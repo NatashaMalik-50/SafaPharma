@@ -7,23 +7,17 @@ package com.safapharma.Main;
 
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
+import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
 import com.safapharma.ModelObjects.User;
 import java.awt.CardLayout;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.LayoutManager;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import static com.safapharma.Helpers.Constants.*;
 
 /**
  *
@@ -34,11 +28,12 @@ public class MainWindow extends javax.swing.JFrame {
     private CardLayout c;
     private LoginDialog login;
     private static User currentUser;
-    private HomeScreenPanel home;
-    private SupplierPanel supplierPanel;
     private JPanel rootPanel;
     private MenuPanel menuPanel;
-    private Stack<Component> componentStack;
+    private final Stack<Component> componentStack;
+    private HomeScreenPanel home;
+    private SupplierPanel supplierPanel;
+    private SalesPanel salesPanel;
 
     /**
      * Creates new form MainWindow
@@ -96,7 +91,7 @@ public class MainWindow extends javax.swing.JFrame {
                 deleteHomeScreen();
             }
             home = new HomeScreenPanel(this);
-            rootPanel.add("Home", home);
+            rootPanel.add(HOMESCREEN_LABEL, home);
             componentStack.push(home);
         } finally {
             setCursor(Cursor.getDefaultCursor());
@@ -106,7 +101,7 @@ public class MainWindow extends javax.swing.JFrame {
     public void showHomeScreen() {
         if (home != null) {
             c = (CardLayout) rootPanel.getLayout();
-            c.show(rootPanel, "Home");
+            c.show(rootPanel, HOMESCREEN_LABEL);
             setCursor(Cursor.getDefaultCursor());
         } else {
             System.out.println("Homescreen object is null");
@@ -130,10 +125,10 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             if (supplierPanel != null) {
-//                deleteHomeScreen();
+                deleteSupplierPanel();
             }
-            supplierPanel = new SupplierPanel();
-            rootPanel.add("Supplier", supplierPanel);
+            supplierPanel = new SupplierPanel(this);
+            rootPanel.add(SUPPLIER_LABEL, supplierPanel);
             componentStack.push(supplierPanel);
         } finally {
             setCursor(Cursor.getDefaultCursor());
@@ -143,7 +138,7 @@ public class MainWindow extends javax.swing.JFrame {
     public void showSupplierPanel() {
         if (supplierPanel != null) {
             c = (CardLayout) rootPanel.getLayout();
-            c.show(rootPanel, "Supplier");
+            c.show(rootPanel, SUPPLIER_LABEL);
             setCursor(Cursor.getDefaultCursor());
         } else {
             System.out.println("Supplier object is null");
@@ -151,6 +146,38 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void deleteSupplierPanel() {
+        if (supplierPanel != null) {
+            c = (CardLayout) rootPanel.getLayout();
+            c.removeLayoutComponent(supplierPanel);
+            supplierPanel = null;
+        }
+    }
+
+    public void createSalesPanel() {
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (salesPanel != null) {
+                deleteSalesPanel();
+            }
+            salesPanel = new SalesPanel(this);
+            rootPanel.add(SALES_LABEL, salesPanel);
+            componentStack.push(salesPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
+    }
+
+    public void showSalesPanel() {
+        if (salesPanel != null) {
+            c = (CardLayout) rootPanel.getLayout();
+            c.show(rootPanel, SALES_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Sales object is null");
+        }
+    }
+
+    public void deleteSalesPanel() {
         if (supplierPanel != null) {
             c = (CardLayout) rootPanel.getLayout();
             c.removeLayoutComponent(supplierPanel);

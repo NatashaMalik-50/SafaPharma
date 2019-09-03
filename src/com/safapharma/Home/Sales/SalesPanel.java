@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.safapharma.Home.Supplier;
+package com.safapharma.Home.Sales;
 
 import com.safapharma.Main.MainWindow;
 
@@ -11,14 +11,14 @@ import com.safapharma.Main.MainWindow;
  *
  * @author Natasha Malik
  */
-public class SupplierPanel extends javax.swing.JPanel {
+public class SalesPanel extends javax.swing.JPanel {
 
     private MainWindow manager;
 
     /**
-     * Creates new form SupplierPanel
+     * Creates new form SalesPanel
      */
-    public SupplierPanel(MainWindow manager) {
+    public SalesPanel(MainWindow manager) {
         initComponents();
         this.manager = manager;
     }

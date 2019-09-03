@@ -26,9 +26,9 @@ public class HomeScreenPanel extends javax.swing.JPanel {
     private MainWindow manager;
 
     public HomeScreenPanel(MainWindow manager) {
-        this.manager = manager;
         initComponents();
         initUI();
+        this.manager = manager;
     }
 
     private void initUI() {
@@ -65,6 +65,11 @@ public class HomeScreenPanel extends javax.swing.JPanel {
         buttonSales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sales.png"))); // NOI18N
         buttonSales.setText("Sales");
         buttonSales.setPreferredSize(new java.awt.Dimension(175, 100));
+        buttonSales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSalesActionPerformed(evt);
+            }
+        });
 
         buttonSupplier1.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
         buttonSupplier1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/supplier.png"))); // NOI18N
@@ -131,6 +136,11 @@ public class HomeScreenPanel extends javax.swing.JPanel {
         manager.createSupplierPanel();
         manager.showSupplierPanel();
     }//GEN-LAST:event_buttonSupplier1ActionPerformed
+
+    private void buttonSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalesActionPerformed
+        manager.createSalesPanel();
+        manager.showSalesPanel();
+    }//GEN-LAST:event_buttonSalesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

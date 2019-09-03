@@ -5,9 +5,9 @@
  */
 package com.safapharma.DataAccessObjects;
 
+import static com.safapharma.Helpers.Constants.TABLE_USERS;
 import com.safapharma.Helpers.DbHelper;
 import com.safapharma.ModelObjects.User;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +18,8 @@ import java.sql.ResultSet;
  */
 public class UserDAO {
 
-    final String UserTable = "user";
-
     public boolean isUserNameEnteredValid(String userName) throws Exception {
-        String sql = "SELECT * FROM " + UserTable + " where username= ?";
+        String sql = "SELECT * FROM " + TABLE_USERS + " where username= ?";
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, userName);
@@ -32,7 +30,7 @@ public class UserDAO {
 
     public String fetchPassword(String userName) throws Exception {
         String password = "";
-        String sql = "SELECT password FROM " + UserTable + " where username= ?";
+        String sql = "SELECT password FROM " + TABLE_USERS + " where username= ?";
         try (Connection connection = DbHelper.getConnection();) {
 
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -46,7 +44,7 @@ public class UserDAO {
     }
 
     public void fetchUserDetail(User user) {
-        final String SQL_QUERY = "select * from " + UserTable + " where username = ? ";
+        final String SQL_QUERY = "select * from " + TABLE_USERS + " where username = ? ";
         try (Connection con = DbHelper.getConnection();) {
 
             PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -60,11 +58,8 @@ public class UserDAO {
                 user.setAddress(rs.getString("address"));
                 user.setEmail(rs.getString("email"));
                 user.setDateOfBirth(rs.getString("date_of_birth"));
-            } else {
-                return;
             }
         } catch (Exception e) {
-            return;
         }
 
     }
