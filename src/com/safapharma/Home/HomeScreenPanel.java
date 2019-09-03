@@ -5,7 +5,13 @@
  */
 package com.safapharma.Home;
 
+import com.safapharma.Helpers.ClockLabel;
+import static com.safapharma.Helpers.Constants.DATE_LABEL;
+import static com.safapharma.Helpers.Constants.TIME_LABEL;
 import com.safapharma.Main.MainWindow;
+import java.awt.BorderLayout;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -13,14 +19,37 @@ import com.safapharma.Main.MainWindow;
  */
 public class HomeScreenPanel extends javax.swing.JPanel {
 
+    private ClockLabel dateLabel;
+//    private ClockLabel dayLabel;
+    private ClockLabel timeLabel;
+
     /**
      * Creates new form HomeScreenPanel
      */
-    
     private MainWindow manager;
+    // private JButton buttonSupplier,buttonStock,buttonCustomer,buttonSales,buttonMedicine;
+
     public HomeScreenPanel(MainWindow manager) {
         this.manager = manager;
         initComponents();
+        initUI();
+    }
+
+    private void initUI() {
+        buttonLogOut.setHorizontalAlignment(SwingConstants.CENTER);
+        buttonLogOut.setVerticalAlignment(SwingConstants.CENTER);
+        buttonLogOut.setHorizontalTextPosition(SwingConstants.CENTER);
+        buttonLogOut.setVerticalTextPosition(SwingConstants.BOTTOM);
+        buttonLogOut.setIconTextGap(1);
+        buttonLogOut.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+        labelWelcomeMsg.setText("Welcome, " + manager.getCurrentUser().getName());        
+        jPanel1.setLayout(new BorderLayout());
+        dateLabel = new ClockLabel(DATE_LABEL);
+//        dayLabel = new ClockLabel(DAY_LABEL);
+        timeLabel = new ClockLabel(TIME_LABEL);
+        jPanel1.add(dateLabel,BorderLayout.CENTER);
+//        jPanel1.add(dayLabel,BorderLayout.SOUTH);
+        jPanel1.add(timeLabel,BorderLayout.NORTH);
     }
 
     /**
@@ -33,29 +62,127 @@ public class HomeScreenPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonLogOut = new javax.swing.JButton();
+        buttonAdmin = new javax.swing.JButton();
+        buttonCustomer = new javax.swing.JButton();
+        buttonSales = new javax.swing.JButton();
+        buttonSupplier1 = new javax.swing.JButton();
+        buttonStock1 = new javax.swing.JButton();
+        buttonMedicine1 = new javax.swing.JButton();
+        labelWelcomeMsg = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
+        buttonLogOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logout.png"))); // NOI18N
         buttonLogOut.setText("Log Out");
+        buttonLogOut.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         buttonLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonLogOutActionPerformed(evt);
             }
         });
 
+        buttonAdmin.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        buttonAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/admin.png"))); // NOI18N
+        buttonAdmin.setText("Admin");
+        buttonAdmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonAdmin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        buttonCustomer.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        buttonCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/customer.png"))); // NOI18N
+        buttonCustomer.setText("Customer");
+        buttonCustomer.setPreferredSize(new java.awt.Dimension(175, 100));
+
+        buttonSales.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        buttonSales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sales.png"))); // NOI18N
+        buttonSales.setText("Sales");
+        buttonSales.setPreferredSize(new java.awt.Dimension(175, 100));
+
+        buttonSupplier1.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        buttonSupplier1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/supplier.png"))); // NOI18N
+        buttonSupplier1.setText("Supplier");
+        buttonSupplier1.setPreferredSize(new java.awt.Dimension(175, 100));
+
+        buttonStock1.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        buttonStock1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/stock.png"))); // NOI18N
+        buttonStock1.setText("Stock");
+        buttonStock1.setPreferredSize(new java.awt.Dimension(175, 100));
+
+        buttonMedicine1.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
+        buttonMedicine1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/medicine.png"))); // NOI18N
+        buttonMedicine1.setText("Medicine");
+        buttonMedicine1.setPreferredSize(new java.awt.Dimension(175, 100));
+
+        labelWelcomeMsg.setFont(new java.awt.Font("Arial Black", 1, 22)); // NOI18N
+        labelWelcomeMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(220, 80));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 220, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(231, Short.MAX_VALUE)
-                .addComponent(buttonLogOut)
-                .addGap(80, 80, 80))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(88, Short.MAX_VALUE)
+                        .addComponent(buttonSupplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonMedicine1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonStock1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(221, 221, 221)
+                                .addComponent(buttonCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonSales, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelWelcomeMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(buttonLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 11, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(buttonAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(buttonLogOut)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelWelcomeMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonSales, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(121, 121, 121)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonSupplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonMedicine1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonStock1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -66,6 +193,14 @@ public class HomeScreenPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAdmin;
+    private javax.swing.JButton buttonCustomer;
     private javax.swing.JButton buttonLogOut;
+    private javax.swing.JButton buttonMedicine1;
+    private javax.swing.JButton buttonSales;
+    private javax.swing.JButton buttonStock1;
+    private javax.swing.JButton buttonSupplier1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelWelcomeMsg;
     // End of variables declaration//GEN-END:variables
 }

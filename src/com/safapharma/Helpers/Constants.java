@@ -11,9 +11,12 @@ package com.safapharma.Helpers;
  */
 public class Constants {
     
-    public static enum SCREEN_CREATION{FIRST_TIME_CREATION, ALREADY_CREATED};
     public static final boolean VALID = true;
-    public static final boolean IN_VALID = true;
+    public static final boolean INVALID = true;
+    public static final String DATE_LABEL = "Date";
+    public static final String DAY_LABEL = "Day";
+    public static final String TIME_LABEL = "Time";
+    
     
     
 }
