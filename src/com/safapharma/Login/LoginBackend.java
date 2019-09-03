@@ -7,10 +7,6 @@ package com.safapharma.Login;
 
 import com.safapharma.DataAccessObjects.UserDAO;
 import com.safapharma.ModelObjects.User;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 
 /**
  *
