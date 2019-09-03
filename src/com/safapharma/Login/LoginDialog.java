@@ -5,8 +5,6 @@
  */
 package com.safapharma.Login;
 
-import static com.safapharma.Helpers.Constants.SCREEN_CREATION;
-import static com.safapharma.Helpers.Constants.SCREEN_CREATION.*;
 import static com.safapharma.Helpers.StringConstants.*;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.User;
@@ -18,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import static jdk.net.SocketFlow.Status.ALREADY_CREATED;
 
 /**
  *
@@ -30,7 +29,6 @@ public class LoginDialog extends javax.swing.JDialog {
     private MainWindow manager;
     private LoginBackend loginBackend;
     private User currentUser;
-    private SCREEN_CREATION creationType;
 
     /**
      * Creates new form LoginDialog
@@ -48,12 +46,6 @@ public class LoginDialog extends javax.swing.JDialog {
         textUsername.setText("");
         textPassword.setText("");
         currentUser = new User();
-        creationType = FIRST_TIME_CREATION;
-    }
-
-    public LoginDialog(MainWindow aThis, SCREEN_CREATION creationType) {
-        this(aThis);
-        this.creationType = creationType;
     }
 
     /**
@@ -308,13 +300,11 @@ public class LoginDialog extends javax.swing.JDialog {
             }
         }
         if (isValid) {
-           manager.deleteLoginDialog(currentUser);
+            manager.deleteLoginDialog(currentUser);
 
             //loggerBackend.enterActivityLog("User Logged in", null, "User", currentUser);
-            if (creationType != ALREADY_CREATED) {
-                manager.createHomeScreen();
-                manager.showHomeScreen();
-            }
+            manager.createHomeScreen();
+            manager.showHomeScreen();
             manager.setVisible(true);
         }
     }//GEN-LAST:event_buttonLoginActionPerformed

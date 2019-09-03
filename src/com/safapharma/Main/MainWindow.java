@@ -5,8 +5,6 @@
  */
 package com.safapharma.Main;
 
-import com.safapharma.Helpers.Constants.SCREEN_CREATION;
-import static com.safapharma.Helpers.Constants.SCREEN_CREATION.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Login.LoginDialog;
 import com.safapharma.ModelObjects.User;
@@ -18,7 +16,6 @@ import java.awt.RenderingHints;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.sql.SQLException;
 
 /**
  *
@@ -28,7 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private CardLayout c;
     private LoginDialog login;
-    private User currentUser;
+    private static User currentUser;
     private Object home;
 
     /**
@@ -40,11 +37,6 @@ public class MainWindow extends javax.swing.JFrame {
         login = new LoginDialog(this);
     }
 
-    public MainWindow(SCREEN_CREATION creationType) {
-        initComponents();
-        init();
-        login = new LoginDialog(this, creationType);
-    }
     private void init() {
         c = (CardLayout) rootPanel.getLayout();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -53,7 +45,7 @@ public class MainWindow extends javax.swing.JFrame {
     public void createLoginDialog()//a dialog box cannot be added to a frame..hence we just make it visible or invisible
     {
         if (login == null) {
-            login = new LoginDialog(this, ALREADY_CREATED);
+            login = new LoginDialog(this);
         }
         login.setVisible(true);
     }
@@ -66,8 +58,8 @@ public class MainWindow extends javax.swing.JFrame {
         if (login != null) {
             currentUser = user;
             login.setVisible(false);
-            login = null;
         }
+            login = null;
     }
 
 //    public void deleteLoginDialog(User user, UserPrivilege userPrivilege) {
@@ -113,6 +105,12 @@ public class MainWindow extends javax.swing.JFrame {
             rootPanel = null;
             new MainWindow();
         }
+    }
+    
+    static public User getCurrentUser() {
+
+        return currentUser;
+
     }
 
     /**
@@ -173,11 +171,9 @@ public class MainWindow extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) throws InterruptedException {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+//        try {
+//            UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+//        } catch (Exception e) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -194,7 +190,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+//        }
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
