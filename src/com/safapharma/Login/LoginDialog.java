@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import static jdk.net.SocketFlow.Status.ALREADY_CREATED;
 
 /**
  *
@@ -152,11 +151,6 @@ public class LoginDialog extends javax.swing.JDialog {
         labelLogin.setForeground(new java.awt.Color(153, 153, 153));
         labelLogin.setText("Login");
 
-        textPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textPasswordActionPerformed(evt);
-            }
-        });
         textPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textPasswordKeyPressed(evt);
@@ -309,14 +303,8 @@ public class LoginDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_buttonLoginActionPerformed
     public void getCompleteUserDetails() {
-        currentUser = loginBackend.getDetails(currentUser);
+        loginBackend.getDetails(currentUser);
     }
-
-    private void textPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPasswordActionPerformed
-        // TODO add your handling code here:
-        // loginButtonActionPerformed(null);
-
-    }//GEN-LAST:event_textPasswordActionPerformed
 
     private void textPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPasswordKeyPressed
         // TODO add your handling code here:
