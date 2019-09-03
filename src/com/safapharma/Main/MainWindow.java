@@ -5,13 +5,20 @@
  */
 package com.safapharma.Main;
 
+import com.safapharma.Helpers.Constants.SCREEN_CREATION;
+import static com.safapharma.Helpers.Constants.SCREEN_CREATION.*;
+import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Login.LoginDialog;
+import com.safapharma.ModelObjects.User;
 import java.awt.CardLayout;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.sql.SQLException;
 
 /**
  *
@@ -21,26 +28,93 @@ public class MainWindow extends javax.swing.JFrame {
 
     private CardLayout c;
     private LoginDialog login;
+    private User currentUser;
+    private Object home;
 
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
-        initComponents();   
+        initComponents();
         init();
         login = new LoginDialog(this);
     }
-    public MainWindow(int id){
-        initComponents();       
+
+    public MainWindow(SCREEN_CREATION creationType) {
+        initComponents();
         init();
-        login = new LoginDialog(this,2);
+        login = new LoginDialog(this, creationType);
     }
-    private void init(){
+    private void init() {
         c = (CardLayout) rootPanel.getLayout();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-    
-    
+
+    public void createLoginDialog()//a dialog box cannot be added to a frame..hence we just make it visible or invisible
+    {
+        if (login == null) {
+            login = new LoginDialog(this, ALREADY_CREATED);
+        }
+        login.setVisible(true);
+    }
+
+    public void showLoginDialog() {
+
+    }
+
+    public void deleteLoginDialog(User user) {
+        if (login != null) {
+            currentUser = user;
+            login.setVisible(false);
+            login = null;
+        }
+    }
+
+//    public void deleteLoginDialog(User user, UserPrivilege userPrivilege) {
+//        if (login != null) {
+//            currentUser = user;
+//            currentUserPrivilege = userPrivilege;
+//            login.setVisible(false);
+//            login = null;
+//
+//        }
+//    }
+    public void createHomeScreen() {
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (home != null) {
+                deleteHomeScreen();
+            }
+            home = new HomeScreenPanel(this);
+            rootPanel.add("Home", (Component) home);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
+    }
+
+    public void showHomeScreen() {
+        if (home != null) {
+            c = (CardLayout) rootPanel.getLayout();
+            c.show(rootPanel, "Home");
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Homescreen object is null");
+        }
+    }
+
+    public void deleteHomeScreen() {
+        if (home != null) {
+            c = (CardLayout) rootPanel.getLayout();
+            c.removeLayoutComponent((Component) home);
+            home = null;
+            login = null;
+            currentUser = null;
+            c = null;
+            rootPanel = null;
+            new MainWindow();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,4 +207,5 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel rootPanel;
     // End of variables declaration//GEN-END:variables
+
 }

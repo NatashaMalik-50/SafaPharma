@@ -5,6 +5,9 @@
  */
 package com.safapharma.Login;
 
+import static com.safapharma.Helpers.Constants.SCREEN_CREATION;
+import static com.safapharma.Helpers.Constants.SCREEN_CREATION.*;
+import static com.safapharma.Helpers.StringConstants.*;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.User;
 import static java.awt.Frame.MAXIMIZED_BOTH;
@@ -21,19 +24,19 @@ import javax.swing.JOptionPane;
  * @author Natasha Malik
  */
 public class LoginDialog extends javax.swing.JDialog {
-    
+
     private String username;
     private String password;
     private MainWindow manager;
     private LoginBackend loginBackend;
     private User currentUser;
-    private int id;
-    
+    private SCREEN_CREATION creationType;
+
     /**
      * Creates new form LoginDialog
      */
     public LoginDialog(MainWindow aThis) {
-        this.setLocation(160, 50);
+        // this.setLocation(160, 50);
         initComponents();
         labelLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo.png")).getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH)));
         textUsername.requestFocusInWindow();
@@ -45,12 +48,12 @@ public class LoginDialog extends javax.swing.JDialog {
         textUsername.setText("");
         textPassword.setText("");
         currentUser = new User();
-        id=1;
+        creationType = FIRST_TIME_CREATION;
     }
-    
-    public LoginDialog(MainWindow aThis,int id){
+
+    public LoginDialog(MainWindow aThis, SCREEN_CREATION creationType) {
         this(aThis);
-        this.id = id;
+        this.creationType = creationType;
     }
 
     /**
@@ -274,46 +277,51 @@ public class LoginDialog extends javax.swing.JDialog {
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
         username = textUsername.getText();
         password = textPassword.getText();
-        int flag = 1;
+        boolean isValid = true;
         if (username.equalsIgnoreCase("") || password.equalsIgnoreCase("")) {
-            flag = 0;
-            JOptionPane.showMessageDialog(null, "Username or password cannot be empty. Kindly enter again");
+            isValid = false;
+            JOptionPane.showMessageDialog(null, EMPTY_LOGIN_FIELDS);
         }
 
-        if (flag == 1) {
+        if (isValid) {
             try {
                 if (loginBackend.checkUsername(username) == false) {
-                    JOptionPane optionPane = new JOptionPane("Incorrect user name");
-                    JDialog dialog = optionPane.createDialog("Login error");
+                    isValid = false;
+                    JOptionPane optionPane = new JOptionPane(INVALID_USERNAME_MSG);
+                    JDialog dialog = optionPane.createDialog(LOGIN_ERROR_MSG);
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 } else if (!loginBackend.getUserPassword(username).equals(password)) {
-                    JOptionPane optionPane = new JOptionPane("Incorrect password");
-                    JDialog dialog = optionPane.createDialog("Login error");
+                    isValid = false;
+                    JOptionPane optionPane = new JOptionPane(INVALID_PASSWORD_MSG);
+                    JDialog dialog = optionPane.createDialog(LOGIN_ERROR_MSG);
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 } else {
-                    //setVisible(false);
-                   // userPrivilege = loginBackend.authorize(username);
-                    flag = 2;
+                    setVisible(false);
+                    // userPrivilege = loginBackend.authorize(username);
                     currentUser.setUsername(username);
-                    getUserDetails();
-                    System.out.println(" User.. "+currentUser);
-                    JOptionPane optionPane = new JOptionPane("Login successful!");
-                    JDialog dialog = optionPane.createDialog("Login");
-                    dialog.setAlwaysOnTop(true);
-                    dialog.setVisible(true);
+                    getCompleteUserDetails();
                 }
             } catch (Exception ex) {
                 Logger.getLogger(LoginDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_buttonLoginActionPerformed
-    public void getUserDetails() {
-        currentUser = loginBackend.getDetails(currentUser);
+        if (isValid) {
+           manager.deleteLoginDialog(currentUser);
 
+            //loggerBackend.enterActivityLog("User Logged in", null, "User", currentUser);
+            if (creationType != ALREADY_CREATED) {
+                manager.createHomeScreen();
+                manager.showHomeScreen();
+            }
+            manager.setVisible(true);
+        }
+    }//GEN-LAST:event_buttonLoginActionPerformed
+    public void getCompleteUserDetails() {
+        currentUser = loginBackend.getDetails(currentUser);
     }
-    
+
     private void textPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPasswordActionPerformed
         // TODO add your handling code here:
         // loginButtonActionPerformed(null);
@@ -330,7 +338,7 @@ public class LoginDialog extends javax.swing.JDialog {
     private void buttonServerSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonServerSettingActionPerformed
 //        manager.createServerSetupScreen();
 //        manager.showServerSetupScreen();
-  //      manager.setVisible(true);
+        //      manager.setVisible(true);
     }//GEN-LAST:event_buttonServerSettingActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
