@@ -27,7 +27,6 @@ public class HomeScreenPanel extends javax.swing.JPanel {
      * Creates new form HomeScreenPanel
      */
     private MainWindow manager;
-    // private JButton buttonSupplier,buttonStock,buttonCustomer,buttonSales,buttonMedicine;
 
     public HomeScreenPanel(MainWindow manager) {
         this.manager = manager;
@@ -42,7 +41,7 @@ public class HomeScreenPanel extends javax.swing.JPanel {
         buttonLogOut.setVerticalTextPosition(SwingConstants.BOTTOM);
         buttonLogOut.setIconTextGap(1);
         buttonLogOut.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-        labelWelcomeMsg.setText("Welcome, " + manager.getCurrentUser().getName());        
+        labelWelcomeMsg.setText("Welcome, " + manager.getCurrentUser().getName()+"!");        
         jPanel1.setLayout(new BorderLayout());
         dateLabel = new ClockLabel(DATE_LABEL);
 //        dayLabel = new ClockLabel(DAY_LABEL);
