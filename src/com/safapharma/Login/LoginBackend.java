@@ -7,34 +7,30 @@ package com.safapharma.Login;
 
 import com.safapharma.DataAccessObjects.UserDAO;
 import com.safapharma.ModelObjects.User;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 
 /**
  *
  * @author Natasha Malik
  */
 public class LoginBackend {
+
     UserDAO userDAO;
-    
-    public LoginBackend(){
+
+    public LoginBackend() {
         userDAO = new UserDAO();
     }
-    
+
     public boolean checkUsername(String userName) throws Exception {
         return (userDAO.isUserNameEnteredValid(userName));
     }
-    
+
     public String getUserPassword(String userName) throws Exception {
         String password = userDAO.fetchPassword(userName);
         return password;
     }
-    
-    public User getDetails(User u) {
-        User user = userDAO.fetchUserDetail(u);
-        return user;
+
+    public void getDetails(User u) {
+        userDAO.fetchUserDetail(u);
     }
-    
+
 }
