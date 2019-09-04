@@ -28,7 +28,7 @@ public class UserDAO {
         }
     }
 
-    public String fetchPassword(String userName) throws Exception {
+    public String getPassword(String userName) throws Exception {
         String password = "";
         String sql = "SELECT password FROM " + TABLE_USERS + " where username= ?";
         try (Connection connection = DbHelper.getConnection();) {
@@ -43,10 +43,9 @@ public class UserDAO {
         return password;
     }
 
-    public void fetchUserDetail(User user) {
+    public void getUser(User user) throws Exception{
         final String SQL_QUERY = "select * from " + TABLE_USERS + " where username = ? ";
         try (Connection con = DbHelper.getConnection();) {
-
             PreparedStatement pst = con.prepareStatement(SQL_QUERY);
             pst.setString(1, user.getUsername());
             ResultSet rs = pst.executeQuery();
@@ -59,9 +58,7 @@ public class UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setDateOfBirth(rs.getString("date_of_birth"));
             }
-        } catch (Exception e) {
         }
-
     }
 
 }

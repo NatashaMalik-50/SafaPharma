@@ -20,17 +20,17 @@ public class LoginBackend {
         userDAO = new UserDAO();
     }
 
-    public boolean checkUsername(String userName) throws Exception {
+    public boolean validateUsername(String userName) throws Exception {
         return (userDAO.isUserNameEnteredValid(userName));
     }
 
-    public String getUserPassword(String userName) throws Exception {
-        String password = userDAO.fetchPassword(userName);
+    public String fetchUserPassword(String userName) throws Exception {
+        String password = userDAO.getPassword(userName);
         return password;
     }
 
-    public void getDetails(User u) {
-        userDAO.fetchUserDetail(u);
+    public void fetchCompleteUserDetails(User u) throws Exception {
+        userDAO.getUser(u);
     }
 
 }
