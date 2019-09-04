@@ -1,25 +1,22 @@
-
 package com.safapharma.ModelObjects;
 
-
-
 public class MedicineCategory {
-    
+
     private int id;
     private String name;
-	private String createdAt;
-	private String updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
     public MedicineCategory(int id, String name, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
-		this.createdAt=createdAt;
-		this.updatedAt=updatedAt;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public MedicineCategory() {
     }
-        
+
     public int getId() {
         return id;
     }
@@ -35,21 +32,21 @@ public class MedicineCategory {
     public void setName(String name) {
         this.name = name;
     }
-	
-	public String getcreatedAt() {
+
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setcreatedAt(String createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-	
-	public String getupdatedAt() {
+
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setupdatedAt(String updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-       
+
 }

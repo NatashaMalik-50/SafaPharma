@@ -5,17 +5,15 @@
  */
 package com.safapharma.ModelObjects;
 
-
-
 /**
  *
  * @author Natasha Malik
  */
 public class User {
-    
+
     private int id;
     private String name;
-    private String username;    
+    private String username;
     private String password;
     private String contactNo;
     private String address;
@@ -24,19 +22,22 @@ public class User {
     private String createdAt;
     private String updatedAt;
 
-    public User(int id, String name, String username, String contactNo, String address, String email, String dateOfBirth) {
+    public User(int id, String name, String username, String password, String contactNo, String address, String email, String dateOfBirth, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.username = username;
+        this.password = password;
         this.contactNo = contactNo;
         this.address = address;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public User() {
     }
-        
+
     public int getId() {
         return id;
     }
@@ -116,7 +117,5 @@ public class User {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-    
-    
-    
+
 }

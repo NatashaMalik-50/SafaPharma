@@ -1,55 +1,52 @@
-
 package com.safapharma.ModelObjects;
 
-
-
 public class UserRole {
-    
+
     private int userId;
     private int roleId;
-	private String createdAt;
-	private String updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
     public UserRole(int userId, int roleId, String createdAt, String updatedAt) {
         this.userId = userId;
         this.roleId = roleId;
-		this.createdAt=createdAt;
-		this.updatedAt=updatedAt;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public UserRole() {
     }
-        
-    public int getuserId() {
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setuserId(int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public int getroleId() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setroleId(int roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
-	
-	public String getcreatedAt() {
+
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setcreatedAt(String createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-	
-	public String getupdatedAt() {
+
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setupdatedAt(String updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-       
+
 }

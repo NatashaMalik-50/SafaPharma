@@ -1,55 +1,52 @@
-
 package com.safapharma.ModelObjects;
 
-
-
 public class MedicineSalt {
-    
+
     private int saltId;
     private int medicineId;
-	private String createdAt;
-	private String updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
     public MedicineSalt(int saltId, int medicineId, String createdAt, String updatedAt) {
         this.saltId = saltId;
         this.medicineId = medicineId;
-		this.createdAt=createdAt;
-		this.updatedAt=updatedAt;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public MedicineSalt() {
     }
-        
-    public int getsaltId() {
+
+    public int getSaltId() {
         return saltId;
     }
 
-    public void setsaltId(int saltId) {
+    public void setSaltId(int saltId) {
         this.saltId = saltId;
     }
 
-    public int getmedicineId() {
+    public int getMedicineId() {
         return medicineId;
     }
 
-    public void setmedicineId(int medicineId) {
+    public void setMedicineId(int medicineId) {
         this.medicineId = medicineId;
     }
-	
-	public String getcreatedAt() {
+
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setcreatedAt(String createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-	
-	public String getupdatedAt() {
+
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setupdatedAt(String updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-       
+
 }
