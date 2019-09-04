@@ -33,7 +33,7 @@ public class LoginDialog extends javax.swing.JDialog {
      * Creates new form LoginDialog
      */
     public LoginDialog(MainWindow aThis) {
-        // this.setLocation(160, 50);
+        this.setLocation(160, 50);
         initComponents();
         labelLogo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/logo.png")).getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH)));
         textUsername.requestFocusInWindow();
@@ -253,7 +253,6 @@ public class LoginDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_textUsernameTextValueChanged
 
     private void textUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textUsernameKeyPressed
-        // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buttonLoginActionPerformed(null);
         }
@@ -271,13 +270,13 @@ public class LoginDialog extends javax.swing.JDialog {
 
         if (isValid) {
             try {
-                if (loginBackend.checkUsername(username) == false) {
+                if (loginBackend.validateUsername(username) == false) {
                     isValid = false;
                     JOptionPane optionPane = new JOptionPane(INVALID_USERNAME_MSG);
                     JDialog dialog = optionPane.createDialog(LOGIN_ERROR_MSG);
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
-                } else if (!loginBackend.getUserPassword(username).equals(password)) {
+                } else if (!loginBackend.fetchUserPassword(username).equals(password)) {
                     isValid = false;
                     JOptionPane optionPane = new JOptionPane(INVALID_PASSWORD_MSG);
                     JDialog dialog = optionPane.createDialog(LOGIN_ERROR_MSG);
@@ -295,19 +294,16 @@ public class LoginDialog extends javax.swing.JDialog {
         }
         if (isValid) {
             manager.deleteLoginDialog(currentUser);
-
-            //loggerBackend.enterActivityLog("User Logged in", null, "User", currentUser);
             manager.createHomeScreen();
             manager.showHomeScreen();
             manager.setVisible(true);
         }
     }//GEN-LAST:event_buttonLoginActionPerformed
-    public void getCompleteUserDetails() {
-        loginBackend.getDetails(currentUser);
+    public void getCompleteUserDetails() throws Exception {
+        loginBackend.fetchCompleteUserDetails(currentUser);
     }
 
     private void textPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textPasswordKeyPressed
-        // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             buttonLoginActionPerformed(null);
         }
@@ -320,7 +316,7 @@ public class LoginDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonServerSettingActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        System.exit(0); //temporarily
+        System.exit(0);
     }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
