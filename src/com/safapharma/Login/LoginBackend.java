@@ -6,6 +6,7 @@
 package com.safapharma.Login;
 
 import com.safapharma.DataAccessObjects.UserDAO;
+import com.safapharma.Helpers.Constants;
 import com.safapharma.ModelObjects.User;
 
 /**
@@ -20,8 +21,8 @@ public class LoginBackend {
         userDAO = new UserDAO();
     }
 
-    public boolean validateUsername(String userName) throws Exception {
-        return (userDAO.isUserNameEnteredValid(userName));
+    public boolean isUsernameValid(String userName) throws Exception {
+        return (userDAO.getUserId(userName) != Constants.INVALID);
     }
 
     public String fetchUserPassword(String userName) throws Exception {
