@@ -5,14 +5,7 @@
  */
 package com.safapharma.Home;
 
-import com.safapharma.Helpers.ClockLabel;
-import static com.safapharma.Helpers.Constants.DATE_LABEL;
-import static com.safapharma.Helpers.Constants.TIME_LABEL;
 import com.safapharma.Main.MainWindow;
-import java.awt.BorderLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 
 /**
  *

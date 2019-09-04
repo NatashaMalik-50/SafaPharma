@@ -12,6 +12,7 @@ import static com.safapharma.Helpers.Constants.TIME_LABEL;
 import com.safapharma.Main.MainWindow;
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -133,7 +134,7 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
         if (manager.isHome()) {
-            buttonLogOutActionPerformed(null);
+//            buttonLogOutActionPerformed(null);
         } else {
             manager.deleteCurrentPanel();
         }
