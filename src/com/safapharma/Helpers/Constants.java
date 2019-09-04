@@ -11,8 +11,8 @@ package com.safapharma.Helpers;
  */
 public class Constants {
     
-    public static final boolean VALID = true;
-    public static final boolean INVALID = true;
+    public static final int VALID = 1;
+    public static final int INVALID = -1;
     public static final String DATE_LABEL = "Date";
     public static final String DAY_LABEL = "Day";
     public static final String TIME_LABEL = "Timegit ";    

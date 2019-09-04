@@ -270,7 +270,7 @@ public class LoginDialog extends javax.swing.JDialog {
 
         if (isValid) {
             try {
-                if (loginBackend.validateUsername(username) == false) {
+                if (!loginBackend.isUsernameValid(username)) {
                     isValid = false;
                     JOptionPane optionPane = new JOptionPane(INVALID_USERNAME_MSG);
                     JDialog dialog = optionPane.createDialog(LOGIN_ERROR_MSG);
@@ -284,7 +284,6 @@ public class LoginDialog extends javax.swing.JDialog {
                     dialog.setVisible(true);
                 } else {
                     setVisible(false);
-                    // userPrivilege = loginBackend.authorize(username);
                     currentUser.setUsername(username);
                     getCompleteUserDetails();
                 }

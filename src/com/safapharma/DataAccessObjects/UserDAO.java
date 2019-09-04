@@ -5,6 +5,7 @@
  */
 package com.safapharma.DataAccessObjects;
 
+import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.TABLE_USERS;
 import com.safapharma.Helpers.DbHelper;
 import com.safapharma.ModelObjects.User;
@@ -18,13 +19,16 @@ import java.sql.ResultSet;
  */
 public class UserDAO {
 
-    public boolean isUserNameEnteredValid(String userName) throws Exception {
-        String sql = "SELECT * FROM " + TABLE_USERS + " where username= ?";
+    public int getUserId(String userName) throws Exception {
+        String sql = "SELECT id FROM " + TABLE_USERS + " where username= ?";
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, userName);
             ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            if(resultSet.next())
+                return resultSet.getInt(1);
+            else
+               return Constants.INVALID;
         }
     }
 
