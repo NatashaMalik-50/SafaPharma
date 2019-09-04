@@ -1,37 +1,32 @@
-
 package com.safapharma.ModelObjects;
 
-
-
 public class StockEntry {
-    
+
     private int id;
     private int billId;
-	private int medicineLotId;
-	private int quantity;
-	private double discountPercentage;
-	private double gstPercentage;
-	private double amount;
-	private String createdAt;
-	private String updatedAt;
-	
+    private int medicineLotId;
+    private int quantity;
+    private double discountPercentage;
+    private double gstPercentage;
+    private double amount;
+    private String createdAt;
+    private String updatedAt;
 
     public StockEntry(int id, int billId, int medicineLotId, int quantity, double discountPercentage, double gstPercentage, double amount, String createdAt, String updatedAt) {
         this.id = id;
         this.billId = billId;
-		this.medicineLotId=medicineLotId;
-		this.rate=rate;
-		this.quantity=quantity;
-		this.discountPercentage=discountPercentage;
-		this.gstPercentage=gstPercentage;
-		this.amount=amount;
-		this.createdAt=createdAt;
-		this.updatedAt=updatedAt;
+        this.medicineLotId = medicineLotId;
+        this.quantity = quantity;
+        this.discountPercentage = discountPercentage;
+        this.gstPercentage = gstPercentage;
+        this.amount = amount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public StockEntry() {
     }
-        
+
     public int getId() {
         return id;
     }
@@ -40,52 +35,68 @@ public class StockEntry {
         this.id = id;
     }
 
-    public int getbillId() {
+    public int getBillId() {
         return billId;
     }
 
-    public void setbillId(int billId) {
+    public void setBillId(int billId) {
         this.billId = billId;
     }
-	
-	public int getmedicineLotId() {
+
+    public int getMedicineLotId() {
         return medicineLotId;
     }
 
-    public void setmedicineLotId(int medicineLotId) {
+    public void setMedicineLotId(int medicineLotId) {
         this.medicineLotId = medicineLotId;
     }
-	
-	public int getquantity() {
+
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setquantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-	
-	public double getdiscountPercentage() {
+
+    public double getDiscountPercentage() {
         return discountPercentage;
     }
 
-    public void setdiscountPercentage(double discountPercentage) {
+    public void setDiscountPercentage(double discountPercentage) {
         this.discountPercentage = discountPercentage;
     }
-	
-	public String getcreatedAt() {
+
+    public double getGstPercentage() {
+        return gstPercentage;
+    }
+
+    public void setGstPercentage(double gstPercentage) {
+        this.gstPercentage = gstPercentage;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setcreatedAt(String createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-	
-	public String getupdatedAt() {
+
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setupdatedAt(String updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-	
+
 }
