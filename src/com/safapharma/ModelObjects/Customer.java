@@ -1,30 +1,28 @@
-
 package com.safapharma.ModelObjects;
 
-
-
-
 public class Customer {
-    
+
     private int id;
     private String name;
     private String address;
-	private String contactNo;
+    private String contactNo;
     private String email;
-	private String createdAt;
-	private String updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
-    public Customer(int id, String name, String address, String contactNo,String email, String createdAt, String updatedAt) {
+    public Customer(int id, String name, String address, String contactNo, String email, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.address = address;
-		this.contactNo = contactNo;
+        this.contactNo = contactNo;
         this.email = email;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Customer() {
     }
-        
+
     public int getId() {
         return id;
     }
@@ -41,7 +39,7 @@ public class Customer {
         this.name = name;
     }
 
-	public String getAddress() {
+    public String getAddress() {
         return address;
     }
 
@@ -55,7 +53,7 @@ public class Customer {
 
     public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
-    }    
+    }
 
     public String getEmail() {
         return email;
@@ -64,21 +62,21 @@ public class Customer {
     public void setEmail(String email) {
         this.email = email;
     }
-	
-	public String getcreatedAt() {
+
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setcreatedAt(String createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
-	
-	public String getupdatedAt() {
+
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setupdatedAt(String updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-    
+
 }
