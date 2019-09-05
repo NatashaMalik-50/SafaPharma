@@ -13,15 +13,18 @@ import com.safapharma.Helpers.IconConstants;
 import com.safapharma.Main.MainWindow;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Image;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import static com.safapharma.Helpers.Constants.FONT_SIZE_14_CALIBRI;
-import static com.safapharma.Helpers.Constants.FONT_SIZE_14_CALIBRI;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
-import javax.swing.border.CompoundBorder;
+import javax.swing.JLabel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 /**
  *
@@ -30,11 +33,12 @@ import javax.swing.border.CompoundBorder;
 public class SidePanel extends javax.swing.JPanel {
 
     private MainWindow manager;
-    private JButton buttonCustomer;
-    private JButton buttonSales;
-    private JButton buttonSupplier;
-    private JButton buttonStock;
-    private JButton buttonMedicine;
+    private JLabel buttonCustomer;
+    private JLabel buttonSales;
+    private JLabel buttonSupplier;
+    private JLabel buttonStock;
+    private JLabel buttonMedicine;
+    private final static int WIDTH_PANEL = 130;
 
     /**
      * Creates new form SidePanel
@@ -50,16 +54,14 @@ public class SidePanel extends javax.swing.JPanel {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(Color.gray);
-        setPreferredSize(new Dimension(140, HEIGHT));
-        setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 0, 4, Color.darkGray),BorderFactory.createEmptyBorder(4,4,4,4)));
+        setPreferredSize(new Dimension(WIDTH_PANEL, HEIGHT));
+        setBorder(BorderFactory.createMatteBorder(0, 0, 0, 4, Color.darkGray));
 
-        buttonCustomer = new PanelButton(BUTTON_CUSTOMER_LABEL, new ImageIcon(getClass().getResource(IconConstants.CUSTOMER_ICON)));
-//        buttonCustomer.setHorizontalAlignment(SwingConstants.CENTER);
-//        buttonCustomer.setVerticalAlignment(SwingConstants.CENTER);
-        buttonSales = new PanelButton(BUTTON_SALES_LABEL, new ImageIcon(getClass().getResource(IconConstants.SALES_ICON)));
-        buttonSupplier = new PanelButton(BUTTON_SUPPLIER_LABEL, new ImageIcon(getClass().getResource(IconConstants.SUPPLIER_ICON)));
-        buttonStock = new PanelButton(Constants.BUTTON_STOCK_LABEL, new ImageIcon(getClass().getResource(IconConstants.STOCK_ICON)));
-        buttonMedicine = new PanelButton(Constants.BUTTON_MEDICINE_LABEL, new ImageIcon(getClass().getResource(IconConstants.MEDICINE_ICON)));
+        buttonCustomer = new SidePaneLabel(BUTTON_CUSTOMER_LABEL, new ImageIcon(getClass().getResource(IconConstants.CUSTOMER_ICON)));
+        buttonSales = new SidePaneLabel(BUTTON_SALES_LABEL, new ImageIcon(getClass().getResource(IconConstants.SALES_ICON)));
+        buttonSupplier = new SidePaneLabel(BUTTON_SUPPLIER_LABEL, new ImageIcon(getClass().getResource(IconConstants.SUPPLIER_ICON)));
+        buttonStock = new SidePaneLabel(Constants.BUTTON_STOCK_LABEL, new ImageIcon(getClass().getResource(IconConstants.STOCK_ICON)));
+        buttonMedicine = new SidePaneLabel(Constants.BUTTON_MEDICINE_LABEL, new ImageIcon(getClass().getResource(IconConstants.MEDICINE_ICON)));
 
         add(buttonCustomer);
         add(buttonMedicine);
@@ -69,19 +71,34 @@ public class SidePanel extends javax.swing.JPanel {
     }
 
     private void setListeners() {
-        buttonSales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-
+        buttonSupplier.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                buttonSupplierActionPerformed(e);
             }
         });
-        buttonSupplier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSupplier1ActionPerformed(evt);
+        buttonCustomer.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                buttonSupplierActionPerformed(e);
+            }
+        });
+        buttonMedicine.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                buttonSupplierActionPerformed(e);
+            }
+        });
+        buttonSales.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                buttonSupplierActionPerformed(e);
+            }
+        });
+        buttonStock.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                buttonSupplierActionPerformed(e);
             }
         });
     }
 
-    private void buttonSupplier1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void buttonSupplierActionPerformed(MouseEvent e) {
         manager.createSupplierPanel();
         manager.showSupplierPanel();
     }
@@ -110,19 +127,35 @@ public class SidePanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    private class PanelButton extends JButton{
+    private class PanelButton extends JButton {
 
-        public PanelButton(String text,ImageIcon icon) {
+        public PanelButton(String text, ImageIcon icon) {
             super(text, icon);
 //            setPreferredSize(new Dimension(138, HEIGHT));
-            setMinimumSize(new Dimension(140, 55));
-            setMaximumSize(new Dimension(140, 55));
-            setBorder(BorderFactory.createEmptyBorder(6,16,6,6));
+            setMinimumSize(new Dimension(WIDTH_PANEL, 55));
+            setMaximumSize(new Dimension(WIDTH_PANEL, 55));
+            setBorder(BorderFactory.createEmptyBorder(6, 16, 6, 6));
             setHorizontalAlignment(SwingConstants.LEFT);
             setVerticalAlignment(SwingConstants.CENTER);
             setHorizontalTextPosition(SwingConstants.RIGHT);
             setFont(FONT_SIZE_14_CALIBRI);
         }
-        
+
+    }
+
+    private class SidePaneLabel extends JLabel {
+
+        public SidePaneLabel(String text, ImageIcon icon) {
+            super(text, icon, JLabel.HORIZONTAL);
+            setMinimumSize(new Dimension(WIDTH_PANEL, 55));
+            setMaximumSize(new Dimension(WIDTH_PANEL, 55));
+            setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED), BorderFactory.createEtchedBorder(EtchedBorder.RAISED)));
+            setHorizontalAlignment(LEFT);
+            setHorizontalTextPosition(RIGHT);
+            setVerticalTextPosition(CENTER);
+            setFont(FONT_SIZE_14_CALIBRI);
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        }
+
     }
 }
