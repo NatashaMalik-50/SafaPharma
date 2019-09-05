@@ -36,112 +36,19 @@ public class HomeScreenPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonAdmin = new javax.swing.JButton();
-        buttonCustomer = new javax.swing.JButton();
-        buttonSales = new javax.swing.JButton();
-        buttonSupplier1 = new javax.swing.JButton();
-        buttonStock1 = new javax.swing.JButton();
-        buttonMedicine1 = new javax.swing.JButton();
-
-        buttonAdmin.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
-        buttonAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/admin.png"))); // NOI18N
-        buttonAdmin.setText("Admin");
-        buttonAdmin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        buttonAdmin.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        buttonCustomer.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
-        buttonCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/customer.png"))); // NOI18N
-        buttonCustomer.setText("Customer");
-        buttonCustomer.setPreferredSize(new java.awt.Dimension(175, 100));
-
-        buttonSales.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
-        buttonSales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sales.png"))); // NOI18N
-        buttonSales.setText("Sales");
-        buttonSales.setPreferredSize(new java.awt.Dimension(175, 100));
-        buttonSales.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSalesActionPerformed(evt);
-            }
-        });
-
-        buttonSupplier1.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
-        buttonSupplier1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/supplier.png"))); // NOI18N
-        buttonSupplier1.setText("Supplier");
-        buttonSupplier1.setPreferredSize(new java.awt.Dimension(175, 100));
-        buttonSupplier1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSupplier1ActionPerformed(evt);
-            }
-        });
-
-        buttonStock1.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
-        buttonStock1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/stock.png"))); // NOI18N
-        buttonStock1.setText("Stock");
-        buttonStock1.setPreferredSize(new java.awt.Dimension(175, 100));
-
-        buttonMedicine1.setFont(new java.awt.Font("Arial Black", 0, 20)); // NOI18N
-        buttonMedicine1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/medicine.png"))); // NOI18N
-        buttonMedicine1.setText("Medicine");
-        buttonMedicine1.setPreferredSize(new java.awt.Dimension(175, 100));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonSupplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonMedicine1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonStock1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(buttonCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonSales, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addComponent(buttonAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+            .addGap(0, 210, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(buttonCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonSales, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(buttonAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(121, 121, 121)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonSupplier1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonMedicine1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonStock1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+            .addGap(0, 213, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonSupplier1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplier1ActionPerformed
-        manager.createSupplierPanel();
-        manager.showSupplierPanel();
-    }//GEN-LAST:event_buttonSupplier1ActionPerformed
-
-    private void buttonSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalesActionPerformed
-        manager.createSalesPanel();
-        manager.showSalesPanel();
-    }//GEN-LAST:event_buttonSalesActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonAdmin;
-    private javax.swing.JButton buttonCustomer;
-    private javax.swing.JButton buttonMedicine1;
-    private javax.swing.JButton buttonSales;
-    private javax.swing.JButton buttonStock1;
-    private javax.swing.JButton buttonSupplier1;
     // End of variables declaration//GEN-END:variables
 }

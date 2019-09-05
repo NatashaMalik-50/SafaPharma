@@ -18,6 +18,12 @@ import java.util.Stack;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import static com.safapharma.Helpers.Constants.*;
+import com.safapharma.Home.SidePanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -28,8 +34,10 @@ public class MainWindow extends javax.swing.JFrame {
     private CardLayout c;
     private LoginDialog login;
     private static User currentUser;
-    private JPanel rootPanel;
+    private JPanel mainPanel;
+    private JPanel screenPanel;
     private MenuPanel menuPanel;
+    private JPanel sidePanel;
     private final Stack<Component> componentStack;
     private HomeScreenPanel home;
     private SupplierPanel supplierPanel;
@@ -46,11 +54,16 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void initPanels() {
-        rootPanel = new JPanel(new CardLayout());
+        mainPanel = new JPanel(new BorderLayout());
         menuPanel = new MenuPanel(this);
-        add(menuPanel);
-        add(rootPanel);
-        c = (CardLayout) rootPanel.getLayout();
+        screenPanel = new JPanel(new CardLayout());
+        sidePanel = new SidePanel(this);
+        screenPanel.setBackground(Color.CYAN);
+        mainPanel.add(menuPanel, BorderLayout.NORTH);
+        mainPanel.add(sidePanel, BorderLayout.WEST);
+        mainPanel.add(screenPanel, BorderLayout.CENTER);
+        add(mainPanel);
+        c = (CardLayout) screenPanel.getLayout();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -91,7 +104,7 @@ public class MainWindow extends javax.swing.JFrame {
                 deleteHomeScreen();
             }
             home = new HomeScreenPanel(this);
-            rootPanel.add(HOMESCREEN_LABEL, home);
+            screenPanel.add(HOMESCREEN_LABEL, home);
             componentStack.push(home);
         } finally {
             setCursor(Cursor.getDefaultCursor());
@@ -100,8 +113,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void showHomeScreen() {
         if (home != null) {
-            c = (CardLayout) rootPanel.getLayout();
-            c.show(rootPanel, HOMESCREEN_LABEL);
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, HOMESCREEN_LABEL);
             setCursor(Cursor.getDefaultCursor());
         } else {
             System.out.println("Homescreen object is null");
@@ -110,13 +123,13 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void deleteHomeScreen() {
         if (home != null) {
-            c = (CardLayout) rootPanel.getLayout();
+            c = (CardLayout) screenPanel.getLayout();
             c.removeLayoutComponent(home);
             home = null;
             login = null;
             currentUser = null;
             c = null;
-            rootPanel = null;
+            screenPanel = null;
             new MainWindow();
         }
     }
@@ -128,7 +141,7 @@ public class MainWindow extends javax.swing.JFrame {
                 deleteSupplierPanel();
             }
             supplierPanel = new SupplierPanel(this);
-            rootPanel.add(SUPPLIER_LABEL, supplierPanel);
+            screenPanel.add(SUPPLIER_LABEL, supplierPanel);
             componentStack.push(supplierPanel);
         } finally {
             setCursor(Cursor.getDefaultCursor());
@@ -137,8 +150,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void showSupplierPanel() {
         if (supplierPanel != null) {
-            c = (CardLayout) rootPanel.getLayout();
-            c.show(rootPanel, SUPPLIER_LABEL);
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, SUPPLIER_LABEL);
             setCursor(Cursor.getDefaultCursor());
         } else {
             System.out.println("Supplier object is null");
@@ -147,7 +160,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void deleteSupplierPanel() {
         if (supplierPanel != null) {
-            c = (CardLayout) rootPanel.getLayout();
+            c = (CardLayout) screenPanel.getLayout();
             c.removeLayoutComponent(supplierPanel);
             supplierPanel = null;
         }
@@ -160,7 +173,7 @@ public class MainWindow extends javax.swing.JFrame {
                 deleteSalesPanel();
             }
             salesPanel = new SalesPanel(this);
-            rootPanel.add(SALES_LABEL, salesPanel);
+            screenPanel.add(SALES_LABEL, salesPanel);
             componentStack.push(salesPanel);
         } finally {
             setCursor(Cursor.getDefaultCursor());
@@ -169,8 +182,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void showSalesPanel() {
         if (salesPanel != null) {
-            c = (CardLayout) rootPanel.getLayout();
-            c.show(rootPanel, SALES_LABEL);
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, SALES_LABEL);
             setCursor(Cursor.getDefaultCursor());
         } else {
             System.out.println("Sales object is null");
@@ -179,7 +192,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void deleteSalesPanel() {
         if (supplierPanel != null) {
-            c = (CardLayout) rootPanel.getLayout();
+            c = (CardLayout) screenPanel.getLayout();
             c.removeLayoutComponent(supplierPanel);
             supplierPanel = null;
         }
@@ -202,6 +215,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         return currentUser;
 
+    }
+    public static ImageIcon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
+        Image img = icon.getImage();
+        Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImage);
     }
 
     /**
@@ -269,6 +287,10 @@ public class MainWindow extends javax.swing.JFrame {
                 m.setExtendedState(MAXIMIZED_BOTH);
             }
         });
+    }
+
+    public Icon resizeIcon(ImageIcon imageIcon) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
