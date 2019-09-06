@@ -5,7 +5,8 @@
  */
 package com.safapharma.Login;
 
-import static com.safapharma.Helpers.StringConstants.*;
+import com.safapharma.Helpers.Constants;
+import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.User;
 import static java.awt.Frame.MAXIMIZED_BOTH;
@@ -265,21 +266,21 @@ public class LoginDialog extends javax.swing.JDialog {
         boolean isValid = true;
         if (username.equalsIgnoreCase("") || password.equalsIgnoreCase("")) {
             isValid = false;
-            JOptionPane.showMessageDialog(null, EMPTY_LOGIN_FIELDS);
+            JOptionPane.showMessageDialog(null, Constants.EMPTY_LOGIN_FIELDS);
         }
 
         if (isValid) {
             try {
                 if (!loginBackend.isUsernameValid(username)) {
                     isValid = false;
-                    JOptionPane optionPane = new JOptionPane(INVALID_USERNAME_MSG);
-                    JDialog dialog = optionPane.createDialog(LOGIN_ERROR_MSG);
+                    JOptionPane optionPane = new JOptionPane(Constants.INVALID_USERNAME_MSG);
+                    JDialog dialog = optionPane.createDialog(Constants.LOGIN_ERROR_MSG);
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 } else if (!loginBackend.fetchUserPassword(username).equals(password)) {
                     isValid = false;
-                    JOptionPane optionPane = new JOptionPane(INVALID_PASSWORD_MSG);
-                    JDialog dialog = optionPane.createDialog(LOGIN_ERROR_MSG);
+                    JOptionPane optionPane = new JOptionPane(Constants.INVALID_PASSWORD_MSG);
+                    JDialog dialog = optionPane.createDialog(Constants.LOGIN_ERROR_MSG);
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 } else {

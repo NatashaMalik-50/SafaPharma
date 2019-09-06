@@ -6,26 +6,22 @@
 package com.safapharma.Home;
 
 import com.safapharma.Helpers.ClockLabel;
-import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.BACK_LABEL;
 import static com.safapharma.Helpers.Constants.DATE_LABEL;
 import static com.safapharma.Helpers.Constants.LOG_OUT_LABEL;
 import static com.safapharma.Helpers.Constants.TIME_LABEL;
-import com.safapharma.Helpers.IconConstants;
 import static com.safapharma.Helpers.IconConstants.BACK_BUTTON_ICON;
 import static com.safapharma.Helpers.IconConstants.LOG_OUT_ICON;
 import com.safapharma.Main.MainWindow;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
-import static com.safapharma.Helpers.Constants.FONT_SIZE_16_CALIBRI;
+import com.safapharma.Helpers.DesignConstants;
 
 /**
  *
@@ -55,7 +51,7 @@ public class MenuPanel extends javax.swing.JPanel {
     private void initUI() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(WIDTH, 50));
-        setBackground(Color.gray);
+//        setBackground(Color.gray);
 //        backButton = new JButton(BACK_LABEL, manager.resizeIcon(new javax.swing.ImageIcon(getClass().getResource(BACK_BUTTON_ICON)), 35, 40));
         backButton = new JButton(BACK_LABEL, new javax.swing.ImageIcon(getClass().getResource(BACK_BUTTON_ICON)));
         logOutButton = new JButton(LOG_OUT_LABEL, new javax.swing.ImageIcon(getClass().getResource(LOG_OUT_ICON)));
@@ -63,24 +59,24 @@ public class MenuPanel extends javax.swing.JPanel {
 //        logOutButton.setVerticalAlignment(SwingConstants.CENTER);
 //        logOutButton.setIconTextGap(1);
 //        logOutButton.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-        backButton.setFont(Constants.FONT_SIZE_14_CALIBRI);
-        logOutButton.setFont(Constants.FONT_SIZE_14_CALIBRI);
+        backButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+        logOutButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         backButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         welcomeMsgLabel = new JLabel("Welcome, " + manager.getCurrentUser().getName() + "!");
         welcomeMsgLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        welcomeMsgLabel.setFont(FONT_SIZE_16_CALIBRI);
+        welcomeMsgLabel.setFont(DesignConstants.FONT_SIZE_18_CALIBRI);
         dateLabel = new ClockLabel(DATE_LABEL);
         timeLabel = new ClockLabel(TIME_LABEL);
         timeAndInfoPanel = new JPanel();
         timeAndInfoPanel.setLayout(new BorderLayout());
         timeAndInfoPanel.setBorder(BorderFactory.createEmptyBorder(2, 6, 2, 6));
-        timeAndInfoPanel.setBackground(Color.gray);
+//        timeAndInfoPanel.setBackground(Color.gray);
         timeAndInfoPanel.add(dateLabel, BorderLayout.WEST);
         timeAndInfoPanel.add(welcomeMsgLabel, BorderLayout.CENTER);
         timeAndInfoPanel.add(timeLabel, BorderLayout.EAST);
 
-        setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 4, 0, Color.darkGray), BorderFactory.createEmptyBorder(2, 6, 2, 6)));
+        setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 0, 4, 0, DesignConstants.BORDER_COLOR), BorderFactory.createEmptyBorder(2, 6, 2, 6)));
         add(backButton, BorderLayout.WEST);
         add(timeAndInfoPanel, BorderLayout.CENTER);
         add(logOutButton, BorderLayout.EAST);

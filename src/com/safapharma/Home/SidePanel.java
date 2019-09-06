@@ -11,13 +11,10 @@ import static com.safapharma.Helpers.Constants.BUTTON_SALES_LABEL;
 import static com.safapharma.Helpers.Constants.BUTTON_SUPPLIER_LABEL;
 import com.safapharma.Helpers.IconConstants;
 import com.safapharma.Main.MainWindow;
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import static com.safapharma.Helpers.Constants.FONT_SIZE_14_CALIBRI;
+import com.safapharma.Helpers.DesignConstants;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -53,9 +50,9 @@ public class SidePanel extends javax.swing.JPanel {
     private void initUI() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(Color.gray);
+//        setBackground(Color.gray);
         setPreferredSize(new Dimension(WIDTH_PANEL, HEIGHT));
-        setBorder(BorderFactory.createMatteBorder(0, 0, 0, 4, Color.darkGray));
+        setBorder(BorderFactory.createMatteBorder(0, 0, 0, 4, DesignConstants.BORDER_COLOR));
 
         buttonCustomer = new SidePaneLabel(BUTTON_CUSTOMER_LABEL, new ImageIcon(getClass().getResource(IconConstants.CUSTOMER_ICON)));
         buttonSales = new SidePaneLabel(BUTTON_SALES_LABEL, new ImageIcon(getClass().getResource(IconConstants.SALES_ICON)));
@@ -127,22 +124,6 @@ public class SidePanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    private class PanelButton extends JButton {
-
-        public PanelButton(String text, ImageIcon icon) {
-            super(text, icon);
-//            setPreferredSize(new Dimension(138, HEIGHT));
-            setMinimumSize(new Dimension(WIDTH_PANEL, 55));
-            setMaximumSize(new Dimension(WIDTH_PANEL, 55));
-            setBorder(BorderFactory.createEmptyBorder(6, 16, 6, 6));
-            setHorizontalAlignment(SwingConstants.LEFT);
-            setVerticalAlignment(SwingConstants.CENTER);
-            setHorizontalTextPosition(SwingConstants.RIGHT);
-            setFont(FONT_SIZE_14_CALIBRI);
-        }
-
-    }
-
     private class SidePaneLabel extends JLabel {
 
         public SidePaneLabel(String text, ImageIcon icon) {
@@ -153,7 +134,7 @@ public class SidePanel extends javax.swing.JPanel {
             setHorizontalAlignment(LEFT);
             setHorizontalTextPosition(RIGHT);
             setVerticalTextPosition(CENTER);
-            setFont(FONT_SIZE_14_CALIBRI);
+            setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 
