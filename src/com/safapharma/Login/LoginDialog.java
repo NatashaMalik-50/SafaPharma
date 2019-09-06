@@ -6,7 +6,6 @@
 package com.safapharma.Login;
 
 import com.safapharma.Helpers.Constants;
-import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.User;
 import static java.awt.Frame.MAXIMIZED_BOTH;

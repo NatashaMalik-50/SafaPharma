@@ -5,12 +5,8 @@
  */
 package com.safapharma.Home;
 
-import com.safapharma.DataAccessObjects.UserDAO;
+import com.safapharma.DataAccessObjects.StockDAO;
 import com.safapharma.ModelObjects.DataWithColumn;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,20 +15,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Natasha Malik
  */
 public class HomeScreenBackend {
-    
-    private UserDAO userDAO;
-    
-    //DAO objects
+
+    private StockDAO stockDAO;
 
     public HomeScreenBackend() {
-        userDAO = new UserDAO();
+        stockDAO = new StockDAO();
     }
-    
-    
-    
-    public DataWithColumn setStockInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception{
-        DataWithColumn dataWithColumn = userDAO.getUsers(); //get from dao
-         return dataWithColumn;        
+
+    public DataWithColumn setStockInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
+        DataWithColumn dataWithColumn = stockDAO.getStockDetails();
+        return dataWithColumn;
     }
-    
+
 }

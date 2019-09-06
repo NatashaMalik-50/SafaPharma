@@ -5,9 +5,6 @@
  */
 package com.safapharma.Helpers;
 
-import java.awt.Color;
-import java.awt.Font;
-
 /**
  *
  * @author Natasha Malik
@@ -50,10 +47,12 @@ public class Constants {
     public static final String TABLE_MEDICINE_SALT = "medicine_salt";
     public static final String TABLE_ROLE = "role";
     public static final String TABLE_USER_ROLE = "user_role";
+    
+    public static final String VIEW_STOCK_VIEW = "stock_view";
+    
     public static final String INVALID_PASSWORD_MSG = "Incorrect password. Kindly enter again.";
     public static final String INVALID_USERNAME_MSG = "Incorrect username. Kindly enter again.";
     public static final String LOGIN_ERROR_MSG = "Login Error";
     public static final String EMPTY_LOGIN_FIELDS = "Username or password cannot be empty. Kindly enter again.";
-
 
 }

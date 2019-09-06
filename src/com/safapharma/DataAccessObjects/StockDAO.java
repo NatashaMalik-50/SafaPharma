@@ -6,45 +6,52 @@
 package com.safapharma.DataAccessObjects;
 
 import com.safapharma.Helpers.Constants;
-import static com.safapharma.Helpers.Constants.TABLE_STOCK_ENTRY;
-import static com.safapharma.Helpers.Constants.TABLE_MEDICINE_LOT;
 import static com.safapharma.Helpers.Constants.TABLE_MEDICINE;
+import static com.safapharma.Helpers.Constants.TABLE_MEDICINE_LOT;
+import static com.safapharma.Helpers.Constants.TABLE_STOCK_ENTRY;
 import com.safapharma.Helpers.DbHelper;
+import com.safapharma.ModelObjects.DataWithColumn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
 
 /**
  *
  * @author shiva
  */
 public class StockDAO {
+
     public int getStockId(String MedicineName) throws Exception {
-    /*select se.id from stock_entry as se join medicine_lot as ml on se.medicine_lot_id = ml.id join medicine as m on ml.medicine_id = m.id
+        /*select se.id from stock_entry as se join medicine_lot as ml on se.medicine_lot_id = ml.id join medicine as m on ml.medicine_id = m.id
         where m.name like 'a%';*/
-        String sql = "select tse.id from" + TABLE_STOCK_ENTRY + "as tse join "+ TABLE_MEDICINE_LOT + "as ml on se.medicine_lot_id = ml.id join " + TABLE_MEDICINE + " as m on ml.medicine_id = m.id where m.name like '"+ MedicineName +"%'";
+        String sql = "select tse.id from" + TABLE_STOCK_ENTRY + "as tse join " + TABLE_MEDICINE_LOT + "as ml on se.medicine_lot_id = ml.id join " + TABLE_MEDICINE + " as m on ml.medicine_id = m.id where m.name like '" + MedicineName + "%'";
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, MedicineName);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next()) {
                 return resultSet.getInt(1);
-            else
-               return Constants.INVALID;
+            } else {
+                return Constants.INVALID;
+            }
         }
     }
+
     public int getAmtOfStockById(int StockId) throws Exception {
-    /*select se.id from stock_entry as se join medicine_lot as ml on se.medicine_lot_id = ml.id join medicine as m on ml.medicine_id = m.id
+        /*select se.id from stock_entry as se join medicine_lot as ml on se.medicine_lot_id = ml.id join medicine as m on ml.medicine_id = m.id
         where m.name like 'a%';*/
         String sql = "select tse.amount from" + TABLE_STOCK_ENTRY + "as tse where tse.id = " + StockId;
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, StockId);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next()) {
                 return resultSet.getInt(1);
-            else
-               return Constants.INVALID;
+            } else {
+                return Constants.INVALID;
+            }
         }
     }
 //     public int getStockSupllierWise(String Supplier_Name) throws Exception {
@@ -75,7 +82,29 @@ public class StockDAO {
 //               return Constants.INVALID;
 //        }
 //    }
-     
-   
-    
+
+    public DataWithColumn getStockDetails() throws Exception {
+        final String SQL_QUERY = "select 'Company Name', 'Medicine Name',quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        try (Connection con = DbHelper.getConnection();) {
+            PreparedStatement pst = con.prepareStatement(SQL_QUERY);
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            DataWithColumn dataWithColumn = new DataWithColumn();
+
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                dataWithColumn.getColumnNames().add(metaData.getColumnName(i));
+            }
+
+            while (rs.next()) {
+                Vector<Object> row = new Vector<Object>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.add(rs.getObject(i));
+                }
+                dataWithColumn.getData().add(row);
+            }
+            return dataWithColumn;
+        }
+    }
+
 }

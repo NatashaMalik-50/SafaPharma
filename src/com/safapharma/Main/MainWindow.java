@@ -5,25 +5,25 @@
  */
 package com.safapharma.Main;
 
+import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.Sales.SalesPanel;
+import com.safapharma.Home.SidePanel;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
 import com.safapharma.ModelObjects.User;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Image;
 import java.util.Stack;
 import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import static com.safapharma.Helpers.Constants.*;
-import com.safapharma.Home.SidePanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -216,6 +216,7 @@ public class MainWindow extends javax.swing.JFrame {
         return currentUser;
 
     }
+
     public static ImageIcon resizeIcon(ImageIcon icon, int resizedWidth, int resizedHeight) {
         Image img = icon.getImage();
         Image resizedImage = img.getScaledInstance(resizedWidth, resizedHeight, java.awt.Image.SCALE_SMOOTH);

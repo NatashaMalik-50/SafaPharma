@@ -21,5 +21,5 @@ public class DesignConstants {
     public static final Font FONT_SIZE_16_CALIBRI_BOLD = new Font("Calibri", Font.BOLD, 16);
     public static final Font FONT_SIZE_14_CALIBRI_BOLD = new Font("Calibri", Font.BOLD, 14);
     public static final Font FONT_SIZE_18_CALIBRI_BOLD = new Font("Calibri", Font.BOLD, 18);
-    
+
 }

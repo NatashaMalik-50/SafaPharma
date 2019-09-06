@@ -10,23 +10,26 @@ import com.safapharma.Helpers.DbHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-/** 
+
+/**
  *
  * @author shiva
  */
 public class SupplierDAO {
+
     public int getStockId(String MedicineName) throws Exception {
-    /*select se.id from stock_entry as se join medicine_lot as ml on se.medicine_lot_id = ml.id join medicine as m on ml.medicine_id = m.id
+        /*select se.id from stock_entry as se join medicine_lot as ml on se.medicine_lot_id = ml.id join medicine as m on ml.medicine_id = m.id
         where m.name like 'a%';*/
         String sql = "";
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, MedicineName);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next()) {
                 return resultSet.getInt(1);
-            else
-               return Constants.INVALID;
+            } else {
+                return Constants.INVALID;
+            }
         }
     }
 }

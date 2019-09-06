@@ -10,6 +10,7 @@ import static com.safapharma.Helpers.Constants.BACK_LABEL;
 import static com.safapharma.Helpers.Constants.DATE_LABEL;
 import static com.safapharma.Helpers.Constants.LOG_OUT_LABEL;
 import static com.safapharma.Helpers.Constants.TIME_LABEL;
+import com.safapharma.Helpers.DesignConstants;
 import static com.safapharma.Helpers.IconConstants.BACK_BUTTON_ICON;
 import static com.safapharma.Helpers.IconConstants.LOG_OUT_ICON;
 import com.safapharma.Main.MainWindow;
@@ -21,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
-import com.safapharma.Helpers.DesignConstants;
 
 /**
  *
@@ -129,7 +129,6 @@ public class MenuPanel extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

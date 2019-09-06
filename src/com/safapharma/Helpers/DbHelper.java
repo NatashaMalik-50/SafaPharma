@@ -6,13 +6,9 @@
 package com.safapharma.Helpers;
 
 import com.safapharma.ModelObjects.DbParameters;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
 
 /**
  *

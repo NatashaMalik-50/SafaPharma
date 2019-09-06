@@ -10,5 +10,5 @@ package com.safapharma.DataAccessObjects;
  * @author shiva
  */
 public class MedicineLotDAO {
-    
+
 }

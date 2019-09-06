@@ -9,16 +9,16 @@ import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.BUTTON_CUSTOMER_LABEL;
 import static com.safapharma.Helpers.Constants.BUTTON_SALES_LABEL;
 import static com.safapharma.Helpers.Constants.BUTTON_SUPPLIER_LABEL;
+import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Helpers.IconConstants;
 import com.safapharma.Main.MainWindow;
-import java.awt.Dimension;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import com.safapharma.Helpers.DesignConstants;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -120,7 +120,6 @@ public class SidePanel extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
