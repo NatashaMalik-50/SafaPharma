@@ -84,7 +84,7 @@ public class StockDAO {
 //    }
 
     public DataWithColumn getStockDetails() throws Exception {
-        final String SQL_QUERY = "select 'Company Name', 'Medicine Name',quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
         try (Connection con = DbHelper.getConnection();) {
             PreparedStatement pst = con.prepareStatement(SQL_QUERY);
             ResultSet rs = pst.executeQuery();

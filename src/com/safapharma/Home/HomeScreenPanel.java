@@ -85,6 +85,7 @@ public class HomeScreenPanel extends javax.swing.JPanel {
         stockTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         stockTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         stockTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        stockTable.setAutoCreateRowSorter(true);
         tableScrollPane.setViewportView(stockTable);
     }
 
@@ -125,7 +126,7 @@ public class HomeScreenPanel extends javax.swing.JPanel {
     }
 
     private void addToStatusPanel(int selectedRowIndex) {
-        String medName = (String) tableModel.getValueAt(selectedRowIndex, 2);
+        String medName = (String) tableModel.getValueAt(selectedRowIndex, 1);
         statusPanel.add(new JLabel(medName));
     }
 
