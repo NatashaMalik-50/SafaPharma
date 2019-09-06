@@ -59,13 +59,13 @@ public class MenuPanel extends javax.swing.JPanel {
 //        logOutButton.setVerticalAlignment(SwingConstants.CENTER);
 //        logOutButton.setIconTextGap(1);
 //        logOutButton.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-        backButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
-        logOutButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+        backButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
+        logOutButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         backButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         welcomeMsgLabel = new JLabel("Welcome, " + manager.getCurrentUser().getName() + "!");
         welcomeMsgLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        welcomeMsgLabel.setFont(DesignConstants.FONT_SIZE_18_CALIBRI);
+        welcomeMsgLabel.setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
         dateLabel = new ClockLabel(DATE_LABEL);
         timeLabel = new ClockLabel(TIME_LABEL);
         timeAndInfoPanel = new JPanel();

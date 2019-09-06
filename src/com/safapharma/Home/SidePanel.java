@@ -134,7 +134,7 @@ public class SidePanel extends javax.swing.JPanel {
             setHorizontalAlignment(LEFT);
             setHorizontalTextPosition(RIGHT);
             setVerticalTextPosition(CENTER);
-            setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+            setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 

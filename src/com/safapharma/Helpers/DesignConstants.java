@@ -15,8 +15,11 @@ import java.awt.Font;
 public class DesignConstants {
 
     public static final Color BORDER_COLOR = new Color(238, 239, 242);
-    public static final Font FONT_SIZE_16_CALIBRI = new Font("Calibri", Font.BOLD, 16);
-    public static final Font FONT_SIZE_14_CALIBRI = new Font("Calibri", Font.BOLD, 14);
-    public static final Font FONT_SIZE_18_CALIBRI = new Font("Calibri", Font.BOLD, 18);
+    public static final Font FONT_SIZE_16_CALIBRI = new Font("Calibri", Font.PLAIN, 16);
+    public static final Font FONT_SIZE_14_CALIBRI = new Font("Calibri", Font.PLAIN, 14);
+    public static final Font FONT_SIZE_18_CALIBRI = new Font("Calibri", Font.PLAIN, 18);
+    public static final Font FONT_SIZE_16_CALIBRI_BOLD = new Font("Calibri", Font.BOLD, 16);
+    public static final Font FONT_SIZE_14_CALIBRI_BOLD = new Font("Calibri", Font.BOLD, 14);
+    public static final Font FONT_SIZE_18_CALIBRI_BOLD = new Font("Calibri", Font.BOLD, 18);
     
 }
