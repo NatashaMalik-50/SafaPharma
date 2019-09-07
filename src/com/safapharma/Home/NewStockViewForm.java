@@ -8,6 +8,8 @@ package com.safapharma.Home;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.Templates.DialogForm;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -28,6 +30,7 @@ public class NewStockViewForm extends DialogForm {
     public NewStockViewForm(MainWindow manager) {
         this.manager = manager;
         initUI();
+        addListeners();
     }
 
     private void initUI() {
@@ -46,6 +49,19 @@ public class NewStockViewForm extends DialogForm {
         getFormPanel().add(submitButton);
         getFormPanel().add(resetButton);
         
+    }
+    
+    private void addListeners(){
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
     }
 
 }
