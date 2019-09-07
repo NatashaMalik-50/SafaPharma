@@ -19,6 +19,7 @@ public class Constants {
     public static final String DAY_LABEL = "Day";
     public static final String TIME_LABEL = "Time";
     public static final String SUPPLIER_LABEL = "SUPPLIER";
+    public static final String CUSTOMER_LABEL = "CUSTOMER";
     public static final String SALES_LABEL = "SALES";
     public static final String HOMESCREEN_LABEL = "HOMESCREEN";
 

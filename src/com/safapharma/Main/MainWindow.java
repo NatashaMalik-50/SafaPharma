@@ -5,14 +5,19 @@
  */
 package com.safapharma.Main;
 
+import com.safapharma.Customer.CustomerPanel;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
+import com.safapharma.Home.NewStockViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
+import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.ModelObjects.User;
+import com.safapharma.Stock.StockPanel;
+import com.safapharma.Templates.MainScreenPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -39,9 +44,13 @@ public class MainWindow extends javax.swing.JFrame {
     private MenuPanel menuPanel;
     private JPanel sidePanel;
     private final Stack<Component> componentStack;
-    private HomeScreenPanel home;
     private SupplierPanel supplierPanel;
+    private CustomerPanel customerPanel;
+    private StockPanel stockPanel;
     private SalesPanel salesPanel;
+    private MedicineLotPanel medicinePanel;
+    private NewStockViewForm newStockViewForm;
+    private HomeScreenPanel home;
 
     /**
      * Creates new form MainWindow
@@ -135,67 +144,202 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void createSupplierPanel() {
-        try {
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            if (supplierPanel != null) {
-                deleteSupplierPanel();
-            }
-            supplierPanel = new SupplierPanel(this);
-            screenPanel.add(SUPPLIER_LABEL, supplierPanel);
-            componentStack.push(supplierPanel);
-        } finally {
-            setCursor(Cursor.getDefaultCursor());
-        }
+//        try {
+//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//            if (supplierPan != null) {
+//                deleteSupplierPanel();
+//            }
+//            supplierPan = new SupplierPanel(this);
+//            screenPanel.add(SUPPLIER_LABEL, supplierPan);
+//            componentStack.push(supplierPan);
+//        } finally {
+//            setCursor(Cursor.getDefaultCursor());
+//        }
     }
 
     public void showSupplierPanel() {
-        if (supplierPanel != null) {
-            c = (CardLayout) screenPanel.getLayout();
-            c.show(screenPanel, SUPPLIER_LABEL);
-            setCursor(Cursor.getDefaultCursor());
-        } else {
-            System.out.println("Supplier object is null");
-        }
+//        if (supplierPan != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.show(screenPanel, SUPPLIER_LABEL);
+//            setCursor(Cursor.getDefaultCursor());
+//        } else {
+//            System.out.println("Supplier pan object is null");
+//        }
     }
 
     public void deleteSupplierPanel() {
-        if (supplierPanel != null) {
-            c = (CardLayout) screenPanel.getLayout();
-            c.removeLayoutComponent(supplierPanel);
-            supplierPanel = null;
-        }
+//        if (supplierPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.removeLayoutComponent(supplierPanel);
+//            supplierPanel = null;
+//        }
+    }
+
+    public void createCustomerPanel() {
+//        try {
+//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//            if (customerPanel != null) {
+//                deleteSupplierPanel();
+//            }
+//            customerPanel = new CustomerPanel(this);
+//            screenPanel.add(CUSTOMER_LABEL, customerPanel);
+//            componentStack.push(customerPanel);
+//        } finally {
+//            setCursor(Cursor.getDefaultCursor());
+//        }
+    }
+
+    public void showCustomerPanel() {
+//        if (customerPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.show(screenPanel, CUSTOMER_LABEL);
+//            setCursor(Cursor.getDefaultCursor());
+//        } else {
+//            System.out.println("Customer object is null");
+//        }
+    }
+
+    public void deleteCustomerPanel() {
+//        if (customerPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.removeLayoutComponent(customerPanel);
+//            customerPanel = null;
+//        }
     }
 
     public void createSalesPanel() {
-        try {
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            if (salesPanel != null) {
-                deleteSalesPanel();
-            }
-            salesPanel = new SalesPanel(this);
-            screenPanel.add(SALES_LABEL, salesPanel);
-            componentStack.push(salesPanel);
-        } finally {
-            setCursor(Cursor.getDefaultCursor());
-        }
+//        try {
+//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//            if (salesPanel != null) {
+//                deleteSalesPanel();
+//            }
+//            salesPanel = new SalesPanel(this);
+//            screenPanel.add(SALES_LABEL, salesPanel);
+//            componentStack.push(salesPanel);
+//        } finally {
+//            setCursor(Cursor.getDefaultCursor());
+//        }
     }
 
     public void showSalesPanel() {
-        if (salesPanel != null) {
-            c = (CardLayout) screenPanel.getLayout();
-            c.show(screenPanel, SALES_LABEL);
-            setCursor(Cursor.getDefaultCursor());
-        } else {
-            System.out.println("Sales object is null");
-        }
+//        if (salesPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.show(screenPanel, SALES_LABEL);
+//            setCursor(Cursor.getDefaultCursor());
+//        } else {
+//            System.out.println("Sales object is null");
+//        }
     }
 
     public void deleteSalesPanel() {
-        if (supplierPanel != null) {
-            c = (CardLayout) screenPanel.getLayout();
-            c.removeLayoutComponent(supplierPanel);
-            supplierPanel = null;
+//        if (supplierPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.removeLayoutComponent(supplierPanel);
+//            supplierPanel = null;
+//        }
+    }
+
+    public void createStockPanel() {
+//        try {
+//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//            if (customerPanel != null) {
+//                deleteSupplierPanel();
+//            }
+//            customerPanel = new CustomerPanel(this);
+//            screenPanel.add(CUSTOMER_LABEL, customerPanel);
+//            componentStack.push(customerPanel);
+//        } finally {
+//            setCursor(Cursor.getDefaultCursor());
+//        }
+    }
+
+    public void showStockPanel() {
+//        if (customerPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.show(screenPanel, CUSTOMER_LABEL);
+//            setCursor(Cursor.getDefaultCursor());
+//        } else {
+//            System.out.println("Customer object is null");
+//        }
+    }
+
+    public void deleteStockPanel() {
+//        if (customerPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.removeLayoutComponent(customerPanel);
+//            customerPanel = null;
+//        }
+    }
+
+    public void createMedicinePanel() {
+//        try {
+//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//            if (salesPanel != null) {
+//                deleteSalesPanel();
+//            }
+//            salesPanel = new SalesPanel(this);
+//            screenPanel.add(SALES_LABEL, salesPanel);
+//            componentStack.push(salesPanel);
+//        } finally {
+//            setCursor(Cursor.getDefaultCursor());
+//        }
+    }
+
+    public void showMedicinePanel() {
+//        if (salesPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.show(screenPanel, SALES_LABEL);
+//            setCursor(Cursor.getDefaultCursor());
+//        } else {
+//            System.out.println("Sales object is null");
+//        }
+    }
+
+    public void deleteMedicinePanel() {
+//        if (supplierPanel != null) {
+//            c = (CardLayout) screenPanel.getLayout();
+//            c.removeLayoutComponent(supplierPanel);
+//            supplierPanel = null;
+//        }
+    }
+    
+    public void createNewStockViewForm() throws Exception {
+        if (newStockViewForm != null) {
+            deleteNewStockViewForm();
         }
+        newStockViewForm = new NewStockViewForm(this);        
+    }
+
+    public void showNewStockViewForm() {
+        if (newStockViewForm != null) {
+            newStockViewForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewStockViewForm() {
+        if (newStockViewForm != null) {
+            newStockViewForm.setVisible(false);
+            newStockViewForm = null;
+        }
+    }
+    public void createNewSalesForm() throws Exception {
+//        if (newSaleForm != null) {
+//            deleteNewRoleForm();
+//        }
+//        newSaleForm = new NewSaleForm(this);        
+    }
+
+    public void showNewSaleForm() {
+//        if (newSaleForm != null) {
+//            newSaleForm.setVisible(true);
+//        }
+    }
+
+    public void deleteNewSaleForm() {
+//        if (newSaleForm != null) {
+//            newSaleForm.setVisible(false);
+//            newSaleForm = null;
+//        }
     }
 
     public void deleteCurrentPanel() {

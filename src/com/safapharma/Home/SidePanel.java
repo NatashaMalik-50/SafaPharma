@@ -34,11 +34,12 @@ public class SidePanel extends javax.swing.JPanel {
     private JLabel buttonSales;
     private JLabel buttonSupplier;
     private JLabel buttonStock;
-    private JLabel buttonMedicine;
+    private JLabel buttonMedicineLot;
     private final static int WIDTH_PANEL = 130;
 
     /**
      * Creates new form SidePanel
+     * @param manager
      */
     public SidePanel(MainWindow manager) {
         initComponents();
@@ -58,10 +59,10 @@ public class SidePanel extends javax.swing.JPanel {
         buttonSales = new SidePaneLabel(BUTTON_SALES_LABEL, new ImageIcon(getClass().getResource(IconConstants.SALES_ICON)));
         buttonSupplier = new SidePaneLabel(BUTTON_SUPPLIER_LABEL, new ImageIcon(getClass().getResource(IconConstants.SUPPLIER_ICON)));
         buttonStock = new SidePaneLabel(Constants.BUTTON_STOCK_LABEL, new ImageIcon(getClass().getResource(IconConstants.STOCK_ICON)));
-        buttonMedicine = new SidePaneLabel(Constants.BUTTON_MEDICINE_LABEL, new ImageIcon(getClass().getResource(IconConstants.MEDICINE_ICON)));
+        buttonMedicineLot = new SidePaneLabel(Constants.BUTTON_MEDICINE_LOT_LABEL, new ImageIcon(getClass().getResource(IconConstants.MEDICINE_ICON)));
 
         add(buttonCustomer);
-        add(buttonMedicine);
+        add(buttonMedicineLot);
         add(buttonSales);
         add(buttonStock);
         add(buttonSupplier);
@@ -69,39 +70,39 @@ public class SidePanel extends javax.swing.JPanel {
 
     private void setListeners() {
         buttonSupplier.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                buttonSupplierActionPerformed(e);
+                manager.createSupplierPanel();
+                manager.showSupplierPanel();
             }
         });
         buttonCustomer.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                buttonCustomerActionPerformed(e);
+                manager.createCustomerPanel();
+                manager.showCustomerPanel();
             }
         });
-        buttonMedicine.addMouseListener(new MouseAdapter() {
+        buttonMedicineLot.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                buttonSupplierActionPerformed(e);
+                manager.createMedicinePanel();
+                manager.showMedicinePanel();
             }
         });
         buttonSales.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
-                buttonSupplierActionPerformed(e);
+                manager.createSalesPanel();
+                manager.showSalesPanel();
             }
         });
         buttonStock.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                buttonSupplierActionPerformed(e);
+                manager.createStockPanel();
+                manager.showStockPanel();
             }
         });
-    }
-
-    private void buttonSupplierActionPerformed(MouseEvent e) {
-        manager.createSupplierPanel();
-        manager.showSupplierPanel();
-    }
-    private void buttonCustomerActionPerformed(MouseEvent e) {
-        manager.createCustomerPanel();
-        manager.showCustomerPanel();
     }
 
     /**
