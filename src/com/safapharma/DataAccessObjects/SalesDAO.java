@@ -11,6 +11,7 @@ import static com.safapharma.Helpers.Constants.TABLE_SALES;
 import static com.safapharma.Helpers.Constants.TABLE_SALE_ENTRY;
 import com.safapharma.Helpers.DbHelper;
 import com.safapharma.ModelObjects.Customer;
+import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.ModelObjects.Sales;
 import com.safapharma.ModelObjects.SaleEntry;
 import java.sql.Connection;
@@ -40,5 +41,10 @@ public class SalesDAO {
         String sql = "SELECT id, Customer.name, Customer.id, final_amount FROM " + TABLE_SALES + " INNER JOIN " + TABLE_CUSTOMER + " ON " + TABLE_SALES + ".customer_id =" + TABLE_CUSTOMER +".id ";
        
        
+    }
+    
+     public DataWithColumn getAllSaleDetails() throws Exception {
+        final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        return DAOHelper.getDetailsForTable(SQL_QUERY);
     }
 }

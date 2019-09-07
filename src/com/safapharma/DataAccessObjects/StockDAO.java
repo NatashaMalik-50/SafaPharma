@@ -83,28 +83,8 @@ public class StockDAO {
 //        }
 //    }
 
-    public DataWithColumn getStockDetails() throws Exception {
+    public DataWithColumn getAllStockDetails() throws Exception {
         final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
-        try (Connection con = DbHelper.getConnection();) {
-            PreparedStatement pst = con.prepareStatement(SQL_QUERY);
-            ResultSet rs = pst.executeQuery();
-            ResultSetMetaData metaData = rs.getMetaData();
-            DataWithColumn dataWithColumn = new DataWithColumn();
-
-            int columnCount = metaData.getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                dataWithColumn.getColumnNames().add(metaData.getColumnName(i));
-            }
-
-            while (rs.next()) {
-                Vector<Object> row = new Vector<Object>();
-                for (int i = 1; i <= columnCount; i++) {
-                    row.add(rs.getObject(i));
-                }
-                dataWithColumn.getData().add(row);
-            }
-            return dataWithColumn;
-        }
+        return DAOHelper.getDetailsForTable(SQL_QUERY);
     }
-
 }

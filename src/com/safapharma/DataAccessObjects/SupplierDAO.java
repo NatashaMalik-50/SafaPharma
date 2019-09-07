@@ -7,6 +7,7 @@ package com.safapharma.DataAccessObjects;
 
 import com.safapharma.Helpers.Constants;
 import com.safapharma.Helpers.DbHelper;
+import com.safapharma.ModelObjects.DataWithColumn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,5 +32,9 @@ public class SupplierDAO {
                 return Constants.INVALID;
             }
         }
+    }
+     public DataWithColumn getAllSupplierDetails() throws Exception {
+        final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        return DAOHelper.getDetailsForTable(SQL_QUERY);
     }
 }
