@@ -24,7 +24,7 @@ public class UserDAO {
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, userName);
-            ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();//or executeUpdate
             if(resultSet.next())
                 return resultSet.getInt(1);
             else
