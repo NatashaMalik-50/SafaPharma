@@ -75,7 +75,7 @@ public class SidePanel extends javax.swing.JPanel {
         });
         buttonCustomer.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                buttonSupplierActionPerformed(e);
+                buttonCustomerActionPerformed(e);
             }
         });
         buttonMedicine.addMouseListener(new MouseAdapter() {
@@ -98,6 +98,10 @@ public class SidePanel extends javax.swing.JPanel {
     private void buttonSupplierActionPerformed(MouseEvent e) {
         manager.createSupplierPanel();
         manager.showSupplierPanel();
+    }
+    private void buttonCustomerActionPerformed(MouseEvent e) {
+        manager.createCustomerPanel();
+        manager.showCustomerPanel();
     }
 
     /**

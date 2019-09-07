@@ -9,6 +9,7 @@ import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,8 +20,10 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
@@ -39,6 +42,9 @@ public class HomeScreenPanel extends javax.swing.JPanel {
     private DefaultTableModel tableModel;
     private HomeScreenBackend homeScreenBackend;
     private ToolbarButton addButton, removeButton, viewButton, updateButton;
+    private JComboBox<String> comboBox;
+    private JTextField searchBox;
+    private JButton searchButton;
 
     public HomeScreenPanel(MainWindow manager) {
         initComponents();
@@ -87,6 +93,18 @@ public class HomeScreenPanel extends javax.swing.JPanel {
         stockTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         stockTable.setAutoCreateRowSorter(true);
         tableScrollPane.setViewportView(stockTable);
+        
+        comboBox = new JComboBox<String>();
+        comboBox.addItem("Search By Name");
+        comboBox.addItem("Search By Contact No.");
+        searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
+        searchBox = new JTextField();
+        searchBox.setFont(DesignConstants.FONT_SIZE_16_CALIBRI);
+        searchButton = new JButton("Search");
+        searchButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+        searchPanel.add(comboBox);
+        searchPanel.add(searchBox);
+        searchPanel.add(searchButton);
     }
 
     private void loadData() throws Exception {
@@ -143,6 +161,7 @@ public class HomeScreenPanel extends javax.swing.JPanel {
         statusPanel = new javax.swing.JPanel();
         statusLabel = new javax.swing.JLabel();
         tableScrollPane = new javax.swing.JScrollPane();
+        searchPanel = new javax.swing.JPanel();
 
         toolbarPanel.setPreferredSize(new java.awt.Dimension(450, 40));
 
@@ -172,14 +191,28 @@ public class HomeScreenPanel extends javax.swing.JPanel {
                 .addGap(0, 755, Short.MAX_VALUE))
         );
 
+        searchPanel.setPreferredSize(new java.awt.Dimension(450, 40));
+
+        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        searchPanel.setLayout(searchPanelLayout);
+        searchPanelLayout.setHorizontalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        searchPanelLayout.setVerticalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tableScrollPane))
+                    .addComponent(toolbarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                    .addComponent(tableScrollPane)
+                    .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -189,14 +222,17 @@ public class HomeScreenPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(tableScrollPane))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel searchPanel;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JScrollPane tableScrollPane;
