@@ -16,8 +16,12 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -29,6 +33,7 @@ public class HomeScreenPanel extends MainScreenPanel {
     private JTable stockTable;
     private DefaultTableModel tableModel;
     private final HomeScreenBackend homeScreenBackend;
+    private TableRowSorter sorter;
 
     public HomeScreenPanel(MainWindow manager) {
         this.manager = manager;
@@ -49,11 +54,12 @@ public class HomeScreenPanel extends MainScreenPanel {
 
         tableModel = new DefaultTableModel();
         stockTable = new JTable(tableModel);
+        sorter = new TableRowSorter(tableModel);
+        stockTable.setRowSorter(sorter);
         stockTable.getTableHeader().setResizingAllowed(false);
         stockTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         stockTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         stockTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        stockTable.setAutoCreateRowSorter(true);
         getTableScrollPane().setViewportView(stockTable);
 
     }
@@ -61,6 +67,7 @@ public class HomeScreenPanel extends MainScreenPanel {
     private void loadData() throws Exception {
         DataWithColumn dataWithColumn = homeScreenBackend.setStockInfoIntoTable(stockTable, tableModel);
         tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
+
     }
 
     private void setListeners() {
@@ -71,7 +78,7 @@ public class HomeScreenPanel extends MainScreenPanel {
             }
 
         });
-        
+
         //on add button click
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -82,6 +89,31 @@ public class HomeScreenPanel extends MainScreenPanel {
                     manager.showNewStockViewForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        searchBox.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" +str));
                 }
             }
         });

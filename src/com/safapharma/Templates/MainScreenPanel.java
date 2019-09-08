@@ -6,6 +6,7 @@
 package com.safapharma.Templates;
 
 import com.safapharma.Helpers.DesignConstants;
+import com.safapharma.Helpers.IconConstants;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
@@ -27,9 +28,9 @@ import javax.swing.border.BevelBorder;
 public class MainScreenPanel extends javax.swing.JPanel {
 
     protected ToolbarButton addButton, removeButton, viewButton, updateButton;
-    protected JComboBox<String> comboBox;
+//    protected JComboBox<String> comboBox;
     protected JTextField searchBox;
-    protected JButton searchButton;
+    protected ToolbarButton searchButton;
 
     /**
      * Creates new form NewJPanel
@@ -62,15 +63,15 @@ public class MainScreenPanel extends javax.swing.JPanel {
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
         statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
-        comboBox = new JComboBox<String>();
-        comboBox.addItem("Search By Name");
-        comboBox.addItem("Search By Contact No.");
+//        comboBox = new JComboBox<String>();
+//        comboBox.addItem("Search By Name");
+//        comboBox.addItem("Search By Contact No.");
         searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
         searchBox = new JTextField();
         searchBox.setFont(DesignConstants.FONT_SIZE_16_CALIBRI);
-        searchButton = new JButton("Search");
+        searchButton = new ToolbarButton("Search",new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
         searchButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
-        searchPanel.add(comboBox);
+//        searchPanel.add(comboBox);
         searchPanel.add(searchBox);
         searchPanel.add(searchButton);
     }
@@ -191,6 +192,8 @@ public class MainScreenPanel extends javax.swing.JPanel {
     protected class ToolbarButton extends JButton {
 
         ToolbarButton(String text, ImageIcon icon) {
+            super(text,icon);
+            init();
         }
 
         ToolbarButton(String text) {
@@ -200,7 +203,7 @@ public class MainScreenPanel extends javax.swing.JPanel {
 
         void init() {
 //            setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.yellow));
-            setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+            setFont(DesignConstants.FONT_SIZE_16_CALIBRI_BOLD);
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         }
 

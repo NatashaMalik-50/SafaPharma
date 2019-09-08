@@ -19,5 +19,6 @@ public class IconConstants {
     public static final String MEDICINE_LOT_ICON = "/icons/customer.png";
     public static final String BACK_BUTTON_ICON = "/icons/back.png";
     public static final String LOG_OUT_ICON = "/icons/logout.png";
+    public static final String SEARCH_ICON = "/icons/search.png";
 
 }
