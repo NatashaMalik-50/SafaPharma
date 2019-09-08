@@ -172,4 +172,9 @@ public class NewSupplierForm extends DialogForm {
         hideErrorLabels();
     }
 
+    @Override
+    protected void deleteScreen() {
+        manager.deleteNewSupplierForm();
+    }
+
 }

@@ -65,4 +65,9 @@ public class NewStockViewForm extends DialogForm {
         });
     }
 
+    @Override
+    protected void deleteScreen() {
+        manager.deleteNewStockViewForm();
+    }
+
 }

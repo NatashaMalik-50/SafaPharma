@@ -10,6 +10,8 @@ import com.safapharma.Helpers.IconConstants;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,7 +25,7 @@ import javax.swing.JTextField;
  *
  * @author Natasha Malik
  */
-public class DialogForm extends javax.swing.JDialog {
+public abstract class DialogForm extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogForm
@@ -37,6 +39,7 @@ public class DialogForm extends javax.swing.JDialog {
         formLabel.setHorizontalAlignment(JLabel.CENTER);
         formPanel.setLayout(new GridLayout(0, 3));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        addListener();
     }
 
     protected JLabel getFormLabel() {
@@ -47,6 +50,16 @@ public class DialogForm extends javax.swing.JDialog {
         return formPanel;
     }
 
+    protected void addListener() {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                deleteScreen();
+
+            }
+        });
+    }
+
+    abstract protected void deleteScreen();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
