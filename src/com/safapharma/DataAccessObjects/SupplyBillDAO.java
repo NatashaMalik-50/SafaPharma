@@ -5,10 +5,18 @@
  */
 package com.safapharma.DataAccessObjects;
 
+import com.safapharma.Helpers.Constants;
+import com.safapharma.ModelObjects.DataWithColumn;
+
 /**
  *
  * @author shiva
  */
 public class SupplyBillDAO {
+     public DataWithColumn getAllSupplyBillDetails() throws Exception {
+        final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        return DAOHelper.getDetailsForTable(SQL_QUERY);
+    }
     
+
 }

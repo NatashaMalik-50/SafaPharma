@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.safapharma.Home.Supplier;
+package com.safapharma.Stock;
 
 import com.safapharma.Templates.MainScreenPanel;
 
@@ -11,6 +11,6 @@ import com.safapharma.Templates.MainScreenPanel;
  *
  * @author Natasha Malik
  */
-public class SupplierPanel extends MainScreenPanel {
+public class StockPanel extends MainScreenPanel{
     
 }
