@@ -48,6 +48,7 @@ public class NewStockViewForm extends DialogForm {
         getFormPanel().add(contactText);
         getFormPanel().add(submitButton);
         getFormPanel().add(resetButton);
+        this.pack();
         
     }
     

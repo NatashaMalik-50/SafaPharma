@@ -8,6 +8,7 @@ package com.safapharma.DataAccessObjects;
 import com.safapharma.Helpers.Constants;
 import com.safapharma.Helpers.DbHelper;
 import com.safapharma.ModelObjects.DataWithColumn;
+import com.safapharma.ModelObjects.Supplier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,8 +34,26 @@ public class SupplierDAO {
             }
         }
     }
-     public DataWithColumn getAllSupplierDetails() throws Exception {
-        final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+
+    /*
+    INSERT INTO `safa_pharma`.`supplier` (`name`, `address`, `contact_no`, `email`) VALUES ('S1', 'B240', '9899638588', 'supplier@gmail.com');
+    INSERT INTO supplier (name, address, contact_no, email) VALUES ('S1', 'B240', '9899638588', 'supplier@gmail.com');
+     */
+    public int saveSuuplier(Supplier supplier) throws Exception {
+        String sql = "INSERT INTO " + Constants.TABLE_SUPPLIER + " (name, address, contact_no, email) VALUES (?,?,?,?);";
+        try (Connection connection = DbHelper.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, supplier.getName());
+            statement.setString(2, supplier.getAddress());
+            statement.setString(3, supplier.getContactNo());
+            statement.setString(4, supplier.getEmail());
+            int rowsAdded = statement.executeUpdate();
+            return (rowsAdded > 0) ? rowsAdded : Constants.INVALID;
+        }
+    }
+
+    public DataWithColumn getAllSupplierDetails() throws Exception {
+        final String SQL_QUERY = "SELECT name,address,contact_no,email FROM " + Constants.TABLE_SUPPLIER;
         return DAOHelper.getDetailsForTable(SQL_QUERY);
     }
 }

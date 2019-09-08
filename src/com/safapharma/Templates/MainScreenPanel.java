@@ -55,8 +55,6 @@ public class MainScreenPanel extends javax.swing.JPanel {
         toolbarPanel.add(Box.createHorizontalStrut(10));
         toolbarPanel.add(updateButton);
 
-        disableButtons();
-
         statusLabel.setText("Bill Status");
         statusLabel.setHorizontalAlignment(JLabel.CENTER);
         statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
