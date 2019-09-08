@@ -8,10 +8,13 @@ package com.safapharma.DataAccessObjects;
 import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.TABLE_USERS;
 import com.safapharma.Helpers.DbHelper;
+import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.ModelObjects.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
 
 /**
  *
@@ -25,10 +28,11 @@ public class UserDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, userName);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next()) {
                 return resultSet.getInt(1);
-            else
-               return Constants.INVALID;
+            } else {
+                return Constants.INVALID;
+            }
         }
     }
 
@@ -47,7 +51,7 @@ public class UserDAO {
         return password;
     }
 
-    public void getUser(User user) throws Exception{
+    public void getUser(User user) throws Exception {
         final String SQL_QUERY = "select * from " + TABLE_USERS + " where username = ? ";
         try (Connection con = DbHelper.getConnection();) {
             PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -65,4 +69,28 @@ public class UserDAO {
         }
     }
 
+    public DataWithColumn getUsers() throws Exception {
+        final String SQL_QUERY = "select * from " + TABLE_USERS;
+        try (Connection con = DbHelper.getConnection();) {
+            PreparedStatement pst = con.prepareStatement(SQL_QUERY);
+            ResultSet rs = pst.executeQuery();
+            ResultSetMetaData metaData = rs.getMetaData();
+            DataWithColumn dataWithColumn = new DataWithColumn();
+            // Names of columns
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                dataWithColumn.getColumnNames().add(metaData.getColumnName(i));
+            }
+
+            // Data of the table
+            while (rs.next()) {
+                Vector<Object> row = new Vector<Object>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.add(rs.getObject(i));
+                }
+                dataWithColumn.getData().add(row);
+            }
+            return dataWithColumn;
+        }
+    }
 }

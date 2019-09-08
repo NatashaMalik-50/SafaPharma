@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 /**
@@ -29,7 +30,8 @@ public class ClockLabel extends JLabel implements ActionListener {
     public ClockLabel(String type) {
         this.type = type;
         setForeground(Color.BLUE);
-        setFont(new Font("arial-black", Font.BOLD, 22));
+        setFont(new Font("arial-black", Font.BOLD, 18));
+        setHorizontalAlignment(SwingConstants.CENTER);
         switch (type) {
             case DATE_LABEL:
                 sdf = new SimpleDateFormat("EE, dd MMM yyyy");
