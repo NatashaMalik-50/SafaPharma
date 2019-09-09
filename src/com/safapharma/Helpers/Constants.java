@@ -22,6 +22,7 @@ public class Constants {
     public static final String CUSTOMER_LABEL = "CUSTOMER";
     public static final String SALES_LABEL = "SALES";
     public static final String HOMESCREEN_LABEL = "HOMESCREEN";
+    public static final String STOCK_LABEL = "STOCKS";
 
     public static final String BUTTON_CUSTOMER_LABEL = "Customer";
     public static final String BUTTON_SALES_LABEL = "Sales";

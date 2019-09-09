@@ -6,6 +6,7 @@
 package com.safapharma.Main;
 
 import com.safapharma.Customer.CustomerPanel;
+import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
@@ -18,6 +19,7 @@ import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
 import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.ModelObjects.User;
+import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.StockPanel;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.BorderLayout;
@@ -53,6 +55,7 @@ public class MainWindow extends javax.swing.JFrame {
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
     private NewSupplierForm newSupplierForm;
+    private NewStockForm newStockForm;
     private HomeScreenPanel home;
 
     /**
@@ -243,35 +246,35 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void createStockPanel() {
-//        try {
-//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            if (customerPanel != null) {
-//                deleteSupplierPanel();
-//            }
-//            customerPanel = new CustomerPanel(this);
-//            screenPanel.add(CUSTOMER_LABEL, customerPanel);
-//            componentStack.push(customerPanel);
-//        } finally {
-//            setCursor(Cursor.getDefaultCursor());
-//        }
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (stockPanel != null) {
+                deleteStockPanel();
+            }
+            stockPanel = new StockPanel(this);
+            screenPanel.add(STOCK_LABEL,stockPanel);
+            componentStack.push(stockPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     public void showStockPanel() {
-//        if (customerPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.show(screenPanel, CUSTOMER_LABEL);
-//            setCursor(Cursor.getDefaultCursor());
-//        } else {
-//            System.out.println("Customer object is null");
-//        }
+        if (stockPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, STOCK_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Stock object is null");
+        }
     }
 
     public void deleteStockPanel() {
-//        if (customerPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.removeLayoutComponent(customerPanel);
-//            customerPanel = null;
-//        }
+        if (stockPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(stockPanel);
+            stockPanel = null;
+        }
     }
 
     public void createMedicinePanel() {
@@ -323,6 +326,25 @@ public class MainWindow extends javax.swing.JFrame {
         if (newStockViewForm != null) {
             newStockViewForm.setVisible(false);
             newStockViewForm = null;
+        }
+    }
+    public void createNewStockForm() throws Exception {
+        if (newStockForm != null) {
+            deleteNewStockForm();
+        }
+        newStockForm = new NewStockForm(this);        
+    }
+
+    public void showNewStockForm() {
+        if (newStockForm != null) {
+            newStockForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewStockForm() {
+        if (newStockForm != null) {
+            newStockForm.setVisible(false);
+            newStockForm = null;
         }
     }
      public void createNewSupplierForm(SupplierBackend supplierBackend) throws Exception {
