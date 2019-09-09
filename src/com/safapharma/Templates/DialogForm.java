@@ -54,8 +54,6 @@ public class DialogForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        formLabel.setText("jLabel1");
-
         javax.swing.GroupLayout formPanelLayout = new javax.swing.GroupLayout(formPanel);
         formPanel.setLayout(formPanelLayout);
         formPanelLayout.setHorizontalGroup(
@@ -133,6 +131,7 @@ public class DialogForm extends javax.swing.JDialog {
 
         void init() {
             setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
+            
         }
 
     }

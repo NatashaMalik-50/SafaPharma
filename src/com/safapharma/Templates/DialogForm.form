@@ -49,9 +49,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JLabel" name="formLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel1"/>
-      </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="formPanel">
 

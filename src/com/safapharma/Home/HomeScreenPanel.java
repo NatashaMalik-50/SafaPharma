@@ -58,16 +58,21 @@ public class HomeScreenPanel extends MainScreenPanel {
 
     }
 
-    private void loadData() throws Exception {
+    private DataWithColumn loadData() throws Exception {
         DataWithColumn dataWithColumn = homeScreenBackend.setStockInfoIntoTable(stockTable, tableModel);
-        tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
+        //tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
+        
+        return dataWithColumn;
     }
 
     private void setListeners() {
         stockTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                enableButtons();
+                enableAddButtons();
+                enableUpdateButtons();
+                enableRemoveButtons();
+                enableViewButtons();
             }
 
         });

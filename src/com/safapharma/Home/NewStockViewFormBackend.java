@@ -12,13 +12,11 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Natasha Malik
+ * @author shiva
  */
-public class HomeScreenBackend {
-
+public class NewStockViewFormBackend {
     private StockDAO stockDAO;
-
-    public HomeScreenBackend() {
+    public NewStockViewFormBackend() {
         stockDAO = new StockDAO();
     }
 
@@ -27,5 +25,4 @@ public class HomeScreenBackend {
         return dataWithColumn;
         //return null;
     }
-
 }
