@@ -10,14 +10,11 @@ public class Supplier {
     private String createdAt;
     private String updatedAt;
 
-    public Supplier(int id, String name, String address, String contactNo, String email, String createdAt, String updatedAt) {
-        this.id = id;
+    public Supplier(String name, String address, String contactNo, String email) {
         this.name = name;
         this.address = address;
         this.contactNo = contactNo;
         this.email = email;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public Supplier() {

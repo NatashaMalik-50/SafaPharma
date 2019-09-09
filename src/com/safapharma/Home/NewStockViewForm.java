@@ -48,6 +48,7 @@ public class NewStockViewForm extends DialogForm {
         getFormPanel().add(contactText);
         getFormPanel().add(submitButton);
         getFormPanel().add(resetButton);
+        this.pack();
         
     }
     
@@ -62,6 +63,11 @@ public class NewStockViewForm extends DialogForm {
             public void actionPerformed(ActionEvent e) {
             }
         });
+    }
+
+    @Override
+    protected void deleteScreen() {
+        manager.deleteNewStockViewForm();
     }
 
 }

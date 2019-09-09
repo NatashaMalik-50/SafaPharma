@@ -6,11 +6,18 @@
 package com.safapharma.Templates;
 
 import com.safapharma.Helpers.DesignConstants;
-import java.awt.Cursor;
+import com.safapharma.Helpers.IconConstants;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -18,18 +25,21 @@ import javax.swing.JTextField;
  *
  * @author Natasha Malik
  */
-public class DialogForm extends javax.swing.JDialog {
+public abstract class DialogForm extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogForm
      */
     public DialogForm() {
-        initComponents();        
+        initComponents();
         this.setLocation(160, 50);
         this.setAlwaysOnTop(true);
         this.setModal(true);
-        formPanel.setLayout(new GridLayout(0, 2));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(4, 12, 4, 12));
+        formLabel.setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
+        formLabel.setHorizontalAlignment(JLabel.CENTER);
+        formPanel.setLayout(new GridLayout(0, 3));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        addListener();
     }
 
     protected JLabel getFormLabel() {
@@ -40,6 +50,16 @@ public class DialogForm extends javax.swing.JDialog {
         return formPanel;
     }
 
+    protected void addListener() {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                deleteScreen();
+
+            }
+        });
+    }
+
+    abstract protected void deleteScreen();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,13 +74,13 @@ public class DialogForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        formLabel.setText("jLabel1");
+        formLabel.setText("Form");
 
         javax.swing.GroupLayout formPanelLayout = new javax.swing.GroupLayout(formPanel);
         formPanel.setLayout(formPanelLayout);
         formPanelLayout.setHorizontalGroup(
             formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 770, Short.MAX_VALUE)
         );
         formPanelLayout.setVerticalGroup(
             formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -72,12 +92,10 @@ public class DialogForm extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(279, 279, 279)
-                .addComponent(formLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(386, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(formLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -120,10 +138,11 @@ public class DialogForm extends javax.swing.JDialog {
 
         void init() {
             setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+            setPreferredSize(new Dimension(DesignConstants.NEW_FORM_WIDTH, HEIGHT));
         }
 
     }
-    
+
     protected class FormLabel extends JLabel {
 
         public FormLabel(String text) {
@@ -131,9 +150,37 @@ public class DialogForm extends javax.swing.JDialog {
             init();
         }
 
-        void init() {
-            setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
+        public FormLabel(String text, ImageIcon imageIcon) {
+            super(text, imageIcon, JLabel.CENTER);
+            init();
         }
 
+        void init() {
+            setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
+            setHorizontalAlignment(JLabel.CENTER);
+            setPreferredSize(new Dimension(DesignConstants.NEW_FORM_WIDTH, HEIGHT));
+        }
+
+    }
+
+    protected class ErrorLabel extends JLabel {
+        public ErrorLabel() {
+            super();
+            setForeground(Color.red);
+            setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+            setHorizontalAlignment(JLabel.LEFT);
+            setIcon(new ImageIcon(getClass().getResource(IconConstants.ERROR_ICON)));
+        }
+
+        public void setErrorText(String text) {
+            setText(text);
+        }
+    }
+
+    protected void createOptionPane(String message, String title) {
+        JOptionPane optionPane = new JOptionPane(message);
+        JDialog dialog = optionPane.createDialog(title);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
     }
 }

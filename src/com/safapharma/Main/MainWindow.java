@@ -12,6 +12,8 @@ import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
+import com.safapharma.Home.Supplier.NewSupplierForm;
+import com.safapharma.Home.Supplier.SupplierBackend;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
 import com.safapharma.MedicineLot.MedicineLotPanel;
@@ -50,6 +52,7 @@ public class MainWindow extends javax.swing.JFrame {
     private SalesPanel salesPanel;
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
+    private NewSupplierForm newSupplierForm;
     private HomeScreenPanel home;
 
     /**
@@ -144,35 +147,35 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void createSupplierPanel() {
-//        try {
-//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            if (supplierPan != null) {
-//                deleteSupplierPanel();
-//            }
-//            supplierPan = new SupplierPanel(this);
-//            screenPanel.add(SUPPLIER_LABEL, supplierPan);
-//            componentStack.push(supplierPan);
-//        } finally {
-//            setCursor(Cursor.getDefaultCursor());
-//        }
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (supplierPanel != null) {
+                deleteSupplierPanel();
+            }
+            supplierPanel = new SupplierPanel(this);
+            screenPanel.add(SUPPLIER_LABEL, supplierPanel);
+            componentStack.push(supplierPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     public void showSupplierPanel() {
-//        if (supplierPan != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.show(screenPanel, SUPPLIER_LABEL);
-//            setCursor(Cursor.getDefaultCursor());
-//        } else {
-//            System.out.println("Supplier pan object is null");
-//        }
+        if (supplierPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, SUPPLIER_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Supplier panel object is null");
+        }
     }
 
     public void deleteSupplierPanel() {
-//        if (supplierPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.removeLayoutComponent(supplierPanel);
-//            supplierPanel = null;
-//        }
+        if (supplierPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(supplierPanel);
+            supplierPanel = null;
+        }
     }
 
     public void createCustomerPanel() {
@@ -320,6 +323,25 @@ public class MainWindow extends javax.swing.JFrame {
         if (newStockViewForm != null) {
             newStockViewForm.setVisible(false);
             newStockViewForm = null;
+        }
+    }
+     public void createNewSupplierForm(SupplierBackend supplierBackend) throws Exception {
+        if (newSupplierForm != null) {
+            deleteNewSupplierForm();
+        }
+        newSupplierForm = new NewSupplierForm(this,supplierBackend);
+    }
+
+    public void showNewSupplierForm() {
+        if (newSupplierForm != null) {
+            newSupplierForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewSupplierForm() {
+        if (newSupplierForm != null) {
+            newSupplierForm.setVisible(false);
+            newSupplierForm = null;
         }
     }
     public void createNewSalesForm() throws Exception {
