@@ -44,7 +44,7 @@ public class MainWindow extends javax.swing.JFrame {
     private JPanel mainPanel;
     private JPanel screenPanel;
     private MenuPanel menuPanel;
-    private JPanel sidePanel;
+    private SidePanel sidePanel;
     private final Stack<Component> componentStack;
     private SupplierPanel supplierPanel;
     private CustomerPanel customerPanel;
@@ -371,6 +371,7 @@ public class MainWindow extends javax.swing.JFrame {
         } else if (component == supplierPanel) {
             deleteSupplierPanel();
         }
+        sidePanel.backPressedChangeActive();
     }
 
     public boolean isHome() {
