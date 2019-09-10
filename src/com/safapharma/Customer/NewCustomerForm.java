@@ -10,7 +10,7 @@ import com.safapharma.ModelObjects.Customer;
 import com.safapharma.Templates.DialogForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
+
 /**
  *
  * @author sony
@@ -21,15 +21,19 @@ public class NewCustomerForm extends DialogForm {
     private FormLabel nameLabel;
     private FormText nameText;
     private ErrorLabel nameErrorLabel;
+    
     private FormLabel contactLabel;
     private FormText contactText;
     private ErrorLabel contactErrorLabel;
+    
     private FormLabel addressLabel;
     private FormText addressText;
     private ErrorLabel addressErrorLabel;
+    
     private FormLabel customerentryLabel;
     private FormText customerentryText;
     private ErrorLabel customerentryErrorLabel;
+    
     private FormButton submitButton;
     private FormButton resetButton;
     private final CustomerBackend customerBackend;
@@ -67,6 +71,24 @@ public class NewCustomerForm extends DialogForm {
 
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
+        
+        getFormPanel().add(nameLabel);
+        getFormPanel().add(nameText);
+        getFormPanel().add(nameErrorLabel);
+        
+        getFormPanel().add(contactLabel);
+        getFormPanel().add(contactText);
+        getFormPanel().add(contactErrorLabel);
+        
+        getFormPanel().add(addressLabel);
+        getFormPanel().add(addressText);
+        getFormPanel().add(addressErrorLabel);
+        
+        getFormPanel().add(customerentryLabel);
+        getFormPanel().add(customerentryText);
+        getFormPanel().add(customerentryErrorLabel);
+        getFormPanel().add(submitButton);
+        getFormPanel().add(resetButton);
         
         this.pack();
         hideErrorLabels();
