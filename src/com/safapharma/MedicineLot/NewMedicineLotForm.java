@@ -176,7 +176,7 @@ public class NewMedicineLotForm extends DialogForm {
             }
             if(rateText.getText().isEmpty()){
                 isValid = false;
-                rateText.setText("Incorrect Rate");
+                rateErrorLabel.setText("Incorrect Rate");
             }
             if(isValid){
                 double num = Double.parseDouble(rateText.getText());
