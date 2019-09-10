@@ -31,7 +31,7 @@ public class CustomerPanel extends MainScreenPanel{
     private final CustomerBackend CustomerBackend;
 
     public CustomerPanel(MainWindow manager) {
-        System.out.println("Customer PAnel entered");
+        
         this.manager = manager;
         CustomerBackend = new CustomerBackend();
         initUI();
@@ -79,7 +79,6 @@ public class CustomerPanel extends MainScreenPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                  System.out.println("Clicking add button in customerpanel");
                     //create new form
                     manager.createNewCustomerForm(CustomerBackend); //the appropriate function call
                     manager.showNewCustomerForm();

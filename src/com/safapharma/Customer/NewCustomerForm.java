@@ -48,8 +48,7 @@ public class NewCustomerForm extends DialogForm {
 
     private void initUI() {
         getFormLabel().setText("Add Customer");
-        System.out.println("Here in NewCustomerFOrm, creating");
-
+        
         nameLabel = new FormLabel("Name");
         nameText = new FormText();
         nameErrorLabel = new ErrorLabel();
@@ -68,26 +67,7 @@ public class NewCustomerForm extends DialogForm {
 
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
-
-        getFormPanel().add(nameLabel);
-        getFormPanel().add(nameText);
-        getFormPanel().add(nameErrorLabel);
         
-        getFormPanel().add(contactLabel);
-        getFormPanel().add(contactText);
-        getFormPanel().add(contactErrorLabel);
-        
-        getFormPanel().add(addressLabel);
-        getFormPanel().add(addressText);
-        getFormPanel().add(addressErrorLabel);
-        
-        getFormPanel().add(customerentryLabel);
-        getFormPanel().add(customerentryText);
-        getFormPanel().add(customerentryErrorLabel);
-        
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
-
         this.pack();
         hideErrorLabels();
     }
