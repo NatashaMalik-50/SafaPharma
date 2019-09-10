@@ -214,35 +214,35 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void createSalesPanel() {
-//        try {
-//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            if (salesPanel != null) {
-//                deleteSalesPanel();
-//            }
-//            salesPanel = new SalesPanel(this);
-//            screenPanel.add(SALES_LABEL, salesPanel);
-//            componentStack.push(salesPanel);
-//        } finally {
-//            setCursor(Cursor.getDefaultCursor());
-//        }
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (salesPanel != null) {
+                deleteSalesPanel();
+            }
+            salesPanel = new SalesPanel(this);
+            screenPanel.add(SALES_LABEL, salesPanel);
+            componentStack.push(salesPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     public void showSalesPanel() {
-//        if (salesPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.show(screenPanel, SALES_LABEL);
-//            setCursor(Cursor.getDefaultCursor());
-//        } else {
-//            System.out.println("Sales object is null");
-//        }
+        if (salesPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, SALES_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Sales object is null");
+        }
     }
 
     public void deleteSalesPanel() {
-//        if (supplierPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.removeLayoutComponent(supplierPanel);
-//            supplierPanel = null;
-//        }
+        if (supplierPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(supplierPanel);
+            supplierPanel = null;
+        }
     }
 
     public void createStockPanel() {

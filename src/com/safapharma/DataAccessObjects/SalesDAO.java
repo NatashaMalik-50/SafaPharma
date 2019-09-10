@@ -44,7 +44,7 @@ public class SalesDAO {
     }
     
      public DataWithColumn getAllSaleDetails() throws Exception {
-        final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        final String SQL_QUERY = "SELECT " + TABLE_SALES + ".id, " + TABLE_CUSTOMER +".name, total_quantity, total_amount, discount, final_amount, "+ TABLE_SALES + ".created_at as billed_at from " + TABLE_SALES + " INNER JOIN " + TABLE_CUSTOMER +" On " + TABLE_SALES +".customer_id = "+ TABLE_CUSTOMER + ".id";
         return DAOHelper.getDetailsForTable(SQL_QUERY);
     }
 }
