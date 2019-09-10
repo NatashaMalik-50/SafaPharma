@@ -15,10 +15,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author sony
  */
-class customerBackend {
-    private CustomerDAO customerDAO;
+public class CustomerBackend {
+    private final CustomerDAO customerDAO;
 
-    public customerBackend() {
+    public CustomerBackend() {
     customerDAO = new CustomerDAO();
     }
 

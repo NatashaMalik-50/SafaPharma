@@ -6,6 +6,7 @@
 package com.safapharma.Main;
 
 import com.safapharma.Customer.CustomerPanel;
+import com.safapharma.Customer.NewCustomerForm;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
@@ -19,7 +20,6 @@ import com.safapharma.Login.LoginDialog;
 import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.StockPanel;
-import com.safapharma.Templates.MainScreenPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -31,6 +31,7 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import com.safapharma.Customer.CustomerBackend;
 
 /**
  *
@@ -54,6 +55,9 @@ public class MainWindow extends javax.swing.JFrame {
     private NewStockViewForm newStockViewForm;
     private NewSupplierForm newSupplierForm;
     private HomeScreenPanel home;
+    private NewCustomerForm newCustomerForm;
+    
+    
 
     /**
      * Creates new form MainWindow
@@ -179,35 +183,38 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void createCustomerPanel() {
-//        try {
-//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            if (customerPanel != null) {
-//                deleteSupplierPanel();
-//            }
-//            customerPanel = new CustomerPanel(this);
-//            screenPanel.add(CUSTOMER_LABEL, customerPanel);
-//            componentStack.push(customerPanel);
-//        } finally {
-//            setCursor(Cursor.getDefaultCursor());
-//        }
+        try {
+            
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (customerPanel != null) {
+                deleteSupplierPanel();
+            }
+            customerPanel = new CustomerPanel(this);
+            screenPanel.add(CUSTOMER_LABEL, customerPanel);
+            componentStack.push(customerPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     public void showCustomerPanel() {
-//        if (customerPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.show(screenPanel, CUSTOMER_LABEL);
-//            setCursor(Cursor.getDefaultCursor());
-//        } else {
-//            System.out.println("Customer object is null");
-//        }
+        
+        if (customerPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, CUSTOMER_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Customer object is null");
+        }
     }
 
     public void deleteCustomerPanel() {
-//        if (customerPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.removeLayoutComponent(customerPanel);
-//            customerPanel = null;
-//        }
+        
+        if (customerPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(customerPanel);
+            customerPanel = null;
+        }
     }
 
     public void createSalesPanel() {
@@ -462,4 +469,38 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    
+
+    public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
+        {
+            if(newCustomerForm!=null)
+            {
+                deleteNewCustomerForm();
+            }
+            newCustomerForm= new NewCustomerForm(this,customerBackend);
+        
+    }
+        
+    }
+
+    public void showNewCustomerForm() {
+        if(newCustomerForm!=null)
+        {
+            newCustomerForm.setVisible(true);
+        }
+       
+    }
+    
+    public void deleteNewCustomerForm() {
+      if(newCustomerForm!=null)
+      {
+          newCustomerForm.setVisible(false);
+          newCustomerForm=null;
+          
+          
+      }
+    }
+
+    
 }

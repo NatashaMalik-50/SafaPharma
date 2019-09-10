@@ -10,7 +10,7 @@ import com.safapharma.ModelObjects.Customer;
 import com.safapharma.Templates.DialogForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.Date;
 /**
  *
  * @author sony
@@ -27,22 +27,28 @@ public class NewCustomerForm extends DialogForm {
     private FormLabel addressLabel;
     private FormText addressText;
     private ErrorLabel addressErrorLabel;
-    private FormLabel contactnoLabel;
-    private FormText contactnoText;
-    private ErrorLabel contactnoErrorLabel;
+    private FormLabel customerentryLabel;
+    private FormText customerentryText;
+    private ErrorLabel customerentryErrorLabel;
     private FormButton submitButton;
     private FormButton resetButton;
-    private customerBackend customerBackend;
+    private final CustomerBackend customerBackend;
+    
 
-    public NewCustomerForm(MainWindow manager, customerBackend CustomerBackend) {
+    public NewCustomerForm(MainWindow manager, CustomerBackend CustomerBackend) {
         this.manager = manager;
         this.customerBackend = CustomerBackend;
         initUI();
         addListeners();
     }
 
+    public NewCustomerForm(MainWindow aThis, int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private void initUI() {
         getFormLabel().setText("Add Customer");
+        System.out.println("Here in NewCustomerFOrm, creating");
 
         nameLabel = new FormLabel("Name");
         nameText = new FormText();
@@ -56,9 +62,9 @@ public class NewCustomerForm extends DialogForm {
         addressText = new FormText();
         addressErrorLabel = new ErrorLabel();
 
-        contactnoLabel = new FormLabel("Customer Since");
-        contactnoText = new FormText();
-        contactnoErrorLabel = new ErrorLabel();
+        customerentryLabel = new FormLabel("Customer Entry Date");
+        customerentryText = new FormText();
+        customerentryErrorLabel = new ErrorLabel();
 
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
@@ -66,15 +72,19 @@ public class NewCustomerForm extends DialogForm {
         getFormPanel().add(nameLabel);
         getFormPanel().add(nameText);
         getFormPanel().add(nameErrorLabel);
+        
         getFormPanel().add(contactLabel);
         getFormPanel().add(contactText);
         getFormPanel().add(contactErrorLabel);
+        
         getFormPanel().add(addressLabel);
         getFormPanel().add(addressText);
         getFormPanel().add(addressErrorLabel);
-        getFormPanel().add(contactnoLabel);
-        getFormPanel().add(contactnoText);
-        getFormPanel().add(contactnoErrorLabel);
+        
+        getFormPanel().add(customerentryLabel);
+        getFormPanel().add(customerentryText);
+        getFormPanel().add(customerentryErrorLabel);
+        
         getFormPanel().add(submitButton);
         getFormPanel().add(resetButton);
 
@@ -95,17 +105,12 @@ public class NewCustomerForm extends DialogForm {
                             createOptionPane("Customer Added", "");
                             manager.deleteNewCustomerForm();
                         } else {
-                            createOptionPane("Not Able to add supplier! Please try again.", "Error");
+                            createOptionPane("Not Able to add customer! Please try again.", "Error");
                         }
                     } catch (Exception ex) {
                         createOptionPane("Database Error", "Error");
                     }
                 }
-            }
-
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             private void createOptionPane(String not_Able_to_add_supplier_Please_try_again, String error) {
@@ -145,41 +150,25 @@ public class NewCustomerForm extends DialogForm {
             addressErrorLabel.setErrorText("Address length should be between 8 and 45.");
             addressErrorLabel.setVisible(true);
             isValid = false;
-        }
-        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        Matcher matcher = pattern.matcher(emailText.getText());
-        boolean isPatternMatched = matcher.matches();
-        if (!isPatternMatched) {
-            emailErrorLabel.setErrorText("Invalid email address");
-            emailErrorLabel.setVisible(true);
-            isValid = false;
-        }
-        if (emailText.getText().length() > 60) {
-            emailErrorLabel.setErrorText("Email address can be maximum of length 60");
-            emailErrorLabel.setVisible(true);
-            isValid = false;
-        }
-
+        }        
         return isValid;
     }
 
-    private Supplier generateSupplier() {
-        Supplier supplier = new Supplier(nameText.getText(), addressText.getText(), contactText.getText(), emailText.getText());
-        return supplier;
-    }
+//    private Customer generateCustomer() {
+//        Customer customer = new Customer(nameText.getText(), addressText.getText(), customersinceText.getText());
+//        return customer;
+//    }
 
     private void hideErrorLabels() {
         nameErrorLabel.setVisible(false);
         addressErrorLabel.setVisible(false);
         contactErrorLabel.setVisible(false);
-        emailErrorLabel.setVisible(false);
     }
 
     private void resetErrorLabels() {
         nameErrorLabel.setErrorText("");
         addressErrorLabel.setErrorText("");
         contactErrorLabel.setErrorText("");
-        emailErrorLabel.setErrorText("");
         hideErrorLabels();
     }
 
