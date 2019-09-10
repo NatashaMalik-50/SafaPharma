@@ -47,12 +47,9 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JLabel" name="formLabel">
-<<<<<<< HEAD
       <Properties>
         <Property name="text" type="java.lang.String" value="Form"/>
       </Properties>
-=======
->>>>>>> shivam3
     </Component>
     <Container class="javax.swing.JPanel" name="formPanel">
 
