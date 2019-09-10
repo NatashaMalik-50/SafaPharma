@@ -55,6 +55,11 @@ public class MainScreenPanel extends javax.swing.JPanel {
         toolbarPanel.add(Box.createHorizontalStrut(10));
         toolbarPanel.add(updateButton);
 
+        //disableButtons();
+        disableRemoveButtons();
+        disableUpdateButtons();
+        disableViewButtons(); 
+        
         statusLabel.setText("Bill Status");
         statusLabel.setHorizontalAlignment(JLabel.CENTER);
         statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
@@ -73,14 +78,40 @@ public class MainScreenPanel extends javax.swing.JPanel {
         searchPanel.add(searchBox);
         searchPanel.add(searchButton);
     }
-
     protected void enableButtons() {
         addButton.setEnabled(true);
         updateButton.setEnabled(true);
         removeButton.setEnabled(true);
         viewButton.setEnabled(true);
     }
+    protected void enableAddButtons() {
+        addButton.setEnabled(true);
+    }
+    protected void enableUpdateButtons() {
+        updateButton.setEnabled(true);
+    }
+    protected void enableRemoveButtons() {
+        removeButton.setEnabled(true);
+    }
+    protected void enableViewButtons() {
+        viewButton.setEnabled(true);
+    }
+    
+        
 
+    protected void disableAddButtons() {
+        addButton.setEnabled(false);
+    }
+    protected void disableUpdateButtons() {
+        updateButton.setEnabled(false);
+    }
+    protected void disableRemoveButtons() {
+        removeButton.setEnabled(false);
+    }
+    protected void disableViewButtons() {
+        viewButton.setEnabled(false);
+    }
+    
     protected void disableButtons() {
         addButton.setEnabled(false);
         updateButton.setEnabled(false);

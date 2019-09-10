@@ -16,8 +16,8 @@ import com.safapharma.ModelObjects.DataWithColumn;
 public class MedicineLotDAO {
     
      public DataWithColumn getAllMedicineLotDetails() throws Exception {
-        final String SQL_QUERY = "select company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
-        return DAOHelper.getDetailsForTable(SQL_QUERY);
+        final String SQL_QUERY = "select stock_entry_id, company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
 
 }

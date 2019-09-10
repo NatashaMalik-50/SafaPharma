@@ -52,4 +52,12 @@ public class DataWithColumn {
         this.idData = idData;
     }
 
+    public Vector<Object> getDataOf(int index) {
+        return data.get(index);
+    }
+
+    public int getIdOf(int index) {
+        return (Integer) idData.get(index);
+    }
+
 }

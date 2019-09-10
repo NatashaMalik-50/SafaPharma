@@ -22,7 +22,7 @@ public class HomeScreenBackend {
         stockDAO = new StockDAO();
     }
 
-    public DataWithColumn setStockInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
+    public DataWithColumn setStockInfoIntoTable() throws Exception {
         DataWithColumn dataWithColumn = stockDAO.getAllStockDetails();
         return dataWithColumn;
     }

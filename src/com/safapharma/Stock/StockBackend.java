@@ -24,7 +24,7 @@ public class StockBackend {
     }
 
     public DataWithColumn setStockInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
-        DataWithColumn dataWithColumn = stockDAO.getAllStockDetailsWithId();
+        DataWithColumn dataWithColumn = stockDAO.getAllStockDetails();
         return dataWithColumn;
     }
 
