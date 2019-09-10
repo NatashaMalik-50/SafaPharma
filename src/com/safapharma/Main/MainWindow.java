@@ -309,11 +309,11 @@ public class MainWindow extends javax.swing.JFrame {
 //        }
     }
     
-    public void createNewStockViewForm() throws Exception {
+    public void createNewStockViewForm(HomeScreenPanel homeScreenPanel) throws Exception {
         if (newStockViewForm != null) {
             deleteNewStockViewForm();
         }
-        newStockViewForm = new NewStockViewForm(this);        
+        newStockViewForm = new NewStockViewForm(this,homeScreenPanel);        
     }
 
     public void showNewStockViewForm() {
