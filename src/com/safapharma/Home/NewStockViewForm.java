@@ -14,6 +14,7 @@ import com.safapharma.ModelObjects.DataWithColumn;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,8 +25,8 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Natasha Malik
  */
-public class NewStockViewForm extends DialogForm{
-    
+public class NewStockViewForm extends DialogForm {
+
     HomeScreenPanel ob;
     private MainWindow manager;
     private JTable stockTable;
@@ -37,25 +38,25 @@ public class NewStockViewForm extends DialogForm{
     private FormButton resetButton;
     private DefaultTableModel tableModel;
     private final NewStockViewFormBackend newStockViewFormBackend;
-
-        
+    private FormText searchBox;
 
     public NewStockViewForm(MainWindow manager) {
         this.manager = manager;
         newStockViewFormBackend = new NewStockViewFormBackend();
         initUI();
-        //addListeners();
+        addListeners();
     }
 
     private void initUI() {
-       // getFormLabel().setText("Create New Stock View");
+        // getFormLabel().setText("Create New Stock View");
         /*nameLabel = new FormLabel("Name");
         nameText = new FormText();
         contactLabel = new FormLabel("Contact No.");
         contactText = new FormText();*/
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
-        
+        searchBox = new FormText();
+
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -68,10 +69,12 @@ public class NewStockViewForm extends DialogForm{
         getFormPanel().add(nameText);
         getFormPanel().add(contactLabel);
         getFormPanel().add(contactText);*/
-        
+        getFormLabel().setLayout(new BoxLayout(getFormLabel(), BoxLayout.Y_AXIS));
+        getFormLabel().add(searchBox);
+
         getFormLabel().add(submitButton);
         getFormLabel().add(resetButton);
-        
+
         tableModel = new DefaultTableModel();
         stockTable = new JTable(tableModel);
         stockTable.getTableHeader().setResizingAllowed(false);
@@ -79,31 +82,40 @@ public class NewStockViewForm extends DialogForm{
         stockTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         stockTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         stockTable.setAutoCreateRowSorter(true);
-        getFormPanel().setLayout(new GridLayout(0, 1));
+//        getFormPanel().setLayout(new GridLayout(0, 1));
+        getFormPanel().setLayout(new BoxLayout(getFormPanel(), BoxLayout.Y_AXIS));
         //getFormPanel().
         getFormPanel().add(stockTable);
         this.pack();
-        
+
     }
+
     private DataWithColumn loadData() throws Exception {
         DataWithColumn dataWithColumn = newStockViewFormBackend.setStockInfoIntoTable(stockTable, tableModel);
         tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
-        
+
         return dataWithColumn;
     }
-    /*private void addListeners(){
+
+    public HomeScreenPanel returnObject() {
+        return ob;
+
+    }
+
+    private void addListeners(){
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ob = (HomeScreenPanel) tableModel.getValueAt(stockTable.getSelectedRow(),0);
             }
         });
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                stockTable.clearSelection();
             }
         });
-    }*/
-
+    }
     @Override
     protected void deleteScreen() {
         manager.deleteNewStockViewForm();
