@@ -5,7 +5,9 @@
  */
 package com.safapharma.Main;
 
+import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Customer.CustomerPanel;
+import com.safapharma.Customer.NewCustomerForm;
 import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
@@ -57,6 +59,7 @@ public class MainWindow extends javax.swing.JFrame {
     private NewSupplierForm newSupplierForm;
     private NewStockForm newStockForm;
     private HomeScreenPanel home;
+    private NewCustomerForm newCustomerForm;
 
     /**
      * Creates new form MainWindow
@@ -182,35 +185,35 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void createCustomerPanel() {
-//        try {
-//            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            if (customerPanel != null) {
-//                deleteSupplierPanel();
-//            }
-//            customerPanel = new CustomerPanel(this);
-//            screenPanel.add(CUSTOMER_LABEL, customerPanel);
-//            componentStack.push(customerPanel);
-//        } finally {
-//            setCursor(Cursor.getDefaultCursor());
-//        }
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (customerPanel != null) {
+                deleteSupplierPanel();
+            }
+            customerPanel = new CustomerPanel(this);
+            screenPanel.add(CUSTOMER_LABEL, customerPanel);
+            componentStack.push(customerPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
     }
 
     public void showCustomerPanel() {
-//        if (customerPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.show(screenPanel, CUSTOMER_LABEL);
-//            setCursor(Cursor.getDefaultCursor());
-//        } else {
-//            System.out.println("Customer object is null");
-//        }
+        if (customerPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, CUSTOMER_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Customer object is null");
+        }
     }
 
     public void deleteCustomerPanel() {
-//        if (customerPanel != null) {
-//            c = (CardLayout) screenPanel.getLayout();
-//            c.removeLayoutComponent(customerPanel);
-//            customerPanel = null;
-//        }
+        if (customerPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(customerPanel);
+            customerPanel = null;
+        }
     }
 
     public void createSalesPanel() {
@@ -238,10 +241,10 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void deleteSalesPanel() {
-        if (supplierPanel != null) {
+        if (salesPanel != null) {
             c = (CardLayout) screenPanel.getLayout();
-            c.removeLayoutComponent(supplierPanel);
-            supplierPanel = null;
+            c.removeLayoutComponent(salesPanel);
+            salesPanel = null;
         }
     }
 
@@ -252,7 +255,7 @@ public class MainWindow extends javax.swing.JFrame {
                 deleteStockPanel();
             }
             stockPanel = new StockPanel(this);
-            screenPanel.add(STOCK_LABEL,stockPanel);
+            screenPanel.add(STOCK_LABEL, stockPanel);
             componentStack.push(stockPanel);
         } finally {
             setCursor(Cursor.getDefaultCursor());
@@ -308,12 +311,12 @@ public class MainWindow extends javax.swing.JFrame {
 //            supplierPanel = null;
 //        }
     }
-    
+
     public void createNewStockViewForm() throws Exception {
         if (newStockViewForm != null) {
             deleteNewStockViewForm();
         }
-        newStockViewForm = new NewStockViewForm(this);        
+        newStockViewForm = new NewStockViewForm(this);
     }
 
     public void showNewStockViewForm() {
@@ -328,11 +331,12 @@ public class MainWindow extends javax.swing.JFrame {
             newStockViewForm = null;
         }
     }
+
     public void createNewStockForm() throws Exception {
         if (newStockForm != null) {
             deleteNewStockForm();
         }
-        newStockForm = new NewStockForm(this);        
+        newStockForm = new NewStockForm(this);
     }
 
     public void showNewStockForm() {
@@ -347,11 +351,12 @@ public class MainWindow extends javax.swing.JFrame {
             newStockForm = null;
         }
     }
-     public void createNewSupplierForm(SupplierBackend supplierBackend) throws Exception {
+
+    public void createNewSupplierForm(SupplierBackend supplierBackend) throws Exception {
         if (newSupplierForm != null) {
             deleteNewSupplierForm();
         }
-        newSupplierForm = new NewSupplierForm(this,supplierBackend);
+        newSupplierForm = new NewSupplierForm(this, supplierBackend);
     }
 
     public void showNewSupplierForm() {
@@ -366,6 +371,7 @@ public class MainWindow extends javax.swing.JFrame {
             newSupplierForm = null;
         }
     }
+
     public void createNewSalesForm() throws Exception {
 //        if (newSaleForm != null) {
 //            deleteNewRoleForm();
@@ -386,12 +392,40 @@ public class MainWindow extends javax.swing.JFrame {
 //        }
     }
 
+    public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
+        {
+            if (newCustomerForm != null) {
+                deleteNewCustomerForm();
+            }
+            newCustomerForm = new NewCustomerForm(this, customerBackend);
+        }
+    }
+
+    public void showNewCustomerForm() {
+        if (newCustomerForm != null) {
+            newCustomerForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewCustomerForm() {
+        if (newCustomerForm != null) {
+            newCustomerForm.setVisible(false);
+            newCustomerForm = null;
+        }
+    }
+
     public void deleteCurrentPanel() {
         Component component = componentStack.pop();
         if (component == home) {
             deleteHomeScreen();
         } else if (component == supplierPanel) {
             deleteSupplierPanel();
+        } else if (component == customerPanel) {
+            deleteCustomerPanel();
+        } else if (component == salesPanel) {
+            deleteSalesPanel();
+        } else if (component == stockPanel) {
+            deleteStockPanel();
         }
         sidePanel.backPressedChangeActive();
     }
