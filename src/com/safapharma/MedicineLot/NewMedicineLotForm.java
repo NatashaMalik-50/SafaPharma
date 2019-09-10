@@ -7,9 +7,13 @@ package com.safapharma.MedicineLot;
 
 import com.safapharma.Main.MainWindow;
 import com.safapharma.Templates.DialogForm;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,10 +22,11 @@ import javax.swing.JComboBox;
 public class NewMedicineLotForm extends DialogForm {
     
     private MainWindow manager;
-    
-    private FormLabel medicineIdLabel;
-    private JComboBox medicineIdCombo;
-    private ErrorLabel medicineIdErrorLabel;
+        
+    private FormLabel medicineNameLabel;
+    private JComboBox medicineNameCombo;
+    private ErrorLabel medicineNameErrorLabel;
+    private FormButton medicineNameAddButton;
     
     private FormLabel batchNumLabel;
     private FormText batchNumText;
@@ -37,25 +42,39 @@ public class NewMedicineLotForm extends DialogForm {
     
     private FormButton submitButton;
     private FormButton resetButton;
-    private MedicineLotBackend medicineLotBackend;
+    
+    private MedicineLotBackend medicineLotBackend;    
+    
     
 
     public NewMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend) {
         this.manager = manager;
         this.medicineLotBackend = medicineLotBackend;
-        initUI();
+        initUI();        
         addListeners();
     }
+    
+    private void setComboBox(JComboBox mbox){
+        mbox.setEditable(true);
+     
+    }
+    
 
     private void initUI() {
+        
+        //Set and configure layout
         getFormLabel().setText("Add MedicineLotForm");
+        getFormPanel().setLayout(new GridLayout(0, 4));
         System.out.println("Creating and Adding Medicine Lot Form ");
 
         String[] someString = { "Bird", "Cat", "Dog", "Rabbit" };
         
-        medicineIdLabel = new FormLabel("Medicine Id");
-        medicineIdCombo = new JComboBox(someString);
-        medicineIdErrorLabel = new ErrorLabel();
+        medicineNameLabel = new FormLabel("Medicine Name");
+        medicineNameCombo = new JComboBox(someString);
+        medicineNameAddButton = new FormButton("Add");
+        medicineNameErrorLabel = new ErrorLabel();
+        
+        setComboBox(medicineNameCombo);
 
         batchNumLabel = new FormLabel("Batch Number");
         batchNumText = new FormText();
@@ -68,28 +87,34 @@ public class NewMedicineLotForm extends DialogForm {
         rateLabel = new FormLabel("Rate");
         rateText = new FormText();
         rateErrorLabel = new ErrorLabel();
-
+        
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
         
-        getFormPanel().add(medicineIdLabel);
-        getFormPanel().add(medicineIdCombo);
-        getFormPanel().add(medicineIdErrorLabel);
+        getFormPanel().add(medicineNameLabel);
+        getFormPanel().add(medicineNameCombo);
+        getFormPanel().add(medicineNameAddButton);
+        getFormPanel().add(medicineNameErrorLabel);        
         
         getFormPanel().add(batchNumLabel);
         getFormPanel().add(batchNumText);
         getFormPanel().add(batchNumErrorLabel);
+        getFormPanel().add(new JPanel());
         
         getFormPanel().add(expiryLabel);
         getFormPanel().add(expiryText);
         getFormPanel().add(expiryErrorLabel);
+        getFormPanel().add(new JPanel());
         
         getFormPanel().add(rateLabel);
         getFormPanel().add(rateText);
         getFormPanel().add(rateErrorLabel);
+        getFormPanel().add(new JPanel());
         
         getFormPanel().add(submitButton);
         getFormPanel().add(resetButton);
+        getFormPanel().add(new JPanel());
+        getFormPanel().add(new JPanel());
 
         this.pack();
         hideErrorLabels();
@@ -126,71 +151,7 @@ public class NewMedicineLotForm extends DialogForm {
     private boolean validateInfo() {
         resetErrorLabels();
         boolean isValid = true;
-//        if (nameText.getText().length() < 3) {
-//            medicineIdErrorLabel.setErrorText("Name must be atleast of length 3");
-//            nameErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (nameText.getText().length() > 45) {
-//            nameErrorLabel.setErrorText("Name can be maximum of length 45");
-//            nameErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (contactText.getText().length() != 10) {
-//            contactErrorLabel.setErrorText("Contact no. must be of 10 digits");
-//            contactErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (addressText.getText().length() < 8 || addressText.getText().length() > 45) {
-//            addressErrorLabel.setErrorText("Address length should be between 8 and 45.");
-//            addressErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-//        Matcher matcher = pattern.matcher(emailText.getText());
-//        boolean isPatternMatched = matcher.matches();
-//        if (!isPatternMatched) {
-//            emailErrorLabel.setErrorText("Invalid email address");
-//            emailErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (emailText.getText().length() > 60) {
-//            emailErrorLabel.setErrorText("Email address can be maximum of length 60");
-//            emailErrorLabel.setVisible(true);
-//            isValid = false;
-//        if (nameText.getText().length() < 3) {
-//            medicineIdErrorLabel.setErrorText("Name must be atleast of length 3");
-//            nameErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (nameText.getText().length() > 45) {
-//            nameErrorLabel.setErrorText("Name can be maximum of length 45");
-//            nameErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (contactText.getText().length() != 10) {
-//            contactErrorLabel.setErrorText("Contact no. must be of 10 digits");
-//            contactErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (addressText.getText().length() < 8 || addressText.getText().length() > 45) {
-//            addressErrorLabel.setErrorText("Address length should be between 8 and 45.");
-//            addressErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-//        Matcher matcher = pattern.matcher(emailText.getText());
-//        boolean isPatternMatched = matcher.matches();
-//        if (!isPatternMatched) {
-//            emailErrorLabel.setErrorText("Invalid email address");
-//            emailErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
-//        if (emailText.getText().length() > 60) {
-//            emailErrorLabel.setErrorText("Email address can be maximum of length 60");
-//            emailErrorLabel.setVisible(true);
-//            isValid = false;
-//        }
+        
 
         return isValid;
     }
@@ -201,14 +162,14 @@ public class NewMedicineLotForm extends DialogForm {
 //    }
 
     private void hideErrorLabels() {
-        medicineIdErrorLabel.setVisible(false);
+        medicineNameErrorLabel.setVisible(false);
         batchNumErrorLabel.setVisible(false);
         expiryErrorLabel.setVisible(false);
         rateErrorLabel.setVisible(false);
     }
 
     private void resetErrorLabels() {
-        medicineIdErrorLabel.setErrorText("");
+        medicineNameErrorLabel.setErrorText("");
         batchNumErrorLabel.setErrorText("");
         expiryErrorLabel.setErrorText("");
         rateErrorLabel.setErrorText("");
