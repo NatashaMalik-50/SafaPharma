@@ -27,14 +27,14 @@ import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author Natasha Malik
+ * @author Karan Nagpal
  */
 public class MedicineLotPanel extends MainScreenPanel{
     
     private MainWindow manager;
     private JTable supplierTable;
     private DefaultTableModel tableModel;
-    private final MedicineLotBackend medicineLotBackend; //  Karan : Change this later
+    private final MedicineLotBackend medicineLotBackend;
     private TableRowSorter sorter;
     
     public MedicineLotPanel(MainWindow manager){
@@ -68,6 +68,7 @@ public class MedicineLotPanel extends MainScreenPanel{
         supplierTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         supplierTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         getTableScrollPane().setViewportView(supplierTable);
+        
     }
     
     private void setListeners() {
@@ -83,14 +84,48 @@ public class MedicineLotPanel extends MainScreenPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println(e);
-                    System.out.println(e.getActionCommand());     
-                    
-                    
-                        manager.createNewMedicineLotForm(medicineLotBackend);
-                        manager.showNewMedicineLotForm();
-                    
-                    
+                    System.out.println("Add Button Called");
+                    manager.createNewMedicineLotForm(medicineLotBackend);
+                    manager.showNewMedicineLotForm();                  
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    System.out.println("Remove Button Called");
+//                    manager.createNewMedicineLotForm(medicineLotBackend);
+//                    manager.showNewMedicineLotForm();                  
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    System.out.println("View Button Called");
+//                    manager.createNewMedicineLotForm(medicineLotBackend);
+//                    manager.showNewMedicineLotForm();                  
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    System.out.println("Update Button Called");
+//                    manager.createNewMedicineLotForm(medicineLotBackend);
+//                    manager.showNewMedicineLotForm();                  
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
