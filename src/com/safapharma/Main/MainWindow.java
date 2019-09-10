@@ -19,7 +19,11 @@ import com.safapharma.Home.Supplier.NewSupplierForm;
 import com.safapharma.Home.Supplier.SupplierBackend;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
+import com.safapharma.MedicineLot.MedicineLotBackend;
 import com.safapharma.MedicineLot.MedicineLotPanel;
+import com.safapharma.MedicineLot.NewMedicineLotForm;
+import com.safapharma.MedicineLot.UpdateMedicineLotForm;
+import com.safapharma.MedicineLot.ViewMedicineLotForm;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.StockPanel;
@@ -59,6 +63,10 @@ public class MainWindow extends javax.swing.JFrame {
     private NewSupplierForm newSupplierForm;
     private NewStockForm newStockForm;
     private HomeScreenPanel home;
+    private NewMedicineLotForm newMedicineLotForm;
+    private ViewMedicineLotForm viewMedicineLotForm;
+    private MedicineLotPanel medicineLotPanel;
+    private UpdateMedicineLotForm updateMedicineLotForm;
     private NewCustomerForm newCustomerForm;
 
     /**
@@ -281,13 +289,15 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void createMedicinePanel() {
+        System.out.println("Create MedicinePanel Clicked, calling createMedicineLot function");
+        createMedicineLotPanel();
 //        try {
 //            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//            if (salesPanel != null) {
-//                deleteSalesPanel();
+//            if (medicinePanel != null) {
+//                deleteMedicinePanel();
 //            }
-//            salesPanel = new SalesPanel(this);
-//            screenPanel.add(SALES_LABEL, salesPanel);
+//            medicinePanel = new MedicineLotPanel(this);
+//            screenPanel.add(BUTTON_MEDICINE_LOT_LABEL, med);
 //            componentStack.push(salesPanel);
 //        } finally {
 //            setCursor(Cursor.getDefaultCursor());
@@ -295,7 +305,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void showMedicinePanel() {
-//        if (salesPanel != null) {
+        System.out.println("MedicinePanel Clicked, to display MedicineLot");
+        showMedicineLotPanel();
+//        if (medicinePanel != null) {
 //            c = (CardLayout) screenPanel.getLayout();
 //            c.show(screenPanel, SALES_LABEL);
 //            setCursor(Cursor.getDefaultCursor());
@@ -305,12 +317,46 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     public void deleteMedicinePanel() {
+        deleteMedicineLotPanel();
 //        if (supplierPanel != null) {
 //            c = (CardLayout) screenPanel.getLayout();
 //            c.removeLayoutComponent(supplierPanel);
 //            supplierPanel = null;
 //        }
     }
+
+    public void createMedicineLotPanel() {
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (medicineLotPanel != null) {
+                deleteMedicineLotPanel();
+            }
+            medicineLotPanel = new MedicineLotPanel(this);
+            screenPanel.add(MEDICINELOT_LABEL, medicineLotPanel);
+            componentStack.push(medicineLotPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
+    }
+
+    public void showMedicineLotPanel() {
+        if (medicineLotPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, MEDICINELOT_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Sales object is null");
+        }
+    }
+
+    public void deleteMedicineLotPanel() {
+        if (medicineLotPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(medicineLotPanel);
+            medicineLotPanel = null;
+        }
+    }
+    
 
     public void createNewStockViewForm() throws Exception {
         if (newStockViewForm != null) {
@@ -392,6 +438,65 @@ public class MainWindow extends javax.swing.JFrame {
 //        }
     }
 
+    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+        if (newMedicineLotForm != null) {
+            deleteNewMedicineLotForm();
+        }
+        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend);
+    }
+
+    public void showNewMedicineLotForm() {
+        if (newMedicineLotForm != null) {
+            newMedicineLotForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewMedicineLotForm() {
+        if (newMedicineLotForm != null) {
+            newMedicineLotForm.setVisible(false);
+            newMedicineLotForm = null;
+        }
+    }
+    /* For Viewing of MedicineLotForms */
+    public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+        if (viewMedicineLotForm != null) {
+            deleteViewMedicineLotForm();
+        }
+        viewMedicineLotForm = new ViewMedicineLotForm(this, medicineLotBackend);
+    }
+
+    public void showViewMedicineLotForm() {
+        if (viewMedicineLotForm != null) {
+            viewMedicineLotForm.setVisible(true);
+        }
+    }
+
+    public void deleteViewMedicineLotForm() {
+        if (viewMedicineLotForm != null) {
+            viewMedicineLotForm.setVisible(false);
+            viewMedicineLotForm = null;
+        }
+    }
+    /* For showing update medicine lot panel */
+    public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+        if (updateMedicineLotForm != null) {
+            deleteUpdateMedicineLotForm();
+        }
+        updateMedicineLotForm = new UpdateMedicineLotForm(this, medicineLotBackend);
+    }
+
+    public void showUpdateMedicineLotForm() {
+        if (updateMedicineLotForm != null) {
+            updateMedicineLotForm.setVisible(true);
+        }
+    }
+
+    public void deleteUpdateMedicineLotForm() {
+        if (updateMedicineLotForm != null) {
+            updateMedicineLotForm.setVisible(false);
+            updateMedicineLotForm = null;
+        }
+    }
     public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
         {
             if (newCustomerForm != null) {
