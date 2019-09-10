@@ -55,8 +55,7 @@ public class NewMedicineLotForm extends DialogForm {
     }
     
     private void setComboBox(JComboBox mbox){
-        mbox.setEditable(true);
-     
+        mbox.setEditable(true);    
     }
     
 
@@ -127,14 +126,7 @@ public class NewMedicineLotForm extends DialogForm {
                 boolean isValid = validateInfo();
                 if (isValid) {
                     try {
-//                        Supplier supplier = generateSupplier();
-//                        boolean isAdded = medicineLotBackend.addSupplier(supplier);
-//                        if (isAdded) {
-//                            createOptionPane("Supplier Added", "");
-//                            manager.deleteNewSupplierForm();
-//                        } else {
-//                            createOptionPane("Not Able to add supplier! Please try again.", "Error");
-//                        }
+                        // Add the content provided in the form.
                     } catch (Exception ex) {
                         createOptionPane("Database Error", "Error");
                     }
@@ -146,14 +138,51 @@ public class NewMedicineLotForm extends DialogForm {
             public void actionPerformed(ActionEvent e) {
             }
         });
+        medicineNameCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Add Button called");
+            }
+        });
     }
-
+    
+    private boolean isEmpty(String str){
+        boolean checker = false;
+        if(str.equals("") || str.equals(null))
+            checker = true;
+        
+        return checker;    
+    }
+    
+    
     private boolean validateInfo() {
         resetErrorLabels();
         boolean isValid = true;
+        try{
         
+            /*Checking if the respective textfields are empty or not. */
+            if(medicineNameCombo.getSelectedItem().toString().isEmpty())
+                isValid = false;
+            if(batchNumText.getText().isEmpty())
+                isValid = false;
+            if(expiryText.getText().isEmpty())
+                isValid = false;
+            if(rateText.getText().isEmpty())
+                isValid = false;
+            
+            if(isValid){
+                double num = Double.parseDouble(rateText.getText());
+                if(num<=0){
+                    isValid = false;
+                }
+            }
 
-        return isValid;
+            return isValid;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 //    private Supplier generateSupplier() {

@@ -11,6 +11,7 @@ import com.safapharma.ModelObjects.DataWithColumn;
 /**
  *
  * @author shiva
+ * 
  */
 public class MedicineLotDAO {
     
