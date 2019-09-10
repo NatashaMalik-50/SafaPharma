@@ -66,7 +66,7 @@ public class NewMedicineLotForm extends DialogForm {
         getFormPanel().setLayout(new GridLayout(0, 4));
         System.out.println("Creating and Adding Medicine Lot Form ");
 
-        String[] someString = { "Bird", "Cat", "Dog", "Rabbit" };
+        String[] someString = { "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine" };
         
         medicineNameLabel = new FormLabel("Medicine Name");
         medicineNameCombo = new JComboBox(someString);
@@ -161,26 +161,42 @@ public class NewMedicineLotForm extends DialogForm {
         try{
         
             /*Checking if the respective textfields are empty or not. */
-            if(medicineNameCombo.getSelectedItem().toString().isEmpty())
+            if(medicineNameCombo.getSelectedItem().toString().isEmpty()){
                 isValid = false;
-            if(batchNumText.getText().isEmpty())
+                medicineNameErrorLabel.setText("Incorrect Medicine Name");
+            }
+            if(batchNumText.getText().isEmpty()){
                 isValid = false;
-            if(expiryText.getText().isEmpty())
+                batchNumErrorLabel.setText("Incorrect batch number");
+            }
+                
+            if(expiryText.getText().isEmpty()){
                 isValid = false;
-            if(rateText.getText().isEmpty())
+                expiryErrorLabel.setText("Incorrect Expiry ");
+            }
+            if(rateText.getText().isEmpty()){
                 isValid = false;
-            
+                rateText.setText("Incorrect Rate");
+            }
             if(isValid){
                 double num = Double.parseDouble(rateText.getText());
                 if(num<=0){
                     isValid = false;
                 }
             }
-
+            
+            if(isValid){
+               resetErrorLabels();
+            }
+            else{
+                 showErrorLabels();
+            }
+            
             return isValid;
         }
         catch(Exception e){
             e.printStackTrace();
+            showErrorLabels();
             return false;
         }
     }
@@ -196,6 +212,13 @@ public class NewMedicineLotForm extends DialogForm {
         expiryErrorLabel.setVisible(false);
         rateErrorLabel.setVisible(false);
     }
+    
+    private void showErrorLabels() {
+        medicineNameErrorLabel.setVisible(true);
+        batchNumErrorLabel.setVisible(true);
+        expiryErrorLabel.setVisible(true);
+        rateErrorLabel.setVisible(true);
+    }
 
     private void resetErrorLabels() {
         medicineNameErrorLabel.setErrorText("");
@@ -204,6 +227,7 @@ public class NewMedicineLotForm extends DialogForm {
         rateErrorLabel.setErrorText("");
         hideErrorLabels();
     }
+
 
     @Override
     protected void deleteScreen() {
