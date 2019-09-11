@@ -67,6 +67,7 @@ public class HomeScreenPanel extends MainScreenPanel {
         billEntriesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         billEntriesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         getTableScrollPane().setViewportView(billEntriesTable);
+        
 
     }
 
@@ -104,6 +105,45 @@ public class HomeScreenPanel extends MainScreenPanel {
                 }
             }
         });
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                   int id = billEntriesTable.getSelectedRow();
+                   System.out.println(id);
+                   //billEntriesTable.remove(id);
+                   if(billEntriesTable.getSelectedRow()>=0)
+                   {
+                    DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
+                    model.removeRow(id);
+                    if(billEntriesTable.getRowCount()>=0)
+                    {
+                       disableRemoveButtons();
+                       disableUpdateButtons();
+                       disableViewButtons();
+                    }
+                   }
+                   else
+                   {
+                       disableRemoveButtons();
+                       disableUpdateButtons();
+                       disableViewButtons();
+                   }
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        });
+        billEntriesTable.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                enableRemoveButtons();
+                enableUpdateButtons();
+                enableViewButtons();
+            }
+    });
 
         searchBox.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -139,5 +179,7 @@ public class HomeScreenPanel extends MainScreenPanel {
         System.out.println("found row : "+rowIndex+ " with value"+stockData.getDataOf(rowIndex)+ " --with id-- "+stockData.getIdData());
         DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
         model.addRow(stockData.getDataOf(rowIndex));
+        
+        
     }
 }
