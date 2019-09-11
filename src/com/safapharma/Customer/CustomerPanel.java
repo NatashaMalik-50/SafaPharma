@@ -24,19 +24,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Natasha Malik
  */
-public class CustomerPanel extends MainScreenPanel{
+public class CustomerPanel extends MainScreenPanel {
+
     private MainWindow manager;
     private JTable customerTable;
     private DefaultTableModel tableModel;
     private final CustomerBackend CustomerBackend;
 
     public CustomerPanel(MainWindow manager) {
-        
+
         this.manager = manager;
         CustomerBackend = new CustomerBackend();
         initUI();
         setListeners();
-        
+
     }
 
     private void initUI() {
@@ -73,7 +74,7 @@ public class CustomerPanel extends MainScreenPanel{
             }
 
         });
-        
+
         //on add button click
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -87,5 +88,44 @@ public class CustomerPanel extends MainScreenPanel{
                 }
             }
         });
-    
-    }}
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    //create new form
+                    manager.createViewCustomerForm(CustomerBackend); //the appropriate function call
+                    manager.showViewCustomerForm();
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        );
+        
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    //create new form
+                    manager.createUpdateCustomerForm(CustomerBackend); //the appropriate function call
+                    manager.showUpdateCustomerForm();
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        );
+        
+        
+          customerTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                enableUpdateButtons();
+                enableRemoveButtons();
+                enableViewButtons();
+            }
+
+        });
+
+    }
+}
