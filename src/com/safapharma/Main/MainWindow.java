@@ -69,6 +69,7 @@ public class MainWindow extends javax.swing.JFrame {
     private MedicineLotPanel medicineLotPanel;
     private UpdateMedicineLotForm updateMedicineLotForm;
     private NewCustomerForm newCustomerForm;
+    
 
     /**
      * Creates new form MainWindow
