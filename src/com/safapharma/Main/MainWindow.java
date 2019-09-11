@@ -13,6 +13,7 @@ import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
+import com.safapharma.Home.Sales.SaleViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
 import com.safapharma.Home.Supplier.NewSupplierForm;
@@ -60,6 +61,7 @@ public class MainWindow extends javax.swing.JFrame {
     private SalesPanel salesPanel;
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
+    private SaleViewForm saleViewForm;
     private NewSupplierForm newSupplierForm;
     private NewStockForm newStockForm;
     private HomeScreenPanel home;
@@ -436,6 +438,26 @@ public class MainWindow extends javax.swing.JFrame {
 //            newSaleForm.setVisible(false);
 //            newSaleForm = null;
 //        }
+    }
+    
+    public void createSaleViewForm(int sale_id,String customeName) throws Exception {
+        if (saleViewForm != null) {
+            deleteSaleViewForm();
+        }
+        saleViewForm = new SaleViewForm(this, sale_id, customeName);        
+    }
+
+    public void showSaleViewForm() {
+        if (saleViewForm != null) {
+            saleViewForm.setVisible(true);
+         }
+    }
+
+    public void deleteSaleViewForm() {
+        if (saleViewForm != null) {
+            saleViewForm.setVisible(false);
+            saleViewForm = null;
+        }
     }
 
     public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
