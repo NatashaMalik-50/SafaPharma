@@ -8,6 +8,8 @@ package com.safapharma.Main;
 import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Customer.CustomerPanel;
 import com.safapharma.Customer.NewCustomerForm;
+import com.safapharma.Customer.UpdateCustomerForm;
+import com.safapharma.Customer.ViewCustomerForm;
 import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
@@ -68,6 +70,8 @@ public class MainWindow extends javax.swing.JFrame {
     private MedicineLotPanel medicineLotPanel;
     private UpdateMedicineLotForm updateMedicineLotForm;
     private NewCustomerForm newCustomerForm;
+    private ViewCustomerForm viewCustomerForm;
+    private UpdateCustomerForm updateCustomerForm;
 
     /**
      * Creates new form MainWindow
@@ -519,6 +523,61 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
+   public void createViewCustomerForm(CustomerBackend customerBackend) throws Exception {
+        if(viewCustomerForm!=null)
+            {
+                deleteViewCustomerForm();
+            }
+            viewCustomerForm= new ViewCustomerForm(this,customerBackend);
+
+    }
+    
+    public void showViewCustomerForm() {
+        if(viewCustomerForm!=null)
+        {
+            viewCustomerForm.setVisible(true);
+        }
+       
+    }
+
+    public void deleteViewCustomerForm() {
+      if(viewCustomerForm!=null)
+      {
+          viewCustomerForm.setVisible(false);
+          viewCustomerForm=null;
+          
+         
+      }
+    }
+    
+    public void createUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
+        if(updateCustomerForm!=null)
+            {
+                deleteViewCustomerForm();
+            }
+            updateCustomerForm= new UpdateCustomerForm(this,customerBackend);
+
+    }
+
+    public void showUpdateCustomerForm() {
+        if(updateCustomerForm!=null)
+        {
+            updateCustomerForm.setVisible(true);
+        }
+       
+    }
+
+    public void deleteUpdateCustomerForm() {
+      if(updateCustomerForm!=null)
+      {
+          updateCustomerForm.setVisible(false);
+          updateCustomerForm=null;
+          
+         
+      }
+    }
+    
+    
     public void deleteCurrentPanel() {
         Component component = componentStack.pop();
         if (component == home) {
