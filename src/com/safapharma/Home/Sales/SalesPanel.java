@@ -18,7 +18,11 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -30,16 +34,22 @@ public class SalesPanel extends MainScreenPanel {
     private JTable salesTable;
     private CustomDefaultTableModel tableModel;
     private final SalesBackend salesBackend;
-
+    private TableRowSorter sorter;
+    
     public SalesPanel(MainWindow manager) {
         this.manager = manager;
         salesBackend = new SalesBackend();
+        getToolbar().remove(addButton);
+        getToolbar().remove(updateButton);
+        //getToolbar().remove(removeButton);
         initUI();
         setListeners();
     }
 
     private void initUI() {
         tableModel = new CustomDefaultTableModel();
+        sorter = new TableRowSorter(tableModel);
+        
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -69,6 +79,25 @@ public class SalesPanel extends MainScreenPanel {
             public void mouseClicked(MouseEvent e) {
                 enableButtons();
             }
-        });        
+        });
+        
+        //on view button click
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    //create new form
+                    int row = salesTable.getSelectedRow();
+                    int sale_id = (Integer)tableModel.getValueAt(row, 0);
+                    String customerName = (String)tableModel.getValueAt(row, 1);
+                 
+                    manager.createSaleViewForm(sale_id, customerName); //the appropriate function call
+                    manager.showSaleViewForm();
+                } catch (Exception ex) {
+                    Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
     }
 }
