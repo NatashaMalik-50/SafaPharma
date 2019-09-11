@@ -5,15 +5,18 @@
  */
 package com.safapharma.MedicineLot;
 
+
 import com.safapharma.Main.MainWindow;
 import com.safapharma.Templates.DialogForm;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -43,32 +46,49 @@ public class NewMedicineLotForm extends DialogForm {
     private FormButton submitButton;
     private FormButton resetButton;
     
-    private MedicineLotBackend medicineLotBackend;    
+    private MedicineLotBackend medicineLotBackend;
+
+    private Vector<Vector> fullList;
+    private Vector fullNameList;
     
     
 
-    public NewMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend) {
+    public NewMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend,Vector fullList) {
         this.manager = manager;
         this.medicineLotBackend = medicineLotBackend;
+        this.fullList = fullList;
+        
         initUI();        
-        addListeners();
+        addListeners();  
+     
     }
     
     private void setComboBox(JComboBox mbox){
         mbox.setEditable(true);    
+        AutoCompleteDecorator.decorate(mbox);       
+        setFullNameList();
     }
     
-
+    private void setFullNameList(){
+        Vector medName = new Vector();
+        for(Vector v : fullList){
+            System.out.println(v.get(2).toString());
+            medName.add(v.get(2));
+        }
+        fullNameList=medName;
+    }
+    
     private void initUI() {
         
         //Set and configure layout
         getFormLabel().setText("Add MedicineLotForm");
         System.out.println("Creating and Adding Medicine Lot Form ");
-
-        String[] someString = { "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine" };
+        
+//        String[] someString = {"", "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine","Karan","Manan","Raghav","Parman" };
+        setFullNameList();
         
         medicineNameLabel = new FormLabel("Medicine Name");
-        medicineNameCombo = new JComboBox(someString);
+        medicineNameCombo = new JComboBox(fullNameList);
         medicineNameAddButton = new FormButton("Add");
         medicineNameErrorLabel = new ErrorLabel();
         

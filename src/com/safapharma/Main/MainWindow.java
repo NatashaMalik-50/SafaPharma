@@ -439,11 +439,11 @@ public class MainWindow extends javax.swing.JFrame {
 //        }
     }
 
-    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend,Vector fullList) throws Exception {
         if (newMedicineLotForm != null) {
             deleteNewMedicineLotForm();
         }
-        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend);
+        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend,fullList);
     }
 
     public void showNewMedicineLotForm() {
