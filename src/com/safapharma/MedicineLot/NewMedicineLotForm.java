@@ -63,7 +63,6 @@ public class NewMedicineLotForm extends DialogForm {
         
         //Set and configure layout
         getFormLabel().setText("Add MedicineLotForm");
-        getFormPanel().setLayout(new GridLayout(0, 4));
         System.out.println("Creating and Adding Medicine Lot Form ");
 
         String[] someString = { "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine" };
