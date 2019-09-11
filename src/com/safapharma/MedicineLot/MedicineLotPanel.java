@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -37,6 +38,7 @@ public class MedicineLotPanel extends MainScreenPanel{
     private final MedicineLotBackend medicineLotBackend;
     private TableRowSorter sorter;
     DataWithColumn dataWithColumn;
+    Vector<Object> selectedObject;
     
     public MedicineLotPanel(MainWindow manager){
         this.manager = manager;
@@ -83,6 +85,7 @@ public class MedicineLotPanel extends MainScreenPanel{
 //                Object ob = tableModel.getDataVector().elementAt(supplierTable.getSelectedRow());
 //                Object ob = dataWithColumn.getData();
                 Object ob= dataWithColumn.getDataOf(x);
+                selectedObject = dataWithColumn.getDataOf(x);
                 System.out.println("I am here"+ob);
                 
             }
@@ -120,7 +123,9 @@ public class MedicineLotPanel extends MainScreenPanel{
             public void actionPerformed(ActionEvent e) {
                 try {
                     System.out.println("View Button Called");
-                    manager.createViewMedicineLotForm(medicineLotBackend);
+
+                           
+                    manager.createViewMedicineLotForm(medicineLotBackend,selectedObject);
                     manager.showViewMedicineLotForm();                  
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
