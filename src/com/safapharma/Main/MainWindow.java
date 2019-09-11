@@ -15,7 +15,7 @@ import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
-import com.safapharma.Home.Supplier.NewSupplierForm;
+import com.safapharma.Home.Supplier.AddOrUpdateSupplierForm;
 import com.safapharma.Home.Supplier.SupplierBackend;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
@@ -24,6 +24,7 @@ import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.MedicineLot.NewMedicineLotForm;
 import com.safapharma.MedicineLot.UpdateMedicineLotForm;
 import com.safapharma.MedicineLot.ViewMedicineLotForm;
+import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.StockPanel;
@@ -60,7 +61,7 @@ public class MainWindow extends javax.swing.JFrame {
     private SalesPanel salesPanel;
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
-    private NewSupplierForm newSupplierForm;
+    private AddOrUpdateSupplierForm newSupplierForm;
     private NewStockForm newStockForm;
     private HomeScreenPanel home;
     private NewMedicineLotForm newMedicineLotForm;
@@ -356,13 +357,12 @@ public class MainWindow extends javax.swing.JFrame {
             medicineLotPanel = null;
         }
     }
-    
 
     public void createNewStockViewForm(HomeScreenPanel homeScreenPanel) throws Exception {
         if (newStockViewForm != null) {
             deleteNewStockViewForm();
         }
-        newStockViewForm = new NewStockViewForm(this,homeScreenPanel);
+        newStockViewForm = new NewStockViewForm(this, homeScreenPanel);
     }
 
     public void showNewStockViewForm() {
@@ -398,25 +398,34 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewSupplierForm(SupplierBackend supplierBackend) throws Exception {
+    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend) throws Exception {
         if (newSupplierForm != null) {
-            deleteNewSupplierForm();
+            deleteNewOrUpdateSupplierForm();
         }
-        newSupplierForm = new NewSupplierForm(this, supplierBackend);
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend);
+    }
+    
+    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier) throws Exception {
+        if (newSupplierForm != null) {
+            deleteNewOrUpdateSupplierForm();
+        }
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend,isUpdateForm,supplier);
     }
 
-    public void showNewSupplierForm() {
+    public void showNewOrUpdateSupplierForm() {
         if (newSupplierForm != null) {
             newSupplierForm.setVisible(true);
         }
     }
 
-    public void deleteNewSupplierForm() {
+    public void deleteNewOrUpdateSupplierForm() {
         if (newSupplierForm != null) {
             newSupplierForm.setVisible(false);
             newSupplierForm = null;
         }
     }
+
+    
 
     public void createNewSalesForm() throws Exception {
 //        if (newSaleForm != null) {
@@ -457,6 +466,7 @@ public class MainWindow extends javax.swing.JFrame {
             newMedicineLotForm = null;
         }
     }
+
     /* For Viewing of MedicineLotForms */
     public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
         if (viewMedicineLotForm != null) {
@@ -477,6 +487,7 @@ public class MainWindow extends javax.swing.JFrame {
             viewMedicineLotForm = null;
         }
     }
+
     /* For showing update medicine lot panel */
     public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
         if (updateMedicineLotForm != null) {
@@ -497,6 +508,7 @@ public class MainWindow extends javax.swing.JFrame {
             updateMedicineLotForm = null;
         }
     }
+
     public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
         {
             if (newCustomerForm != null) {
