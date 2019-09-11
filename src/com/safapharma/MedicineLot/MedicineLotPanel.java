@@ -36,6 +36,7 @@ public class MedicineLotPanel extends MainScreenPanel{
     private DefaultTableModel tableModel;
     private final MedicineLotBackend medicineLotBackend;
     private TableRowSorter sorter;
+    DataWithColumn dataWithColumn;
     
     public MedicineLotPanel(MainWindow manager){
         this.manager = manager;
@@ -45,7 +46,7 @@ public class MedicineLotPanel extends MainScreenPanel{
     }
     
     private void loadData() throws Exception {
-        DataWithColumn dataWithColumn = medicineLotBackend.setMedicineIntoTable(supplierTable, tableModel);
+        dataWithColumn = medicineLotBackend.setMedicineIntoTable(supplierTable, tableModel);
         tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
 
     }
@@ -75,7 +76,15 @@ public class MedicineLotPanel extends MainScreenPanel{
         supplierTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                enableButtons();
+                enableButtons();
+                int x = supplierTable.getSelectedRow();
+//                int y = supplierTable.getSelectedColumn();
+//                
+//                Object ob = tableModel.getDataVector().elementAt(supplierTable.getSelectedRow());
+//                Object ob = dataWithColumn.getData();
+                Object ob= dataWithColumn.getDataOf(x);
+                System.out.println("I am here"+ob);
+                
             }
 
         });

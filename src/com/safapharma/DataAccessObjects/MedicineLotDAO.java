@@ -11,12 +11,15 @@ import com.safapharma.ModelObjects.DataWithColumn;
 /**
  *
  * @author shiva
- * 
+ * updated by karan
  */
 public class MedicineLotDAO {
     
+    
      public DataWithColumn getAllMedicineLotDetails() throws Exception {
-        final String SQL_QUERY = "select stock_entry_id, company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+         System.out.println("Running View medicine lot query");
+        final String SQL_QUERY = "select lot_id, company_name,medicine_name,expiry,batch_no,rate from " + Constants.VIEW_MEDICINE_LOT_VIEW;
+        
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
 
