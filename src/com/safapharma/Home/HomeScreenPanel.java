@@ -11,12 +11,14 @@ import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.Cursor;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
@@ -38,6 +40,7 @@ public class HomeScreenPanel extends MainScreenPanel {
     private TableRowSorter sorter;
     private DataWithColumn stockData;
     private final HomeScreenPanel thisHome;
+    private JLabel TotalLable;
 
     public HomeScreenPanel(MainWindow manager) {
         this.manager = manager;
@@ -48,9 +51,7 @@ public class HomeScreenPanel extends MainScreenPanel {
     }
 
     private void initUI() {
-
         
-
         tableModel = new CustomDefaultTableModel();
         new SwingWorker<Void, Void>() {
             @Override
@@ -67,7 +68,8 @@ public class HomeScreenPanel extends MainScreenPanel {
         billEntriesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         billEntriesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         getTableScrollPane().setViewportView(billEntriesTable);
-        
+        //TotalLable.setText("shivam");
+        //getTableScrollPane().add(TotalLable);
 
     }
 
