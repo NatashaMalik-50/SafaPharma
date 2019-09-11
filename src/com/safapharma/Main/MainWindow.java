@@ -8,14 +8,17 @@ package com.safapharma.Main;
 import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Customer.CustomerPanel;
 import com.safapharma.Customer.NewCustomerForm;
+import com.safapharma.Customer.UpdateCustomerForm;
+import com.safapharma.Customer.ViewCustomerForm;
 import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
+import com.safapharma.Home.Sales.SaleViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
-import com.safapharma.Home.Supplier.NewSupplierForm;
+import com.safapharma.Home.Supplier.AddOrUpdateSupplierForm;
 import com.safapharma.Home.Supplier.SupplierBackend;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
@@ -24,6 +27,7 @@ import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.MedicineLot.NewMedicineLotForm;
 import com.safapharma.MedicineLot.UpdateMedicineLotForm;
 import com.safapharma.MedicineLot.ViewMedicineLotForm;
+import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.StockPanel;
@@ -60,7 +64,8 @@ public class MainWindow extends javax.swing.JFrame {
     private SalesPanel salesPanel;
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
-    private NewSupplierForm newSupplierForm;
+    private AddOrUpdateSupplierForm newSupplierForm;
+    private SaleViewForm saleViewForm;
     private NewStockForm newStockForm;
     private HomeScreenPanel home;
     private NewMedicineLotForm newMedicineLotForm;
@@ -68,6 +73,8 @@ public class MainWindow extends javax.swing.JFrame {
     private MedicineLotPanel medicineLotPanel;
     private UpdateMedicineLotForm updateMedicineLotForm;
     private NewCustomerForm newCustomerForm;
+    private ViewCustomerForm viewCustomerForm;
+    private UpdateCustomerForm updateCustomerForm;
 
     /**
      * Creates new form MainWindow
@@ -356,13 +363,12 @@ public class MainWindow extends javax.swing.JFrame {
             medicineLotPanel = null;
         }
     }
-    
 
     public void createNewStockViewForm(HomeScreenPanel homeScreenPanel) throws Exception {
         if (newStockViewForm != null) {
             deleteNewStockViewForm();
         }
-        newStockViewForm = new NewStockViewForm(this,homeScreenPanel);
+        newStockViewForm = new NewStockViewForm(this, homeScreenPanel);
     }
 
     public void showNewStockViewForm() {
@@ -398,25 +404,34 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewSupplierForm(SupplierBackend supplierBackend) throws Exception {
+    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend) throws Exception {
         if (newSupplierForm != null) {
-            deleteNewSupplierForm();
+            deleteNewOrUpdateSupplierForm();
         }
-        newSupplierForm = new NewSupplierForm(this, supplierBackend);
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend);
+    }
+    
+    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier) throws Exception {
+        if (newSupplierForm != null) {
+            deleteNewOrUpdateSupplierForm();
+        }
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend,isUpdateForm,supplier);
     }
 
-    public void showNewSupplierForm() {
+    public void showNewOrUpdateSupplierForm() {
         if (newSupplierForm != null) {
             newSupplierForm.setVisible(true);
         }
     }
 
-    public void deleteNewSupplierForm() {
+    public void deleteNewOrUpdateSupplierForm() {
         if (newSupplierForm != null) {
             newSupplierForm.setVisible(false);
             newSupplierForm = null;
         }
     }
+
+    
 
     public void createNewSalesForm() throws Exception {
 //        if (newSaleForm != null) {
@@ -436,6 +451,26 @@ public class MainWindow extends javax.swing.JFrame {
 //            newSaleForm.setVisible(false);
 //            newSaleForm = null;
 //        }
+    }
+    
+    public void createSaleViewForm(int sale_id,String customeName) throws Exception {
+        if (saleViewForm != null) {
+            deleteSaleViewForm();
+        }
+        saleViewForm = new SaleViewForm(this, sale_id, customeName);        
+    }
+
+    public void showSaleViewForm() {
+        if (saleViewForm != null) {
+            saleViewForm.setVisible(true);
+         }
+    }
+
+    public void deleteSaleViewForm() {
+        if (saleViewForm != null) {
+            saleViewForm.setVisible(false);
+            saleViewForm = null;
+        }
     }
 
     public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
@@ -457,6 +492,7 @@ public class MainWindow extends javax.swing.JFrame {
             newMedicineLotForm = null;
         }
     }
+
     /* For Viewing of MedicineLotForms */
     public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
         if (viewMedicineLotForm != null) {
@@ -477,6 +513,7 @@ public class MainWindow extends javax.swing.JFrame {
             viewMedicineLotForm = null;
         }
     }
+
     /* For showing update medicine lot panel */
     public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
         if (updateMedicineLotForm != null) {
@@ -497,6 +534,7 @@ public class MainWindow extends javax.swing.JFrame {
             updateMedicineLotForm = null;
         }
     }
+
     public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
         {
             if (newCustomerForm != null) {
@@ -519,6 +557,61 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
+   public void createViewCustomerForm(CustomerBackend customerBackend) throws Exception {
+        if(viewCustomerForm!=null)
+            {
+                deleteViewCustomerForm();
+            }
+            viewCustomerForm= new ViewCustomerForm(this,customerBackend);
+
+    }
+    
+    public void showViewCustomerForm() {
+        if(viewCustomerForm!=null)
+        {
+            viewCustomerForm.setVisible(true);
+        }
+       
+    }
+
+    public void deleteViewCustomerForm() {
+      if(viewCustomerForm!=null)
+      {
+          viewCustomerForm.setVisible(false);
+          viewCustomerForm=null;
+          
+         
+      }
+    }
+    
+    public void createUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
+        if(updateCustomerForm!=null)
+            {
+                deleteViewCustomerForm();
+            }
+            updateCustomerForm= new UpdateCustomerForm(this,customerBackend);
+
+    }
+
+    public void showUpdateCustomerForm() {
+        if(updateCustomerForm!=null)
+        {
+            updateCustomerForm.setVisible(true);
+        }
+       
+    }
+
+    public void deleteUpdateCustomerForm() {
+      if(updateCustomerForm!=null)
+      {
+          updateCustomerForm.setVisible(false);
+          updateCustomerForm=null;
+          
+         
+      }
+    }
+    
+    
     public void deleteCurrentPanel() {
         Component component = componentStack.pop();
         if (component == home) {

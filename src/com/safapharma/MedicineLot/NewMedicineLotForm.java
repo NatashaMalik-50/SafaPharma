@@ -63,7 +63,6 @@ public class NewMedicineLotForm extends DialogForm {
         
         //Set and configure layout
         getFormLabel().setText("Add MedicineLotForm");
-        getFormPanel().setLayout(new GridLayout(0, 4));
         System.out.println("Creating and Adding Medicine Lot Form ");
 
         String[] someString = { "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine" };
@@ -93,27 +92,27 @@ public class NewMedicineLotForm extends DialogForm {
         getFormPanel().add(medicineNameLabel);
         getFormPanel().add(medicineNameCombo);
         getFormPanel().add(medicineNameAddButton);
-        getFormPanel().add(medicineNameErrorLabel);        
+//        getFormPanel().add(medicineNameErrorLabel);        
         
         getFormPanel().add(batchNumLabel);
         getFormPanel().add(batchNumText);
         getFormPanel().add(batchNumErrorLabel);
-        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
         
         getFormPanel().add(expiryLabel);
         getFormPanel().add(expiryText);
         getFormPanel().add(expiryErrorLabel);
-        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
         
         getFormPanel().add(rateLabel);
         getFormPanel().add(rateText);
         getFormPanel().add(rateErrorLabel);
-        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
         
         getFormPanel().add(submitButton);
         getFormPanel().add(resetButton);
         getFormPanel().add(new JPanel());
-        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
 
         this.pack();
         hideErrorLabels();

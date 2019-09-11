@@ -76,4 +76,12 @@ public class Supplier {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return "Supplier{" + "id=" + id + ", name=" + name + ", address=" + address + ", contactNo=" + contactNo + ", email=" + email + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+    }
+    
+    
+    
+
 }

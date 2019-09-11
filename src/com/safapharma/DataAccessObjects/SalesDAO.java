@@ -47,4 +47,8 @@ public class SalesDAO {
         final String SQL_QUERY = "SELECT " + TABLE_SALES + ".id, " + TABLE_CUSTOMER +".name, total_quantity, total_amount, discount, final_amount, "+ TABLE_SALES + ".created_at as billed_at from " + TABLE_SALES + " INNER JOIN " + TABLE_CUSTOMER +" On " + TABLE_SALES +".customer_id = "+ TABLE_CUSTOMER + ".id";
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
+    public DataWithColumn getSaleDetails(int sale_id) throws Exception{
+         final String SQL_QUERY = "SELECT id, rate, quantity, discount, final_amount from " + TABLE_SALE_ENTRY  + " where sale_id = " + sale_id; 
+         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
 }
