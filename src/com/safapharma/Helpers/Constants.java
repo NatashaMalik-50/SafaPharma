@@ -32,7 +32,20 @@ public class Constants {
     public static final String BUTTON_MEDICINE_LABEL = "Medicine";
     public static final String BUTTON_MEDICINE_LOT_LABEL = "Medicine Lot";
     public static final String BUTTON_BACKUP_LABEL = "Backup";
-
+    
+    public static final String BUTTON_VIEW_SALES_LABEL = "View Sales";
+    public static final String BUTTON_REMOVE_SALES_LABEL = "Remove Sales";
+    
+    public static final String COMBOBOX_FILTER_BY_DATE  = "Filter By Date";
+    public static final String COMBOBOX_FILTER_BY_AMOUNT  = "Filter By Amount";    
+    
+    public static final String PLACEHOLDER_TEXT_SEARCH = "Search";
+    public static final String PLACEHOLDER_TEXT_DATE_FROM = "DD-MM-YYYY";
+    public static final String PLACEHOLDER_TEXT_DATE_TO = "DD-MM-YYYY";
+    public static final String PLACEHOLDER_TEXT_AMOUNT_FROM = "Price From";
+    public static final String PLACEHOLDER_TEXT_AMOUNT_TO = "Price To";
+    
+    
     public static final String TABLE_USERS = "user";
     public static final String TABLE_CUSTOMER = "customer";
     public static final String TABLE_MEDICINE = "medicine";

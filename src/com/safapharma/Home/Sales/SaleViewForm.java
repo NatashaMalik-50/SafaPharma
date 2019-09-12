@@ -61,7 +61,7 @@ public class SaleViewForm extends DialogForm{
         aggregateTextField.setEditable(false);
          
         customerNameField = new JTextField();
-        customerNameField.setEnabled(false);
+        customerNameField.setEditable(false);
         
         aggregatePanel.setLayout(new GridLayout(1, 3));
         customerDetailPanel.setLayout(new GridLayout(1, 3));
