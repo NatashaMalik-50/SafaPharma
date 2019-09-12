@@ -8,13 +8,14 @@ package com.safapharma.Main;
 import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Customer.CustomerPanel;
 import com.safapharma.Customer.NewOrUpdateCustomerForm;
-import com.safapharma.Customer.UpdateCustomerForm;
 import com.safapharma.Customer.ViewCustomerForm;
 import com.safapharma.ExpiredMedicines.ExpiredMedicinesPanel;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
+import com.safapharma.Home.NewUpdateBillForm;
+import com.safapharma.Home.NewBillMedicineEntryViewForm;
 import com.safapharma.Home.Sales.SaleViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
@@ -65,6 +66,8 @@ public class MainWindow extends javax.swing.JFrame {
     private SalesPanel salesPanel;
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
+    private NewUpdateBillForm newUpdateBillForm;
+    private NewBillMedicineEntryViewForm newBillInfoViewForm;
     private AddOrUpdateSupplierForm newSupplierForm;
     private SaleViewForm saleViewForm;
     private NewStockForm newStockForm;
@@ -75,7 +78,6 @@ public class MainWindow extends javax.swing.JFrame {
     private UpdateMedicineLotForm updateMedicineLotForm;
     private NewOrUpdateCustomerForm newOrUpdateCustomerForm;
     private ViewCustomerForm viewCustomerForm;
-    private UpdateCustomerForm updateCustomerForm;
     private ExpiredMedicinesPanel expiredMedicinesPanel;
 
     /**
@@ -515,11 +517,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     /* For showing update medicine lot panel */
-    public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend,Vector selectedObject) throws Exception {
+    public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend, Vector selectedObject) throws Exception {
         if (updateMedicineLotForm != null) {
             deleteUpdateMedicineLotForm();
         }
-        updateMedicineLotForm = new UpdateMedicineLotForm(this, medicineLotBackend,selectedObject);
+        updateMedicineLotForm = new UpdateMedicineLotForm(this, medicineLotBackend, selectedObject);
     }
 
     public void showUpdateMedicineLotForm() {
@@ -543,13 +545,13 @@ public class MainWindow extends javax.swing.JFrame {
             newOrUpdateCustomerForm = new NewOrUpdateCustomerForm(this, customerBackend);
         }
     }
-    
-    public void createNewOrUpdateCustomerForm(CustomerBackend customerBackend,Customer customer,boolean isUpdateForm) throws Exception {
+
+    public void createNewOrUpdateCustomerForm(CustomerBackend customerBackend, Customer customer, boolean isUpdateForm) throws Exception {
         {
             if (newOrUpdateCustomerForm != null) {
                 deleteNewOrUpdateCustomerForm();
             }
-            newOrUpdateCustomerForm = new NewOrUpdateCustomerForm(this, customerBackend,isUpdateForm,customer);
+            newOrUpdateCustomerForm = new NewOrUpdateCustomerForm(this, customerBackend, isUpdateForm, customer);
         }
     }
 
@@ -589,26 +591,43 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
-        if (updateCustomerForm != null) {
-            deleteViewCustomerForm();
+    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel) throws Exception {
+        if (newUpdateBillForm != null) {
+            deleteNewUpdateBillForm();
         }
-        updateCustomerForm = new UpdateCustomerForm(this, customerBackend);
-
+        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel);
     }
 
-    public void showUpdateCustomerForm() {
-        if (updateCustomerForm != null) {
-            updateCustomerForm.setVisible(true);
+    public void showNewUpdateBillForm() {
+        if (newUpdateBillForm != null) {
+            newUpdateBillForm.setVisible(true);
         }
-
     }
 
-    public void deleteUpdateCustomerForm() {
-        if (updateCustomerForm != null) {
-            updateCustomerForm.setVisible(false);
-            updateCustomerForm = null;
+    public void deleteNewUpdateBillForm() {
+        if (newUpdateBillForm != null) {
+            newUpdateBillForm.setVisible(false);
+            newUpdateBillForm = null;
+        }
+    }
 
+    public void createNewBillInfoViewForm(HomeScreenPanel homeScreenPanel, int id) throws Exception {
+        if (newBillInfoViewForm != null) {
+            deleteNewBillInfoViewForm();
+        }
+        newBillInfoViewForm = new NewBillMedicineEntryViewForm(this, homeScreenPanel, id);
+    }
+
+    public void showNewBillInfoViewForm() {
+        if (newBillInfoViewForm != null) {
+            newBillInfoViewForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewBillInfoViewForm() {
+        if (newBillInfoViewForm != null) {
+            newBillInfoViewForm.setVisible(false);
+            newBillInfoViewForm = null;
         }
     }
 

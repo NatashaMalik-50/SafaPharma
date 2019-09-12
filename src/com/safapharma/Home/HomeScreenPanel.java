@@ -19,6 +19,10 @@ import java.awt.event.MouseEvent;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -43,11 +47,12 @@ public class HomeScreenPanel extends MainScreenPanel {
     private DataWithColumn stockData;
     private DataWithColumn billData;
     private final HomeScreenPanel thisHome;
-    private Object[] column = {"Sr.No", "Medicine Name", "Quantity", "Supplier Name", "Rate"};
+    private Object[] column = {"Sr.No", "Medicine Name", "Quantity", "Batch Number", "Rate"};
     private JLabel totalLable;
     private JLabel totalBox;
     protected ToolbarButton btnAddCustomer;
     private ToolbarButton btnGenerateBill;
+    private static int  Srno=0;
 
     public HomeScreenPanel(MainWindow manager) {
         this.manager = manager;
@@ -71,13 +76,16 @@ public class HomeScreenPanel extends MainScreenPanel {
         billEntriesTable = new JTable(tableModel);
         sorter = new TableRowSorter(tableModel);
         billEntriesTable.setRowSorter(sorter);
-
+        
         billEntriesTable.getTableHeader().setResizingAllowed(false);
         billEntriesTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         billEntriesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         billEntriesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         getTableScrollPane().setViewportView(billEntriesTable);
-
+        //addButton.setText("Add Medicine Inside Bill");
+        //removeButton.setText("Remove Medicine From Bill");
+        //viewButton.setText("View Medicine In Detail");
+        //updateButton.setText("Update Quatity Of Medicine");
         totalLable = new JLabel();
         totalLable.setText("Total :");
         totalLable.setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
@@ -141,16 +149,53 @@ public class HomeScreenPanel extends MainScreenPanel {
                 }
             }
         });
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    manager.createNewUpdateBillForm(thisHome);
+                    manager.showNewUpdateBillForm();
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if(billEntriesTable.getSelectedRow()>=0)
+                    {
+                        int rowIndex = billEntriesTable.getSelectedRow();
+                        String exactSrno = billEntriesTable.getValueAt(rowIndex, 0).toString();
+                        int id = (Integer)billData.getDataOf(Integer.parseInt(exactSrno)-1).get(0);
+                        
+                        //System.out.println(exactSrno + " id -- "+id);
+                        manager.createNewBillInfoViewForm(thisHome,id);
+                        manager.showNewBillInfoViewForm();
+                    }
+                    else
+                    {
+                        //Alert ob = new Alert(Alert.AlertType.WARNING,"Select Atleast One Row",ButtonType.OK);
+                    }
+                       
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     int id = billEntriesTable.getSelectedRow();
-                    System.out.println(id);
+                    //System.out.println(id);
                     //billEntriesTable.remove(id);
                     if (billEntriesTable.getSelectedRow() >= 0) {
                         DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
                         model.removeRow(id);
+                        Srno--;
+                        
                         billData.getData().remove(id);
                         if (billEntriesTable.getRowCount() >= 0) {
                             disableRemoveButtons();
@@ -162,11 +207,13 @@ public class HomeScreenPanel extends MainScreenPanel {
                         disableUpdateButtons();
                         disableViewButtons();
                     }
+                    
                     getSum();
+                    
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+                disableButtons();
             }
         });
         btnAddCustomer.addActionListener(new ActionListener() {
@@ -234,14 +281,26 @@ public class HomeScreenPanel extends MainScreenPanel {
 
     public void addRow(int rowIndex) {
         //System.out.println("found row : "+rowIndex+ " with value"+stockData.getDataOf(rowIndex)+ " --with id-- "+stockData.getIdData());
-
+        JTextField obc = new JTextField();
+        String str;
+        str=stockData.getDataOf(rowIndex - 1).get(5).toString();
+        obc.setText(str);
+        System.out.println("Str -- "+str);
         DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
         Vector<Object> newRow = new Vector<>();
-        newRow.add(stockData.getDataOf(rowIndex - 1).get(0).toString());
+        Srno++;
+        newRow.add(Srno);
+        System.out.println("SNo added "+Srno + " for row index "+(rowIndex-1));
         newRow.add(stockData.getDataOf(rowIndex - 1).get(2).toString());
+        
+        System.out.println("next field - "+stockData.getDataOf(rowIndex - 1).get(2).toString());
+        //newRow.add();
         newRow.add(stockData.getDataOf(rowIndex - 1).get(3).toString());
-        newRow.add(stockData.getDataOf(rowIndex - 1).get(7).toString());
+        System.out.println("next field2 - "+stockData.getDataOf(rowIndex - 1).get(3).toString());
+        newRow.add(stockData.getDataOf(rowIndex - 1).get(5).toString());
+        System.out.println("next field3 - "+stockData.getDataOf(rowIndex - 1).get(5).toString());
         newRow.add(stockData.getDataOf(rowIndex - 1).get(4).toString());
+        System.out.println("next field - "+stockData.getDataOf(rowIndex - 1).get(4).toString());
 //        ob[0]=billEntriesTable.getValueAt(rowIndex-1, 0).toString();
 //        ob[1]=billEntriesTable.getValueAt(rowIndex-1, 2).toString();
 //        ob[2]=billEntriesTable.getValueAt(rowIndex-1, 3).toString();
@@ -249,10 +308,12 @@ public class HomeScreenPanel extends MainScreenPanel {
 //        ob[4]=billEntriesTable.getValueAt(rowIndex-1, 4).toString();
         //model.addRow(stockData.getDataOf(rowIndex-1));
         model.addRow(newRow);
+        //model.setValueAt(false);
         //bill row also stores id of the object
         Vector<Object> billRow = new Vector<>();
-        billRow.add(stockData.getIdBySerialNo(Integer.parseInt((String) newRow.get(0))));
+        billRow.add(stockData.getIdBySerialNo((Integer)(stockData.getDataOf(rowIndex - 1).get(0))));
         billRow.addAll(newRow);
+        System.out.println("Bill row "+billRow);
         billData.getData().add(billRow);
         System.out.print("Vec -- " + billData.getData());
 

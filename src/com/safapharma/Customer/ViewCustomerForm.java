@@ -8,6 +8,7 @@ package com.safapharma.Customer;
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
+import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.DialogForm;
 import com.safapharma.Templates.DummyPanel;
 import java.awt.GridLayout;
@@ -67,7 +68,7 @@ public class ViewCustomerForm extends DialogForm {
         viewPanel = new JPanel();
         viewPanel.setLayout(new GridLayout(0, 3));
         scrollPane = new JScrollPane();
-        tableModel = new DefaultTableModel();
+        tableModel = new CustomDefaultTableModel();
         salesTable = new JTable(tableModel);
         salesTable.getTableHeader().setResizingAllowed(false);
         salesTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);

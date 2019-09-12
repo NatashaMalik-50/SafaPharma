@@ -65,8 +65,8 @@ public class NewStockViewForm extends DialogForm {
 
     private void initUI() {
         getFormLabel().setText("View Stock");
-        addButton = new FormButton("Submit");
-        resetButton = new FormButton("Reset");
+        addButton = new FormButton("Add Medicine");
+        resetButton = new FormButton("Reset Selection");
         disableButtons();
 
         tableModel = new CustomDefaultTableModel();
@@ -111,12 +111,17 @@ public class NewStockViewForm extends DialogForm {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{
                 int rowIndex = stockTable.getSelectedRow();
                 String exactSrno = stockTable.getValueAt(rowIndex, 0).toString();
                 int srno = Integer.parseInt(exactSrno);
                 //System.out.println(sr);
-                
                 homeScreenPanel.addRow(srno);
+                }
+                catch(Exception em)
+                {
+                    System.out.println(em);
+                }
             }
         });
         resetButton.addActionListener(new ActionListener() {
