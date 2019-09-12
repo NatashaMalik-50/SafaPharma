@@ -8,17 +8,24 @@ package com.safapharma.Customer;
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Main.MainWindow;
+import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -29,12 +36,15 @@ public class CustomerPanel extends MainScreenPanel {
     private MainWindow manager;
     private JTable customerTable;
     private DefaultTableModel tableModel;
-    private final CustomerBackend CustomerBackend;
+    private final CustomerBackend customerBackend;
+    private TableRowSorter sorter;
+    private DataWithColumn customerDataWithColumns;
+    Vector<Object> selectedObject;
 
     public CustomerPanel(MainWindow manager) {
 
         this.manager = manager;
-        CustomerBackend = new CustomerBackend();
+        customerBackend = new CustomerBackend();
         initUI();
         setListeners();
 
@@ -49,21 +59,27 @@ public class CustomerPanel extends MainScreenPanel {
                 return null;
             }
         }.execute();
+        addButton.setText("Add Customer");
+        viewButton.setText("View Customer");
+        updateButton.setText("Update Customer");
+        removeButton.setText("Remove Customer");
 
         tableModel = new DefaultTableModel();
         customerTable = new JTable(tableModel);
+        sorter = new TableRowSorter(tableModel);
+        customerTable.setRowSorter(sorter);
         customerTable.getTableHeader().setResizingAllowed(false);
         customerTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         customerTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         customerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        customerTable.setAutoCreateRowSorter(true);
+
         getTableScrollPane().setViewportView(customerTable);
 
     }
 
     private void loadData() throws Exception {
-        DataWithColumn dataWithColumn = CustomerBackend.setCustomerInfoIntoTable(customerTable, tableModel);
-        tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
+        customerDataWithColumns = customerBackend.setCustomerInfoIntoTable(customerTable, tableModel);
+        tableModel.setDataVector(customerDataWithColumns.getData(), customerDataWithColumns.getColumnNames());
     }
 
     private void setListeners() {
@@ -81,19 +97,48 @@ public class CustomerPanel extends MainScreenPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     //create new form
-                    manager.createNewCustomerForm(CustomerBackend); //the appropriate function call
-                    manager.showNewCustomerForm();
+                    manager.createNewOrUpdateCustomerForm(customerBackend); //the appropriate function call
+                    manager.showNewOrUpdateCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
+
+        searchBox.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + str));
+                }
+            }
+        });
+
         viewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //create new form
-                    manager.createViewCustomerForm(CustomerBackend); //the appropriate function call
+                    int rowIndex = customerTable.getSelectedRow();
+                    int selectSNo = Integer.parseInt(customerTable.getValueAt(rowIndex, 0).toString());
+                    int currentCustomerId = customerDataWithColumns.getIdBySerialNo(selectSNo);
+                    Vector<Object> customer = customerDataWithColumns.getDataOf(selectSNo - 1);
+                    manager.createViewCustomerForm(customerBackend, customer, currentCustomerId);
                     manager.showViewCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,23 +146,27 @@ public class CustomerPanel extends MainScreenPanel {
             }
         }
         );
-        
+
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //create new form
-                    manager.createUpdateCustomerForm(CustomerBackend); //the appropriate function call
-                    manager.showUpdateCustomerForm();
+                    int rowIndex = customerTable.getSelectedRow();
+                    int selectSNo = Integer.parseInt(customerTable.getValueAt(rowIndex, 0).toString());
+                    int currentCustomerId = customerDataWithColumns.getIdBySerialNo(selectSNo);
+                    Vector<Object> data = customerDataWithColumns.getDataOf(selectSNo - 1);
+                    Customer customer=new Customer(currentCustomerId,(String) data.get(1), (String) data.get(2), ""+(BigDecimal)data.get(3), (String) data.get(4));
+                    System.out.println("sending customer "+customer);
+                    manager.createNewOrUpdateCustomerForm(customerBackend,customer,true);
+                    manager.showNewOrUpdateCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         );
-        
-        
-          customerTable.addMouseListener(new MouseAdapter() {
+
+        customerTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 enableUpdateButtons();

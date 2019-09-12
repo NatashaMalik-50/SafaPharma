@@ -5,6 +5,7 @@
  */
 package com.safapharma.MedicineLot;
 
+import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.Templates.DialogForm;
 import java.awt.GridLayout;
@@ -60,6 +61,10 @@ public class ViewMedicineLotForm extends DialogForm {
         rateText.setText(selectedObject.get(5).toString());
         
         
+    }
+
+    public ViewMedicineLotForm(MainWindow aThis, CustomerBackend customerBackend) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
   
     

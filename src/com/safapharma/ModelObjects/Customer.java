@@ -10,14 +10,21 @@ public class Customer {
     private String createdAt;
     private String updatedAt;
 
-    public Customer(int id, String name, String address, String contactNo, String email, String createdAt, String updatedAt) {
+    public Customer(int id, String name, String address, String contactNo, String email) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.contactNo = contactNo;
         this.email = email;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    }
+
+    public Customer(String name, String address, String contactNo, String email) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.contactNo = contactNo;
+        this.email = email;
+
     }
 
     public Customer() {
@@ -78,5 +85,12 @@ public class Customer {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", name=" + name + ", address=" + address + ", contactNo=" + contactNo + ", email=" + email + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+    }
+    
+    
 
 }

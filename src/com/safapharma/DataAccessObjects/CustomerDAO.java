@@ -25,20 +25,22 @@ import java.util.List;
  * @author akshit
  */
 public class CustomerDAO {
-        public int getCustomerId(String cName) throws Exception {
+
+    public int getCustomerId(String cName) throws Exception {
         String sql = "SELECT id FROM " + TABLE_CUSTOMER + " where name= ?";
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, cName);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
+            if (resultSet.next()) {
                 return resultSet.getInt("id");
-            else
-               return Constants.INVALID;
+            } else {
+                return Constants.INVALID;
+            }
         }
     }
-        
-    public void getCustomer(Customer customer) throws Exception{
+
+    public void getCustomer(Customer customer) throws Exception {
         final String SQL_QUERY = "select * from " + TABLE_CUSTOMER + " where username = ? ";
         try (Connection con = DbHelper.getConnection();) {
             PreparedStatement pst = con.prepareStatement(SQL_QUERY);
@@ -53,60 +55,73 @@ public class CustomerDAO {
             }
         }
     }
-    public int createCustomer(Customer customer) throws Exception{
-        final String sql = "Insert into " + TABLE_CUSTOMER + "values(?,?,?,?,?)";
+
+    public int createCustomer(Customer customer) throws Exception {
+        final String sql = "Insert into " + TABLE_CUSTOMER + " (name, contact_no, address, email) values(?,?,?,?)";
         try (Connection con = DbHelper.getConnection();) {
             PreparedStatement pst = con.prepareStatement(sql);
-            
+
             pst.setString(1, customer.getName());
             pst.setString(2, customer.getContactNo());
             pst.setString(3, customer.getAddress());
             pst.setString(4, customer.getEmail());
-            
+
             int recordUpdatedCount = pst.executeUpdate();
-               return recordUpdatedCount;
+            return recordUpdatedCount;
         }
     }
-    public int UpdateCustomer(Customer customer) throws Exception{
-        final String sql = "Update table " + TABLE_CUSTOMER + "set name = ?, contact_no = ?, address = ?, email= ? where id = /";
+
+    public int UpdateCustomer(Customer customer) throws Exception {
+        final String sql = "Update " + TABLE_CUSTOMER + " set name = ?, contact_no = ?, address = ?, email= ? where id = ?";
         try (Connection con = DbHelper.getConnection();) {
             PreparedStatement pst = con.prepareStatement(sql);
-            
+
             pst.setString(1, customer.getName());
             pst.setString(2, customer.getContactNo());
             pst.setString(3, customer.getAddress());
             pst.setString(4, customer.getEmail());
             pst.setInt(5, customer.getId());
-            
-            int recordUpdatedCount = pst.executeUpdate();
-            return recordUpdatedCount;
+
+            int rowsAdded = pst.executeUpdate();
+            return (rowsAdded > 0) ? rowsAdded : Constants.INVALID;
         }
     }
     // No DELETE Function
-    
-    public void getCustomerAllSales(String customerId) throws Exception{
-      final String sql= "Select * from" + TABLE_SALES +" where customer_id = ?";
-      try(Connection con = DbHelper.getConnection();){
-          PreparedStatement pst = con.prepareStatement(sql);
-          pst.setString(1, customerId);
-          ResultSet rs = pst.executeQuery();
-          List <Sales> sales = new ArrayList<>();
-          while(rs.next()){
-               // return list of sales opject.
-          }  
-      }
+
+    public void getCustomerAllSales(String customerId) throws Exception {
+        final String sql = "Select * from" + TABLE_SALES + " where customer_id = ?";
+        try (Connection con = DbHelper.getConnection();) {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, customerId);
+            ResultSet rs = pst.executeQuery();
+            List<Sales> sales = new ArrayList<>();
+            while (rs.next()) {
+                // return list of sales opject.
+            }
+        }
     }
-    public void getMedicineBought(String customerId) throws Exception{
-       final String sql = "Select * from " + TABLE_SALE_ENTRY + " INNER JOIN " + TABLE_SALES + " ON " + TABLE_SALE_ENTRY +".sale_id = " + TABLE_SALES + ".id where Sales.customer_id = ?";
-       try (Connection con = DbHelper.getConnection();){
-       PreparedStatement pst = con.prepareStatement(sql);
-       pst.setString(1, customerId);
-       ResultSet rs = pst.executeQuery();
-       }   
+
+    public void getMedicineBought(String customerId) throws Exception {
+        final String sql = "Select * from " + TABLE_SALE_ENTRY + " INNER JOIN " + TABLE_SALES + " ON " + TABLE_SALE_ENTRY + ".sale_id = " + TABLE_SALES + ".id where Sales.customer_id = ?";
+        try (Connection con = DbHelper.getConnection();) {
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, customerId);
+            ResultSet rs = pst.executeQuery();
+        }
     }
-    
-     public DataWithColumn getAllCustomerDetails() throws Exception {
-        final String SQL_QUERY = "select stock_entry_id, company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+
+    public DataWithColumn getAllCustomerDetails() throws Exception {
+        final String SQL_QUERY = "select id ,name, address,contact_no,email from " + TABLE_CUSTOMER;
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
+
+    public DataWithColumn getSelectedCustomerDetails(int id) throws Exception {
+        try {
+            final String SQL_QUERY = "SELECT id, total_quantity,total_amount,discount,final_amount,created_at from " + TABLE_SALES + " where customer_id=" + id;
+            return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+        } catch (Exception e) {
+            System.out.println("EXC ----- " + e);
+        }
+        return null;
     }
 }

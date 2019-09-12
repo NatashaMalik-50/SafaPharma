@@ -6,12 +6,10 @@
 package com.safapharma.Home;
 
 import com.safapharma.Helpers.DesignConstants;
-import com.safapharma.Helpers.IconConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
-import com.safapharma.Customer.CustomerPanel;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -21,8 +19,6 @@ import java.awt.event.MouseEvent;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -255,10 +251,10 @@ public class HomeScreenPanel extends MainScreenPanel {
         model.addRow(newRow);
         //bill row also stores id of the object
         Vector<Object> billRow = new Vector<>();
-        billRow.add(stockData.getIdBySerialNo(Integer.parseInt((String)newRow.get(0))));
+        billRow.add(stockData.getIdBySerialNo(Integer.parseInt((String) newRow.get(0))));
         billRow.addAll(newRow);
         billData.getData().add(billRow);
-        System.out.print("Vec -- "+billData.getData());
+        System.out.print("Vec -- " + billData.getData());
 
         /*Vector v = new Vector();
         v.add("Sr.No");

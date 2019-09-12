@@ -5,15 +5,11 @@
  */
 package com.safapharma.Customer;
 
-import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.Customer;
 import com.safapharma.Templates.DialogForm;
-import java.awt.PopupMenu;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,27 +22,23 @@ public class UpdateCustomerForm extends DialogForm {
     private MainWindow manager;
     private JTable customerTable;
     private DefaultTableModel tableModel;
-    
-    
+
     private DialogForm.FormLabel nameLabel;
     private DialogForm.FormText nameText;
     private DialogForm.ErrorLabel nameErrorLabel;
-    
-    
+
     private DialogForm.FormLabel contactLabel;
     private DialogForm.FormText contactText;
     private DialogForm.ErrorLabel contactErrorLabel;
-    
+
     private DialogForm.FormLabel addressLabel;
     private DialogForm.FormText addressText;
     private DialogForm.ErrorLabel addressErrorLabel;
-    
+
     private DialogForm.FormButton submitButton;
     private FormButton resetButton;
-    
+
     private final CustomerBackend customerBackend;
-    
-    
 
     public UpdateCustomerForm(MainWindow manager, CustomerBackend CustomerBackend) {
         this.manager = manager;
@@ -61,11 +53,11 @@ public class UpdateCustomerForm extends DialogForm {
 
     private void initUI() {
         getFormLabel().setText("Update Customer");
-       
+
         nameLabel = new DialogForm.FormLabel("Name");
         nameText = new DialogForm.FormText();
         nameErrorLabel = new DialogForm.ErrorLabel();
-        
+
         contactLabel = new DialogForm.FormLabel("Contact Number");
         contactText = new DialogForm.FormText();
         contactErrorLabel = new DialogForm.ErrorLabel();
@@ -76,15 +68,15 @@ public class UpdateCustomerForm extends DialogForm {
 
         submitButton = new DialogForm.FormButton("Update");
         resetButton = new FormButton("Reset");
-        
+
         getFormPanel().add(nameLabel);
         getFormPanel().add(nameText);
         getFormPanel().add(nameErrorLabel);
-        
+
         getFormPanel().add(contactLabel);
         getFormPanel().add(contactText);
         getFormPanel().add(contactErrorLabel);
-        
+
         getFormPanel().add(addressLabel);
         getFormPanel().add(addressText);
         getFormPanel().add(addressErrorLabel);
@@ -126,12 +118,13 @@ public class UpdateCustomerForm extends DialogForm {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        
-         resetButton.addActionListener(new ActionListener() {
+
+        resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             }
-        }); resetButton.addActionListener(new ActionListener() {
+        });
+        resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             }
@@ -160,7 +153,7 @@ public class UpdateCustomerForm extends DialogForm {
             addressErrorLabel.setErrorText("Address length should be between 8 and 45.");
             addressErrorLabel.setVisible(true);
             isValid = false;
-        }        
+        }
         return isValid;
     }
 
@@ -168,7 +161,6 @@ public class UpdateCustomerForm extends DialogForm {
 //        Customer customer = new Customer(nameText.getText(), addressText.getText(), customersinceText.getText());
 //        return customer;
 //    }
-
     private void hideErrorLabels() {
         nameErrorLabel.setVisible(false);
         addressErrorLabel.setVisible(false);
@@ -185,7 +177,6 @@ public class UpdateCustomerForm extends DialogForm {
     @Override
     protected void deleteScreen() {
         manager.deleteUpdateCustomerForm();
-    }    
+    }
 
 }
-

@@ -27,5 +27,7 @@ public class IconConstants {
     public static final String LOG_OUT_ICON = "/icons/logout.png";
     public static final String SEARCH_ICON = "/icons/search.png";
     public static final String ERROR_ICON = "/icons/close.png";
+    public static final String EXPIRED_MEDICINES_ICON = "/icons/expired.png";
+    public static final String EXPIRED_MEDICINES_RED_ICON = "/icons/expired2.png";
     
 }

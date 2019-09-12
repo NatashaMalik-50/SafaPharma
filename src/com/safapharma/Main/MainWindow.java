@@ -7,10 +7,10 @@ package com.safapharma.Main;
 
 import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Customer.CustomerPanel;
-import com.safapharma.Customer.NewCustomerForm;
+import com.safapharma.Customer.NewOrUpdateCustomerForm;
 import com.safapharma.Customer.UpdateCustomerForm;
 import com.safapharma.Customer.ViewCustomerForm;
-import com.safapharma.Helpers.Constants;
+import com.safapharma.ExpiredMedicines.ExpiredMedicinesPanel;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
@@ -27,11 +27,11 @@ import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.MedicineLot.NewMedicineLotForm;
 import com.safapharma.MedicineLot.UpdateMedicineLotForm;
 import com.safapharma.MedicineLot.ViewMedicineLotForm;
+import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.StockPanel;
-import com.safapharma.Templates.MainScreenPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -73,9 +73,10 @@ public class MainWindow extends javax.swing.JFrame {
     private ViewMedicineLotForm viewMedicineLotForm;
     private MedicineLotPanel medicineLotPanel;
     private UpdateMedicineLotForm updateMedicineLotForm;
-    private NewCustomerForm newCustomerForm;
+    private NewOrUpdateCustomerForm newOrUpdateCustomerForm;
     private ViewCustomerForm viewCustomerForm;
     private UpdateCustomerForm updateCustomerForm;
+    private ExpiredMedicinesPanel expiredMedicinesPanel;
 
     /**
      * Creates new form MainWindow
@@ -514,11 +515,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     /* For showing update medicine lot panel */
-    public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend, Vector selectedObject) throws Exception {
+    public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend,Vector selectedObject) throws Exception {
         if (updateMedicineLotForm != null) {
             deleteUpdateMedicineLotForm();
         }
-        updateMedicineLotForm = new UpdateMedicineLotForm(this, medicineLotBackend, selectedObject);
+        updateMedicineLotForm = new UpdateMedicineLotForm(this, medicineLotBackend,selectedObject);
     }
 
     public void showUpdateMedicineLotForm() {
@@ -534,33 +535,42 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
+    public void createNewOrUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
         {
-            if (newCustomerForm != null) {
-                deleteNewCustomerForm();
+            if (newOrUpdateCustomerForm != null) {
+                deleteNewOrUpdateCustomerForm();
             }
-            newCustomerForm = new NewCustomerForm(this, customerBackend);
+            newOrUpdateCustomerForm = new NewOrUpdateCustomerForm(this, customerBackend);
+        }
+    }
+    
+    public void createNewOrUpdateCustomerForm(CustomerBackend customerBackend,Customer customer,boolean isUpdateForm) throws Exception {
+        {
+            if (newOrUpdateCustomerForm != null) {
+                deleteNewOrUpdateCustomerForm();
+            }
+            newOrUpdateCustomerForm = new NewOrUpdateCustomerForm(this, customerBackend,isUpdateForm,customer);
         }
     }
 
-    public void showNewCustomerForm() {
-        if (newCustomerForm != null) {
-            newCustomerForm.setVisible(true);
+    public void showNewOrUpdateCustomerForm() {
+        if (newOrUpdateCustomerForm != null) {
+            newOrUpdateCustomerForm.setVisible(true);
         }
     }
 
-    public void deleteNewCustomerForm() {
-        if (newCustomerForm != null) {
-            newCustomerForm.setVisible(false);
-            newCustomerForm = null;
+    public void deleteNewOrUpdateCustomerForm() {
+        if (newOrUpdateCustomerForm != null) {
+            newOrUpdateCustomerForm.setVisible(false);
+            newOrUpdateCustomerForm = null;
         }
     }
 
-    public void createViewCustomerForm(CustomerBackend customerBackend) throws Exception {
+    public void createViewCustomerForm(CustomerBackend customerBackend, Vector<Object> obj, int id) throws Exception {
         if (viewCustomerForm != null) {
             deleteViewCustomerForm();
         }
-        viewCustomerForm = new ViewCustomerForm(this, customerBackend);
+        viewCustomerForm = new ViewCustomerForm(this, customerBackend, obj, id);
 
     }
 
@@ -599,6 +609,38 @@ public class MainWindow extends javax.swing.JFrame {
             updateCustomerForm.setVisible(false);
             updateCustomerForm = null;
 
+        }
+    }
+
+    public void createExpiredMedicinesPanel() {
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (expiredMedicinesPanel != null) {
+                deleteExpiredMedicinesPanel();
+            }
+            expiredMedicinesPanel = new ExpiredMedicinesPanel(this);
+            screenPanel.add(EXPIRED_MEDICINES_LABEL, expiredMedicinesPanel);
+            componentStack.push(expiredMedicinesPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
+    }
+
+    public void showExpiredMedicinesPanel() {
+        if (expiredMedicinesPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, EXPIRED_MEDICINES_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Expired Medicine object is null");
+        }
+    }
+
+    public void deleteExpiredMedicinesPanel() {
+        if (expiredMedicinesPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(expiredMedicinesPanel);
+            expiredMedicinesPanel = null;
         }
     }
 
