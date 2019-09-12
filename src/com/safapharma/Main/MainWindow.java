@@ -39,6 +39,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.util.Stack;
+import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -473,11 +474,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend,Vector selectedObject) throws Exception {
         if (newMedicineLotForm != null) {
             deleteNewMedicineLotForm();
         }
-        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend);
+        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend,selectedObject);
     }
 
     public void showNewMedicineLotForm() {
@@ -494,11 +495,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     /* For Viewing of MedicineLotForms */
-    public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+    public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend,Vector selectedObject) throws Exception {
         if (viewMedicineLotForm != null) {
             deleteViewMedicineLotForm();
         }
-        viewMedicineLotForm = new ViewMedicineLotForm(this, medicineLotBackend);
+        viewMedicineLotForm = new ViewMedicineLotForm(this, medicineLotBackend,selectedObject);
     }
 
     public void showViewMedicineLotForm() {

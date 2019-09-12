@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -37,18 +38,21 @@ public class MedicineLotPanel extends MainScreenPanel{
     private final MedicineLotBackend medicineLotBackend;
     private TableRowSorter sorter;
     DataWithColumn dataWithColumn;
+    Vector<Object> selectedObject;
+    Vector fullList;
     
     public MedicineLotPanel(MainWindow manager){
         this.manager = manager;
         medicineLotBackend = new MedicineLotBackend();
         initUI();
         setListeners();
+        removeButton.setText("Previous Add Button");
     }
     
     private void loadData() throws Exception {
         dataWithColumn = medicineLotBackend.setMedicineIntoTable(supplierTable, tableModel);
         tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
-
+        setFullList();
     }
 
     private void initUI() {
@@ -68,8 +72,12 @@ public class MedicineLotPanel extends MainScreenPanel{
         supplierTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         supplierTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         supplierTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        getTableScrollPane().setViewportView(supplierTable);
-        
+        getTableScrollPane().setViewportView(supplierTable);        
+    }
+    
+    // full list will contains vector of all the obtained results,
+    private void setFullList(){
+        fullList = dataWithColumn.getData();
     }
     
     private void setListeners() {
@@ -81,8 +89,9 @@ public class MedicineLotPanel extends MainScreenPanel{
 //                int y = supplierTable.getSelectedColumn();
 //                
 //                Object ob = tableModel.getDataVector().elementAt(supplierTable.getSelectedRow());
-//                Object ob = dataWithColumn.getData();
+//                fullList = dataWithColumn.getData();
                 Object ob= dataWithColumn.getDataOf(x);
+                selectedObject = dataWithColumn.getDataOf(x);
                 System.out.println("I am here"+ob);
                 
             }
@@ -94,7 +103,8 @@ public class MedicineLotPanel extends MainScreenPanel{
             public void actionPerformed(ActionEvent e) {
                 try {
                     System.out.println("Add Button Called");
-                    manager.createNewMedicineLotForm(medicineLotBackend);
+//                    System.out.println(fullList);
+                    manager.createNewMedicineLotForm(medicineLotBackend,fullList);
                     manager.showNewMedicineLotForm();                  
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,7 +130,9 @@ public class MedicineLotPanel extends MainScreenPanel{
             public void actionPerformed(ActionEvent e) {
                 try {
                     System.out.println("View Button Called");
-                    manager.createViewMedicineLotForm(medicineLotBackend);
+
+                           
+                    manager.createViewMedicineLotForm(medicineLotBackend,selectedObject);
                     manager.showViewMedicineLotForm();                  
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
