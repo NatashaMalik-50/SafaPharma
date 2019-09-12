@@ -36,6 +36,7 @@ public class SidePanel extends javax.swing.JPanel {
     private SidePaneLabel buttonSupplier;
     private SidePaneLabel buttonStock;
     private SidePaneLabel buttonMedicineLot;
+    private SidePaneLabel buttonExpiredMedicines;
     private final static int WIDTH_PANEL = 130;
     private final static int HEIGHT_PANEL = 80;
     private SidePaneLabel lastActiveLabel = null;
@@ -64,11 +65,12 @@ public class SidePanel extends javax.swing.JPanel {
         buttonSupplier = new SidePaneLabel(BUTTON_SUPPLIER_LABEL, new ImageIcon(getClass().getResource(IconConstants.SUPPLIER_ICON)));
         buttonStock = new SidePaneLabel(Constants.BUTTON_STOCK_LABEL, new ImageIcon(getClass().getResource(IconConstants.STOCK_ICON)));
         buttonMedicineLot = new SidePaneLabel(Constants.BUTTON_MEDICINE_LOT_LABEL, new ImageIcon(getClass().getResource(IconConstants.MEDICINE_ICON)));
-
+        buttonExpiredMedicines = new SidePaneLabel(Constants.BUTTON_EXPIRED_MEDICINE_LABEL, new ImageIcon(getClass().getResource(IconConstants.EXPIRED_MEDICINES_ICON)));
         add(buttonCustomer);
-        add(buttonMedicineLot);
         add(buttonSales);
         add(buttonStock);
+        add(buttonExpiredMedicines);
+        add(buttonMedicineLot);
         add(buttonSupplier);
     }
 
@@ -135,6 +137,19 @@ public class SidePanel extends javax.swing.JPanel {
                 buttonStock.makeLabelActive();
                 lastActiveLabel = buttonStock;
                 buttonStock.setIcon(new ImageIcon(getClass().getResource(IconConstants.STOCK_RED_ICON)));
+            }
+        });
+        buttonExpiredMedicines.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                manager.createExpiredMedicinesPanel();
+                manager.showExpiredMedicinesPanel();
+                if (lastActiveLabel != null) {
+                    lastActiveLabel.makeLabelInactive();
+                }
+                buttonExpiredMedicines.makeLabelActive();
+                lastActiveLabel = buttonExpiredMedicines;
+                buttonExpiredMedicines.setIcon(new ImageIcon(getClass().getResource(IconConstants.EXPIRED_MEDICINES_RED_ICON)));
             }
         });
     }

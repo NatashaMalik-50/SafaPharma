@@ -23,7 +23,8 @@ public class Constants {
     public static final String MEDICINELOT_LABEL = "MEDICINE LOT";
     public static final String SALES_LABEL = "SALES";
     public static final String HOMESCREEN_LABEL = "HOMESCREEN";
-    public static final String STOCK_LABEL = "STOCKS";
+    public static final String STOCK_LABEL = "STOCKS";    
+    public static final String EXPIRED_MEDICINES_LABEL = "EXPIRED MEDICINES";
 
     public static final String BUTTON_CUSTOMER_LABEL = "Customer";
     public static final String BUTTON_SALES_LABEL = "Sales";
@@ -31,6 +32,7 @@ public class Constants {
     public static final String BUTTON_SUPPLIER_LABEL = "Supplier";
     public static final String BUTTON_MEDICINE_LABEL = "Medicine";
     public static final String BUTTON_MEDICINE_LOT_LABEL = "Medicine Lot";
+    public static final String BUTTON_EXPIRED_MEDICINE_LABEL = "Expired Medicines";
     public static final String BUTTON_BACKUP_LABEL = "Backup";
     
     public static final String BUTTON_VIEW_SALES_LABEL = "View Sales";

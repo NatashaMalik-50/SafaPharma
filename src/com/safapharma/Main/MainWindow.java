@@ -10,6 +10,7 @@ import com.safapharma.Customer.CustomerPanel;
 import com.safapharma.Customer.NewCustomerForm;
 import com.safapharma.Customer.UpdateCustomerForm;
 import com.safapharma.Customer.ViewCustomerForm;
+import com.safapharma.ExpiredMedicines.ExpiredMedicinesPanel;
 import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
@@ -31,7 +32,6 @@ import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.StockPanel;
-import com.safapharma.Templates.MainScreenPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -76,6 +76,7 @@ public class MainWindow extends javax.swing.JFrame {
     private NewCustomerForm newCustomerForm;
     private ViewCustomerForm viewCustomerForm;
     private UpdateCustomerForm updateCustomerForm;
+    private ExpiredMedicinesPanel expiredMedicinesPanel;
 
     /**
      * Creates new form MainWindow
@@ -610,6 +611,38 @@ public class MainWindow extends javax.swing.JFrame {
           
          
       }
+    }
+    
+    public void createExpiredMedicinesPanel() {
+        try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            if (expiredMedicinesPanel != null) {
+                deleteExpiredMedicinesPanel();
+            }
+            expiredMedicinesPanel = new ExpiredMedicinesPanel(this);
+            screenPanel.add(EXPIRED_MEDICINES_LABEL, expiredMedicinesPanel);
+            componentStack.push(expiredMedicinesPanel);
+        } finally {
+            setCursor(Cursor.getDefaultCursor());
+        }
+    }
+
+    public void showExpiredMedicinesPanel() {
+        if (expiredMedicinesPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.show(screenPanel, EXPIRED_MEDICINES_LABEL);
+            setCursor(Cursor.getDefaultCursor());
+        } else {
+            System.out.println("Expired Medicine object is null");
+        }
+    }
+
+    public void deleteExpiredMedicinesPanel() {
+        if (expiredMedicinesPanel != null) {
+            c = (CardLayout) screenPanel.getLayout();
+            c.removeLayoutComponent(expiredMedicinesPanel);
+            expiredMedicinesPanel = null;
+        }
     }
     
     
