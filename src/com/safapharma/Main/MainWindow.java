@@ -11,7 +11,6 @@ import com.safapharma.Customer.NewCustomerForm;
 import com.safapharma.Customer.UpdateCustomerForm;
 import com.safapharma.Customer.ViewCustomerForm;
 import com.safapharma.ExpiredMedicines.ExpiredMedicinesPanel;
-import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
@@ -412,12 +411,12 @@ public class MainWindow extends javax.swing.JFrame {
         }
         newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend);
     }
-    
+
     public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier) throws Exception {
         if (newSupplierForm != null) {
             deleteNewOrUpdateSupplierForm();
         }
-        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend,isUpdateForm,supplier);
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend, isUpdateForm, supplier);
     }
 
     public void showNewOrUpdateSupplierForm() {
@@ -432,8 +431,6 @@ public class MainWindow extends javax.swing.JFrame {
             newSupplierForm = null;
         }
     }
-
-    
 
     public void createNewSalesForm() throws Exception {
 //        if (newSaleForm != null) {
@@ -454,18 +451,18 @@ public class MainWindow extends javax.swing.JFrame {
 //            newSaleForm = null;
 //        }
     }
-    
-    public void createSaleViewForm(int sale_id,String customeName) throws Exception {
+
+    public void createSaleViewForm(int sale_id, String customeName) throws Exception {
         if (saleViewForm != null) {
             deleteSaleViewForm();
         }
-        saleViewForm = new SaleViewForm(this, sale_id, customeName);        
+        saleViewForm = new SaleViewForm(this, sale_id, customeName);
     }
 
     public void showSaleViewForm() {
         if (saleViewForm != null) {
             saleViewForm.setVisible(true);
-         }
+        }
     }
 
     public void deleteSaleViewForm() {
@@ -475,11 +472,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend,Vector selectedObject) throws Exception {
+    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend, Vector selectedObject) throws Exception {
         if (newMedicineLotForm != null) {
             deleteNewMedicineLotForm();
         }
-        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend,selectedObject);
+        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend, selectedObject);
     }
 
     public void showNewMedicineLotForm() {
@@ -496,11 +493,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     /* For Viewing of MedicineLotForms */
-    public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend,Vector selectedObject) throws Exception {
+    public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend, Vector selectedObject) throws Exception {
         if (viewMedicineLotForm != null) {
             deleteViewMedicineLotForm();
         }
-        viewMedicineLotForm = new ViewMedicineLotForm(this, medicineLotBackend,selectedObject);
+        viewMedicineLotForm = new ViewMedicineLotForm(this, medicineLotBackend, selectedObject);
     }
 
     public void showViewMedicineLotForm() {
@@ -559,60 +556,52 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-   public void createViewCustomerForm(CustomerBackend customerBackend) throws Exception {
-        if(viewCustomerForm!=null)
-            {
-                deleteViewCustomerForm();
-            }
-            viewCustomerForm= new ViewCustomerForm(this,customerBackend);
+    public void createViewCustomerForm(CustomerBackend customerBackend, Vector<Object> obj, int id) throws Exception {
+        if (viewCustomerForm != null) {
+            deleteViewCustomerForm();
+        }
+        viewCustomerForm = new ViewCustomerForm(this, customerBackend, obj, id);
 
     }
-    
+
     public void showViewCustomerForm() {
-        if(viewCustomerForm!=null)
-        {
+        if (viewCustomerForm != null) {
             viewCustomerForm.setVisible(true);
         }
-       
+
     }
 
     public void deleteViewCustomerForm() {
-      if(viewCustomerForm!=null)
-      {
-          viewCustomerForm.setVisible(false);
-          viewCustomerForm=null;
-          
-         
-      }
+        if (viewCustomerForm != null) {
+            viewCustomerForm.setVisible(false);
+            viewCustomerForm = null;
+
+        }
     }
-    
+
     public void createUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
-        if(updateCustomerForm!=null)
-            {
-                deleteViewCustomerForm();
-            }
-            updateCustomerForm= new UpdateCustomerForm(this,customerBackend);
+        if (updateCustomerForm != null) {
+            deleteViewCustomerForm();
+        }
+        updateCustomerForm = new UpdateCustomerForm(this, customerBackend);
 
     }
 
     public void showUpdateCustomerForm() {
-        if(updateCustomerForm!=null)
-        {
+        if (updateCustomerForm != null) {
             updateCustomerForm.setVisible(true);
         }
-       
+
     }
 
     public void deleteUpdateCustomerForm() {
-      if(updateCustomerForm!=null)
-      {
-          updateCustomerForm.setVisible(false);
-          updateCustomerForm=null;
-          
-         
-      }
+        if (updateCustomerForm != null) {
+            updateCustomerForm.setVisible(false);
+            updateCustomerForm = null;
+
+        }
     }
-    
+
     public void createExpiredMedicinesPanel() {
         try {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -644,8 +633,7 @@ public class MainWindow extends javax.swing.JFrame {
             expiredMedicinesPanel = null;
         }
     }
-    
-    
+
     public void deleteCurrentPanel() {
         Component component = componentStack.pop();
         if (component == home) {
