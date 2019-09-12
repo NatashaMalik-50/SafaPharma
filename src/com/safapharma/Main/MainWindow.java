@@ -516,11 +516,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     /* For showing update medicine lot panel */
-    public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+    public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend, Vector selectedObject) throws Exception {
         if (updateMedicineLotForm != null) {
             deleteUpdateMedicineLotForm();
         }
-        updateMedicineLotForm = new UpdateMedicineLotForm(this, medicineLotBackend);
+        updateMedicineLotForm = new UpdateMedicineLotForm(this, medicineLotBackend,selectedObject);
     }
 
     public void showUpdateMedicineLotForm() {

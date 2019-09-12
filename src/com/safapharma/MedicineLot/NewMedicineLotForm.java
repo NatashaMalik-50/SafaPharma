@@ -6,6 +6,7 @@
 package com.safapharma.MedicineLot;
 
 
+import com.safapharma.Home.Supplier.SupplierBackend;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.DialogForm;
@@ -19,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import com.safapharma.ModelObjects.MedicineLot;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -201,6 +204,8 @@ public class NewMedicineLotForm extends DialogForm {
             //fullList does not contain medicineId , need to get a view which contains medicine Id as well then check for that value.
             // if v.getItem(2).toString().equals(medName)
             //     int a = Integer.apseInt( v.getItem(1));
+//            supplierNameCombo.getSelectedIndex()
+//              Vector.getID... apne aap
         }
         return -1;
     }
@@ -248,6 +253,13 @@ public class NewMedicineLotForm extends DialogForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Add Supplier called");
+                try {
+                    manager.createNewOrUpdateSupplierForm(new SupplierBackend());
+                    manager.showNewOrUpdateSupplierForm();
+                } catch (Exception ex) {
+                    Logger.getLogger(NewMedicineLotForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         });
     }
