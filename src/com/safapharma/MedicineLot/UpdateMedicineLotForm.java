@@ -10,6 +10,7 @@ import com.safapharma.Templates.DialogForm;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -45,11 +46,12 @@ public class UpdateMedicineLotForm extends DialogForm {
     
     
 
-    public UpdateMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend) {
+    public UpdateMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend,Vector selectedObject) {
         this.manager = manager;
         this.medicineLotBackend = medicineLotBackend;
         initUI();        
         addListeners();
+        
     }
     
     private void setComboBox(JComboBox mbox){

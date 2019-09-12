@@ -117,7 +117,7 @@ public class MedicineLotPanel extends MainScreenPanel{
             public void actionPerformed(ActionEvent e) {
                 try {
                     System.out.println("Update Button Called");
-                    manager.createUpdateMedicineLotForm(medicineLotBackend);
+                    manager.createUpdateMedicineLotForm(medicineLotBackend,selectedObject);
                     manager.showUpdateMedicineLotForm();                  
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,9 +129,7 @@ public class MedicineLotPanel extends MainScreenPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println("View Button Called");
-
-                           
+                    System.out.println("View Button Called");                          
                     manager.createViewMedicineLotForm(medicineLotBackend,selectedObject);
                     manager.showViewMedicineLotForm();                  
                 } catch (Exception ex) {
