@@ -54,7 +54,7 @@ public class CustomerDAO {
         }
     }
     public int createCustomer(Customer customer) throws Exception{
-        final String sql = "Insert into " + TABLE_CUSTOMER + "values(?,?,?,?,?)";
+        final String sql = "Insert into " + TABLE_CUSTOMER + " (name, contact_no, address, email) values(?,?,?,?)";
         try (Connection con = DbHelper.getConnection();) {
             PreparedStatement pst = con.prepareStatement(sql);
             
@@ -68,7 +68,7 @@ public class CustomerDAO {
         }
     }
     public int UpdateCustomer(Customer customer) throws Exception{
-        final String sql = "Update table " + TABLE_CUSTOMER + "set name = ?, contact_no = ?, address = ?, email= ? where id = /";
+        final String sql = "Update " + TABLE_CUSTOMER + " set name = ?, contact_no = ?, address = ?, email= ? where id = ?";
         try (Connection con = DbHelper.getConnection();) {
             PreparedStatement pst = con.prepareStatement(sql);
             
@@ -77,9 +77,9 @@ public class CustomerDAO {
             pst.setString(3, customer.getAddress());
             pst.setString(4, customer.getEmail());
             pst.setInt(5, customer.getId());
-            
-            int recordUpdatedCount = pst.executeUpdate();
-            return recordUpdatedCount;
+                        
+            int rowsAdded = pst.executeUpdate();
+            return (rowsAdded > 0) ? rowsAdded : Constants.INVALID;
         }
     }
     // No DELETE Function

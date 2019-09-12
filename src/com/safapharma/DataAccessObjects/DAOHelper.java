@@ -70,7 +70,6 @@ public class DAOHelper {
                     } else {
                         //first id column
                         idRow.add(rs.getObject(i));
-                        System.out.println("id is--" +(Integer)rs.getObject(i));
                         dataWithColumn.addToIdSNoHashMap(sNo, (Integer) rs.getObject(i));
                     }
                 }

@@ -7,7 +7,7 @@ package com.safapharma.Main;
 
 import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Customer.CustomerPanel;
-import com.safapharma.Customer.NewCustomerForm;
+import com.safapharma.Customer.NewOrUpdateCustomerForm;
 import com.safapharma.Customer.UpdateCustomerForm;
 import com.safapharma.Customer.ViewCustomerForm;
 import com.safapharma.ExpiredMedicines.ExpiredMedicinesPanel;
@@ -27,6 +27,7 @@ import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.MedicineLot.NewMedicineLotForm;
 import com.safapharma.MedicineLot.UpdateMedicineLotForm;
 import com.safapharma.MedicineLot.ViewMedicineLotForm;
+import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
@@ -72,7 +73,7 @@ public class MainWindow extends javax.swing.JFrame {
     private ViewMedicineLotForm viewMedicineLotForm;
     private MedicineLotPanel medicineLotPanel;
     private UpdateMedicineLotForm updateMedicineLotForm;
-    private NewCustomerForm newCustomerForm;
+    private NewOrUpdateCustomerForm newOrUpdateCustomerForm;
     private ViewCustomerForm viewCustomerForm;
     private UpdateCustomerForm updateCustomerForm;
     private ExpiredMedicinesPanel expiredMedicinesPanel;
@@ -534,25 +535,34 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
+    public void createNewOrUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
         {
-            if (newCustomerForm != null) {
-                deleteNewCustomerForm();
+            if (newOrUpdateCustomerForm != null) {
+                deleteNewOrUpdateCustomerForm();
             }
-            newCustomerForm = new NewCustomerForm(this, customerBackend);
+            newOrUpdateCustomerForm = new NewOrUpdateCustomerForm(this, customerBackend);
+        }
+    }
+    
+    public void createNewOrUpdateCustomerForm(CustomerBackend customerBackend,Customer customer,boolean isUpdateForm) throws Exception {
+        {
+            if (newOrUpdateCustomerForm != null) {
+                deleteNewOrUpdateCustomerForm();
+            }
+            newOrUpdateCustomerForm = new NewOrUpdateCustomerForm(this, customerBackend,isUpdateForm,customer);
         }
     }
 
-    public void showNewCustomerForm() {
-        if (newCustomerForm != null) {
-            newCustomerForm.setVisible(true);
+    public void showNewOrUpdateCustomerForm() {
+        if (newOrUpdateCustomerForm != null) {
+            newOrUpdateCustomerForm.setVisible(true);
         }
     }
 
-    public void deleteNewCustomerForm() {
-        if (newCustomerForm != null) {
-            newCustomerForm.setVisible(false);
-            newCustomerForm = null;
+    public void deleteNewOrUpdateCustomerForm() {
+        if (newOrUpdateCustomerForm != null) {
+            newOrUpdateCustomerForm.setVisible(false);
+            newOrUpdateCustomerForm = null;
         }
     }
 

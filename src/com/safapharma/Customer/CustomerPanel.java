@@ -8,12 +8,14 @@ package com.safapharma.Customer;
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Main.MainWindow;
+import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +38,7 @@ public class CustomerPanel extends MainScreenPanel {
     private DefaultTableModel tableModel;
     private final CustomerBackend customerBackend;
     private TableRowSorter sorter;
-    private DataWithColumn dataWithColumn;
+    private DataWithColumn customerDataWithColumns;
     Vector<Object> selectedObject;
 
     public CustomerPanel(MainWindow manager) {
@@ -76,8 +78,8 @@ public class CustomerPanel extends MainScreenPanel {
     }
 
     private void loadData() throws Exception {
-        dataWithColumn = customerBackend.setCustomerInfoIntoTable(customerTable, tableModel);
-        tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
+        customerDataWithColumns = customerBackend.setCustomerInfoIntoTable(customerTable, tableModel);
+        tableModel.setDataVector(customerDataWithColumns.getData(), customerDataWithColumns.getColumnNames());
     }
 
     private void setListeners() {
@@ -95,8 +97,8 @@ public class CustomerPanel extends MainScreenPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     //create new form
-                    manager.createNewCustomerForm(customerBackend); //the appropriate function call
-                    manager.showNewCustomerForm();
+                    manager.createNewOrUpdateCustomerForm(customerBackend); //the appropriate function call
+                    manager.showNewOrUpdateCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -132,12 +134,11 @@ public class CustomerPanel extends MainScreenPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //create new form
-                    int selectedRowIdx = customerTable.getSelectedRow();
-                    int rowIdx = (Integer) tableModel.getValueAt(selectedRowIdx, 0);
-                    Vector<Object> obj = dataWithColumn.getDataOf(rowIdx);
-                    int id = dataWithColumn.getIdOf(rowIdx);
-                    manager.createViewCustomerForm(customerBackend, obj, id); //the appropriate function call
+                    int rowIndex = customerTable.getSelectedRow();
+                    int selectSNo = Integer.parseInt(customerTable.getValueAt(rowIndex, 0).toString());
+                    int currentCustomerId = customerDataWithColumns.getIdBySerialNo(selectSNo);
+                    Vector<Object> customer = customerDataWithColumns.getDataOf(selectSNo - 1);
+                    manager.createViewCustomerForm(customerBackend, customer, currentCustomerId);
                     manager.showViewCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,9 +151,14 @@ public class CustomerPanel extends MainScreenPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //create new form
-                    manager.createUpdateCustomerForm(customerBackend); //the appropriate function call
-                    manager.showUpdateCustomerForm();
+                    int rowIndex = customerTable.getSelectedRow();
+                    int selectSNo = Integer.parseInt(customerTable.getValueAt(rowIndex, 0).toString());
+                    int currentCustomerId = customerDataWithColumns.getIdBySerialNo(selectSNo);
+                    Vector<Object> data = customerDataWithColumns.getDataOf(selectSNo - 1);
+                    Customer customer=new Customer(currentCustomerId,(String) data.get(1), (String) data.get(2), ""+(BigDecimal)data.get(3), (String) data.get(4));
+                    System.out.println("sending customer "+customer);
+                    manager.createNewOrUpdateCustomerForm(customerBackend,customer,true);
+                    manager.showNewOrUpdateCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }

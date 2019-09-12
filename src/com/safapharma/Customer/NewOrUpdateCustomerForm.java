@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  *
  * @author sony
  */
-public class NewCustomerForm extends DialogForm {
+public class NewOrUpdateCustomerForm extends DialogForm {
 
     private MainWindow manager;
     private JTable customerTable;
@@ -44,20 +44,33 @@ public class NewCustomerForm extends DialogForm {
     private FormButton submitButton;
     private FormButton resetButton;
     private final CustomerBackend customerBackend;
+    private boolean isUpdateForm;
+    private Customer currentCustomer;
 
-    public NewCustomerForm(MainWindow manager, CustomerBackend CustomerBackend) {
+    public NewOrUpdateCustomerForm(MainWindow manager, CustomerBackend CustomerBackend) {
         this.manager = manager;
         this.customerBackend = CustomerBackend;
+        this.isUpdateForm = false;
+        this.currentCustomer = null;
         initUI();
         addListeners();
     }
 
-    public NewCustomerForm(MainWindow aThis, int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public NewOrUpdateCustomerForm(MainWindow manager, CustomerBackend customerBackend, boolean isUpdateForm, Customer customer) {
+        this.manager = manager;
+        this.customerBackend = customerBackend;
+        this.isUpdateForm = isUpdateForm;
+        this.currentCustomer = customer;
+        initUI();
+        addListeners();
     }
 
     private void initUI() {
-        getFormLabel().setText("Add Customer");
+        if (isUpdateForm) {
+            getFormLabel().setText("Update Customer");
+        } else {
+            getFormLabel().setText("Add Customer");
+        }
 
         nameLabel = new FormLabel("Name");
         nameText = new FormText();
@@ -79,7 +92,12 @@ public class NewCustomerForm extends DialogForm {
         emailText = new FormText();
         emailErrorLabel = new ErrorLabel();
 
-        submitButton = new FormButton("Submit");
+        if (isUpdateForm) {
+            submitButton = new FormButton("Update");
+        } else {
+            submitButton = new FormButton("Submit");
+        }
+
         resetButton = new FormButton("Reset");
 
         getFormPanel().add(nameLabel);
@@ -98,11 +116,14 @@ public class NewCustomerForm extends DialogForm {
         getFormPanel().add(emailText);
         getFormPanel().add(emailErrorLabel);
 
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton, getGBC(1));
 
         this.pack();
         hideErrorLabels();
+        if (currentCustomer != null) {
+            setFields();
+        }
     }
 
     private void addListeners() {
@@ -113,30 +134,34 @@ public class NewCustomerForm extends DialogForm {
                 if (isValid) {
                     try {
                         Customer customer = generateCustomer();
-                        boolean isAdded = customerBackend.addCustomer(customer);
-                        if (isAdded) {
-                            createOptionPane("Customer Added", "");
-                            manager.deleteNewCustomerForm();
+                        if (isUpdateForm) {
+                            boolean isAdded = customerBackend.updateCustomer(customer);
+                            if (isAdded) {
+                                createOptionPane("Customer Updated", "");
+                                manager.deleteNewOrUpdateCustomerForm();
+                            } else {
+                                createOptionPane("Not Able to update customer! Please try again.", "Error");
+                            }
+
                         } else {
-                            createOptionPane("Not Able to add customer! Please try again.", "Error");
+                            boolean isAdded = customerBackend.addCustomer(customer);
+                            if (isAdded) {
+                                createOptionPane("Customer Added", "");
+                                manager.deleteNewOrUpdateCustomerForm();
+                            } else {
+                                createOptionPane("Not Able to add customer! Please try again.", "Error");
+                            }
                         }
                     } catch (Exception ex) {
                         createOptionPane("Database Error", "Error");
                     }
                 }
             }
-
-            private void createOptionPane(String not_Able_to_add_supplier_Please_try_again, String error) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            private Customer generateCustomer() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
         });
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                resetFields();
             }
         });
     }
@@ -182,7 +207,14 @@ public class NewCustomerForm extends DialogForm {
         return isValid;
     }
 
-    private Customer generateSupplier() {
+    private Customer generateCustomer() {
+        if(isUpdateForm){
+            currentCustomer.setName(nameText.getText());
+            currentCustomer.setAddress(addressText.getText());
+            currentCustomer.setContactNo(contactText.getText());
+            currentCustomer.setEmail(emailText.getText());
+            return currentCustomer;
+        }
         Customer customer = new Customer(nameText.getText(), addressText.getText(), contactText.getText(), emailText.getText());
         return customer;
     }
@@ -202,9 +234,29 @@ public class NewCustomerForm extends DialogForm {
         hideErrorLabels();
     }
 
+    private void resetFields() {
+        if (isUpdateForm) {
+            setFields();
+        } else {
+            nameText.setText("");
+            contactText.setText("");
+            addressText.setText("");
+            emailText.setText("");
+        }
+    }
+
+    private void setFields() {
+        if (currentCustomer != null) {
+            nameText.setText(currentCustomer.getName());
+            addressText.setText(currentCustomer.getAddress());
+            contactText.setText(currentCustomer.getContactNo());
+            emailText.setText(currentCustomer.getEmail());
+        }
+    }
+
     @Override
     protected void deleteScreen() {
-        manager.deleteNewCustomerForm();
+        manager.deleteNewOrUpdateCustomerForm();
     }
 
 }
