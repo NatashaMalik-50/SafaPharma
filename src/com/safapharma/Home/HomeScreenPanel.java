@@ -155,6 +155,7 @@ public class HomeScreenPanel extends MainScreenPanel {
                     if (billEntriesTable.getSelectedRow() >= 0) {
                         DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
                         model.removeRow(id);
+                        billData.getData().remove(id);
                         if (billEntriesTable.getRowCount() >= 0) {
                             disableRemoveButtons();
                             disableUpdateButtons();

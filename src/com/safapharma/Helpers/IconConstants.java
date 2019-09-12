@@ -26,6 +26,6 @@ public class IconConstants {
     public static final String BACK_BUTTON_ICON = "/icons/back.png";
     public static final String LOG_OUT_ICON = "/icons/logout.png";
     public static final String SEARCH_ICON = "/icons/search.png";
-    public static final String ERROR_ICON = "/icons/error.png";
+    public static final String ERROR_ICON = "/icons/close.png";
     
 }
