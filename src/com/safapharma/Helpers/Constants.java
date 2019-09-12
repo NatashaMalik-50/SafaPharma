@@ -52,6 +52,7 @@ public class Constants {
     public static final String TABLE_USER_ROLE = "user_role";
     
     public static final String VIEW_STOCK_VIEW = "stock_view";
+    //public static final String VIEW_CUSTOMER_VIEW = "customer_view";
     
     public static final String INVALID_PASSWORD_MSG = "Incorrect password. Kindly enter again.";
     public static final String INVALID_USERNAME_MSG = "Incorrect username. Kindly enter again.";

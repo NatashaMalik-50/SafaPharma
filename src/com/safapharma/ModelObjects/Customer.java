@@ -19,6 +19,16 @@ public class Customer {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+    
+    public Customer(String name, String address, String contactNo, String email) {
+        
+        this.name = name;
+        this.address = address;
+        this.contactNo = contactNo;
+        this.email = email;
+        
+    }
+
 
     public Customer() {
     }

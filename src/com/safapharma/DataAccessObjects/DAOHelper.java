@@ -53,6 +53,7 @@ public class DAOHelper {
             DataWithColumn dataWithColumn = new DataWithColumn();
 
             int columnCount = metaData.getColumnCount();
+            dataWithColumn.getColumnNames().add("S.No");
             //leaving first id column
             for (int i = 2; i <= columnCount; i++) {
                 dataWithColumn.getColumnNames().add(metaData.getColumnName(i));

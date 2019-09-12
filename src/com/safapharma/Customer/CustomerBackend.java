@@ -6,8 +6,14 @@
 package com.safapharma.Customer;
 
 import com.safapharma.DataAccessObjects.CustomerDAO;
+import com.safapharma.Helpers.Constants;
+import com.safapharma.Helpers.DbHelper;
 import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.DataWithColumn;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import static javax.swing.DropMode.INSERT;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,7 +34,28 @@ public class CustomerBackend {
     }
 
     boolean addCustomer(Customer customer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String sql="INSERT INTO customer (name, contact_no, address, email) VALUES (?, ?, ?, ?)";
+        try (Connection connection = DbHelper.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,customer.getName());
+            statement.setString(2,customer.getContactNo());
+            statement.setString(3,customer.getAddress());
+            statement.setString(4,customer.getEmail());
+            ResultSet resultSet = statement.executeQuery();
+            int i=statement.executeUpdate();
+            if(i!=0)
+                return true;
+            else
+               return false;
+        }
+        catch(Exception e)
+        {
+            System.out.println("Exception Occured");
+        }
+
     }
+    
     
   }

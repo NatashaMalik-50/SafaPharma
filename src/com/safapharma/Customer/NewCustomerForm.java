@@ -7,7 +7,6 @@ package com.safapharma.Customer;
 
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
-import com.safapharma.ModelObjects.Customer;
 import com.safapharma.Templates.DialogForm;
 import java.awt.PopupMenu;
 import java.awt.ScrollPane;
@@ -70,6 +69,7 @@ public class NewCustomerForm extends DialogForm {
     private void initUI() {
         getFormLabel().setText("Add Customer");
        
+        
         nameLabel = new FormLabel("Name");
         nameText = new FormText();
         nameErrorLabel = new ErrorLabel();
@@ -110,13 +110,9 @@ public class NewCustomerForm extends DialogForm {
         getFormPanel().add(emailText);
         getFormPanel().add(emailErrorLabel);
 
-
-
         getFormPanel().add(submitButton);
         getFormPanel().add(resetButton);
-        
-        
-        
+                
         this.pack();
         hideErrorLabels();
     }
@@ -198,17 +194,25 @@ public class NewCustomerForm extends DialogForm {
         
         return isValid;
     }
+    
+    private Customer generateSupplier() {
+        Customer customer = new Customer(nameText.getText(), addressText.getText(), contactText.getText(), emailText.getText());
+        return customer;
+    }
+    
 
     private void hideErrorLabels() {
         nameErrorLabel.setVisible(false);
         addressErrorLabel.setVisible(false);
         contactErrorLabel.setVisible(false);
+        //emailErrorLabel.setVisible(false);
     }
 
     private void resetErrorLabels() {
         nameErrorLabel.setErrorText("");
         addressErrorLabel.setErrorText("");
         contactErrorLabel.setErrorText("");
+        //emailErrorLabel.setErrorText("");
         hideErrorLabels();
     }
 

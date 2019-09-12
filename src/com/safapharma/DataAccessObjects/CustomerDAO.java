@@ -106,7 +106,7 @@ public class CustomerDAO {
     }
     
      public DataWithColumn getAllCustomerDetails() throws Exception {
-        final String SQL_QUERY = "select stock_entry_id, company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW;
+        final String SQL_QUERY = "select id ,name, address,contact_no,email from " + TABLE_CUSTOMER;
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
 }
