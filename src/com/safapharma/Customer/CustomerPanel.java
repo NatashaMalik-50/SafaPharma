@@ -37,6 +37,7 @@ public class CustomerPanel extends MainScreenPanel {
     private final CustomerBackend customerBackend;
     private TableRowSorter sorter;
     private DataWithColumn dataWithColumn;
+    Vector<Object> selectedObject;
 
     public CustomerPanel(MainWindow manager) {
 
@@ -84,6 +85,11 @@ public class CustomerPanel extends MainScreenPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 enableButtons();
+                int x=customerTable.getSelectedRow();
+                
+                //Object ob=dataWithColumn.getDataOf(x);
+                selectedObject=dataWithColumn.getDataOf(x);
+                
             }
 
         });
@@ -135,9 +141,9 @@ public class CustomerPanel extends MainScreenPanel {
                 try {
                     //create new form
          int rowIdx = customerTable.getSelectedRow();
-         Vector<Object> obj = dataWithColumn.getDataOf(rowIdx);
-         
-                    manager.createViewCustomerForm(customerBackend); //the appropriate function call
+         Vector<Object> obj = dataWithColumn.getDataOf(rowIdx);      
+                    
+                    manager.createViewCustomerForm(customerBackend,selectedObject ); //the appropriate function call
                     manager.showViewCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);

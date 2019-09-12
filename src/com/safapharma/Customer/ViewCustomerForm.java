@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
+import java.util.Vector;
 
 /**
  *
@@ -54,18 +55,24 @@ public class ViewCustomerForm extends DialogForm {
     
     
 
-    public ViewCustomerForm(MainWindow manager, CustomerBackend customerBackend) {
+    public ViewCustomerForm(MainWindow manager, CustomerBackend customerBackend,Vector selectedObject) {
         this.thisForm=this;
         this.manager = manager;
         this.customerBackend = customerBackend;
          
         initUI();
+        addListener();
+        System.out.println(selectedObject);
         
+        nameText.setText(selectedObject.get(1).toString());
+        addressText.setText(selectedObject.get(2).toString());
+        contactText.setText(selectedObject.get(3).toString());
     }
 
-    public ViewCustomerForm(MainWindow aThis, int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+//    public ViewCustomerForm(MainWindow aThis, int id) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
     private void initUI() {
         

@@ -205,14 +205,14 @@ public class NewCustomerForm extends DialogForm {
         nameErrorLabel.setVisible(false);
         addressErrorLabel.setVisible(false);
         contactErrorLabel.setVisible(false);
-        //emailErrorLabel.setVisible(false);
+        emailErrorLabel.setVisible(false);
     }
 
     private void resetErrorLabels() {
         nameErrorLabel.setErrorText("");
         addressErrorLabel.setErrorText("");
         contactErrorLabel.setErrorText("");
-        //emailErrorLabel.setErrorText("");
+        emailErrorLabel.setErrorText("");
         hideErrorLabels();
     }
 

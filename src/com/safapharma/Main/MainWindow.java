@@ -37,6 +37,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.util.Stack;
+import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -523,12 +524,12 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-   public void createViewCustomerForm(CustomerBackend customerBackend) throws Exception {
+   public void createViewCustomerForm(CustomerBackend customerBackend, Vector selectedObject) throws Exception {
         if(viewCustomerForm!=null)
             {
                 deleteViewCustomerForm();
             }
-            viewCustomerForm= new ViewCustomerForm(this,customerBackend);
+           viewCustomerForm = new ViewCustomerForm(this, customerBackend,selectedObject);
 
     }
     
@@ -680,6 +681,7 @@ public class MainWindow extends javax.swing.JFrame {
     public Icon resizeIcon(ImageIcon imageIcon) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
