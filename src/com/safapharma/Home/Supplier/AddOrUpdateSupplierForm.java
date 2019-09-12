@@ -116,12 +116,22 @@ public class AddOrUpdateSupplierForm extends DialogForm {
                 if (isValid) {
                     try {
                         Supplier supplier = generateSupplier();
-                        boolean isAdded = supplierBackend.addSupplier(supplier);
-                        if (isAdded) {
-                            createOptionPane("Supplier Added", "");
-                            manager.deleteNewOrUpdateSupplierForm();
+                        if (isUpdateForm) {
+                            boolean isUpated = supplierBackend.updateSupplier(supplier);
+                            if (isUpated) {
+                                createOptionPane("Supplier Updated", "");
+                                manager.deleteNewOrUpdateSupplierForm();
+                            } else {
+                                createOptionPane("Not Able to update supplier! Please try again.", "Error");
+                            }
                         } else {
-                            createOptionPane("Not Able to add supplier! Please try again.", "Error");
+                            boolean isAdded = supplierBackend.addSupplier(supplier);
+                            if (isAdded) {
+                                createOptionPane("Supplier Added", "");
+                                manager.deleteNewOrUpdateSupplierForm();
+                            } else {
+                                createOptionPane("Not Able to add supplier! Please try again.", "Error");
+                            }
                         }
                     } catch (Exception ex) {
                         createOptionPane("Database Error", "Error");
@@ -178,6 +188,13 @@ public class AddOrUpdateSupplierForm extends DialogForm {
     }
 
     private Supplier generateSupplier() {
+        if(isUpdateForm){
+            currentSupplier.setName(nameText.getText());
+            currentSupplier.setAddress(addressText.getText());
+            currentSupplier.setContactNo(contactText.getText());
+            currentSupplier.setEmail(emailText.getText());
+            return currentSupplier;
+        }
         Supplier supplier = new Supplier(nameText.getText(), addressText.getText(), contactText.getText(), emailText.getText());
         return supplier;
     }

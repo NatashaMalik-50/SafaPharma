@@ -39,7 +39,7 @@ public class SupplierDAO {
     INSERT INTO `safa_pharma`.`supplier` (`name`, `address`, `contact_no`, `email`) VALUES ('S1', 'B240', '9899638588', 'supplier@gmail.com');
     INSERT INTO supplier (name, address, contact_no, email) VALUES ('S1', 'B240', '9899638588', 'supplier@gmail.com');
      */
-    public int saveSuuplier(Supplier supplier) throws Exception {
+    public int saveSupplier(Supplier supplier) throws Exception {
         String sql = "INSERT INTO " + Constants.TABLE_SUPPLIER + " (name, address, contact_no, email) VALUES (?,?,?,?);";
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -47,6 +47,21 @@ public class SupplierDAO {
             statement.setString(2, supplier.getAddress());
             statement.setString(3, supplier.getContactNo());
             statement.setString(4, supplier.getEmail());
+            int rowsAdded = statement.executeUpdate();
+            return (rowsAdded > 0) ? rowsAdded : Constants.INVALID;
+        }
+    }
+
+    public int updateSupplier(Supplier supplier) throws Exception {
+        String sql = "UPDATE supplier SET name=? , address=? , contact_no=? , email=?  where id=?";
+        try (Connection connection = DbHelper.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            System.out.println("Supplier "+supplier);
+            statement.setString(1, supplier.getName());
+            statement.setString(2, supplier.getAddress());
+            statement.setString(3, supplier.getContactNo());
+            statement.setString(4, supplier.getEmail());
+            statement.setInt(5, supplier.getId());
             int rowsAdded = statement.executeUpdate();
             return (rowsAdded > 0) ? rowsAdded : Constants.INVALID;
         }

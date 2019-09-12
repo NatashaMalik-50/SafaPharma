@@ -25,7 +25,11 @@ public class SupplierBackend {
     }
 
     public boolean addSupplier(Supplier supplier) throws Exception {
-        return (supplierDAO.saveSuuplier(supplier) != Constants.INVALID) ? true : false;
+        return (supplierDAO.saveSupplier(supplier) != Constants.INVALID) ? true : false;
+    }
+    
+    public boolean updateSupplier(Supplier supplier) throws Exception {
+        return (supplierDAO.updateSupplier(supplier) != Constants.INVALID) ? true : false;
     }
 
     public DataWithColumn setSupplierInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
