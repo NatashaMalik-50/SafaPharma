@@ -109,4 +109,15 @@ public class CustomerDAO {
         final String SQL_QUERY = "select id ,name, address,contact_no,email from " + TABLE_CUSTOMER;
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
+     
+     public DataWithColumn getSelectedCustomerDetails(int id) throws Exception {
+        try{
+        final String SQL_QUERY = "SELECT id, total_quantity,total_amount,discount,final_amount,created_at from " + TABLE_SALES +" where customer_id="+ id ;
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+        }
+        catch(Exception e){
+            System.out.println("EXC ----- "+e);
+        }
+        return null;
+    }
 }

@@ -524,12 +524,12 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-   public void createViewCustomerForm(CustomerBackend customerBackend, Vector selectedObject) throws Exception {
+   public void createViewCustomerForm(CustomerBackend customerBackend, Vector selectedObject,int id) throws Exception {
         if(viewCustomerForm!=null)
             {
                 deleteViewCustomerForm();
             }
-           viewCustomerForm = new ViewCustomerForm(this, customerBackend,selectedObject);
+           viewCustomerForm = new ViewCustomerForm(this, customerBackend,selectedObject,id);
 
     }
     

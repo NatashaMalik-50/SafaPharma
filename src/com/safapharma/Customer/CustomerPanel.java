@@ -85,10 +85,10 @@ public class CustomerPanel extends MainScreenPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 enableButtons();
-                int x=customerTable.getSelectedRow();
+//                int x=customerTable.getSelectedRow();
                 
                 //Object ob=dataWithColumn.getDataOf(x);
-                selectedObject=dataWithColumn.getDataOf(x);
+//                selectedObject=dataWithColumn.getDataOf(x);
                 
             }
 
@@ -140,10 +140,11 @@ public class CustomerPanel extends MainScreenPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     //create new form
-         int rowIdx = customerTable.getSelectedRow();
+         int selectedRowIdx = customerTable.getSelectedRow();
+         int rowIdx = (Integer)tableModel.getValueAt(selectedRowIdx, 0);
          Vector<Object> obj = dataWithColumn.getDataOf(rowIdx);      
-                    
-                    manager.createViewCustomerForm(customerBackend,selectedObject ); //the appropriate function call
+                    int id = dataWithColumn.getIdOf(rowIdx);
+                    manager.createViewCustomerForm(customerBackend,obj,id); //the appropriate function call
                     manager.showViewCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);

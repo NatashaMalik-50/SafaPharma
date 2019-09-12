@@ -32,6 +32,11 @@ public class CustomerBackend {
         DataWithColumn dataWithColumn = customerDAO.getAllCustomerDetails();
         return dataWithColumn;
     }
+    
+    public DataWithColumn setSelectedInfoIntoTable(int id) throws Exception {
+        DataWithColumn dataWithColumn = customerDAO.getSelectedCustomerDetails(id);
+        return dataWithColumn;
+    }
 
     boolean addCustomer(Customer customer) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
