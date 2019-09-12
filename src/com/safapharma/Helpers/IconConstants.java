@@ -16,6 +16,11 @@ public class IconConstants {
     public static final String STOCK_ICON = "/icons/stock.png";
     public static final String MEDICINE_ICON = "/icons/medicine.png";
     public static final String SUPPLIER_ICON = "/icons/supplier.png";
+    public static final String CUSTOMER_RED_ICON = "/icons/customer2.png";
+    public static final String SALES_RED_ICON = "/icons/sales2.png";
+    public static final String STOCK_RED_ICON = "/icons/stock2.png";
+    public static final String MEDICINE_RED_ICON = "/icons/medicine2.png";
+    public static final String SUPPLIER_RED_ICON = "/icons/supplier2.png";
     public static final String MEDICINE_LOT_ICON = "/icons/customer.png";
     public static final String BACK_BUTTON_ICON = "/icons/back.png";
     public static final String LOG_OUT_ICON = "/icons/logout.png";

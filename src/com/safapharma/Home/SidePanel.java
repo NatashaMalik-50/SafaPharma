@@ -12,6 +12,7 @@ import static com.safapharma.Helpers.Constants.BUTTON_SUPPLIER_LABEL;
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Helpers.IconConstants;
 import com.safapharma.Main.MainWindow;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -30,15 +31,18 @@ import javax.swing.border.EtchedBorder;
 public class SidePanel extends javax.swing.JPanel {
 
     private MainWindow manager;
-    private JLabel buttonCustomer;
-    private JLabel buttonSales;
-    private JLabel buttonSupplier;
-    private JLabel buttonStock;
-    private JLabel buttonMedicineLot;
+    private SidePaneLabel buttonCustomer;
+    private SidePaneLabel buttonSales;
+    private SidePaneLabel buttonSupplier;
+    private SidePaneLabel buttonStock;
+    private SidePaneLabel buttonMedicineLot;
     private final static int WIDTH_PANEL = 130;
+    private final static int HEIGHT_PANEL = 80;
+    private SidePaneLabel lastActiveLabel = null;
 
     /**
      * Creates new form SidePanel
+     *
      * @param manager
      */
     public SidePanel(MainWindow manager) {
@@ -74,6 +78,12 @@ public class SidePanel extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 manager.createSupplierPanel();
                 manager.showSupplierPanel();
+                if (lastActiveLabel != null) {
+                    lastActiveLabel.makeLabelInactive();
+                }
+                buttonSupplier.makeLabelActive();
+                lastActiveLabel = buttonSupplier;
+                buttonSupplier.setIcon(new ImageIcon(getClass().getResource(IconConstants.SUPPLIER_RED_ICON)));
             }
         });
         buttonCustomer.addMouseListener(new MouseAdapter() {
@@ -81,6 +91,12 @@ public class SidePanel extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 manager.createCustomerPanel();
                 manager.showCustomerPanel();
+                if (lastActiveLabel != null) {
+                    lastActiveLabel.makeLabelInactive();
+                }
+                buttonCustomer.makeLabelActive();
+                lastActiveLabel = buttonCustomer;
+                buttonCustomer.setIcon(new ImageIcon(getClass().getResource(IconConstants.CUSTOMER_RED_ICON)));
             }
         });
         buttonMedicineLot.addMouseListener(new MouseAdapter() {
@@ -88,6 +104,12 @@ public class SidePanel extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 manager.createMedicinePanel();
                 manager.showMedicinePanel();
+                if (lastActiveLabel != null) {
+                    lastActiveLabel.makeLabelInactive();
+                }
+                buttonMedicineLot.makeLabelActive();
+                lastActiveLabel = buttonMedicineLot;
+                buttonMedicineLot.setIcon(new ImageIcon(getClass().getResource(IconConstants.MEDICINE_RED_ICON)));
             }
         });
         buttonSales.addMouseListener(new MouseAdapter() {
@@ -95,14 +117,33 @@ public class SidePanel extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 manager.createSalesPanel();
                 manager.showSalesPanel();
+                if (lastActiveLabel != null) {
+                    lastActiveLabel.makeLabelInactive();
+                }
+                buttonSales.makeLabelActive();
+                lastActiveLabel = buttonSales;
+                buttonSales.setIcon(new ImageIcon(getClass().getResource(IconConstants.SALES_RED_ICON)));
             }
         });
         buttonStock.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 manager.createStockPanel();
                 manager.showStockPanel();
+                if (lastActiveLabel != null) {
+                    lastActiveLabel.makeLabelInactive();
+                }
+                buttonStock.makeLabelActive();
+                lastActiveLabel = buttonStock;
+                buttonStock.setIcon(new ImageIcon(getClass().getResource(IconConstants.STOCK_RED_ICON)));
             }
         });
+    }
+
+    public void backPressedChangeActive() {
+        if (lastActiveLabel != null) {
+            lastActiveLabel.makeLabelInactive();
+        }
+        lastActiveLabel = null;
     }
 
     /**
@@ -130,16 +171,33 @@ public class SidePanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private class SidePaneLabel extends JLabel {
 
+        ImageIcon iconForLabel;
+
         public SidePaneLabel(String text, ImageIcon icon) {
             super(text, icon, JLabel.HORIZONTAL);
-            setMinimumSize(new Dimension(WIDTH_PANEL, 55));
-            setMaximumSize(new Dimension(WIDTH_PANEL, 55));
+            this.iconForLabel = icon;
+            setMinimumSize(new Dimension(WIDTH_PANEL, HEIGHT_PANEL));
+            setMaximumSize(new Dimension(WIDTH_PANEL, HEIGHT_PANEL));
+
             setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED), BorderFactory.createEtchedBorder(EtchedBorder.RAISED)));
-            setHorizontalAlignment(LEFT);
-            setHorizontalTextPosition(RIGHT);
-            setVerticalTextPosition(CENTER);
+            setHorizontalAlignment(JLabel.CENTER);
+            setHorizontalTextPosition(JLabel.CENTER);
+            setVerticalTextPosition(JLabel.BOTTOM);
             setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        }
+
+        public void makeLabelActive() {
+            setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED), BorderFactory.createEtchedBorder(EtchedBorder.LOWERED)));
+            setBackground(Color.red);
+            setForeground(Color.red);
+        }
+
+        public void makeLabelInactive() {
+            setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED), BorderFactory.createEtchedBorder(EtchedBorder.RAISED)));
+            setBackground(null);
+            setForeground(null);
+            setIcon(iconForLabel);
         }
 
     }

@@ -20,8 +20,10 @@ public class Constants {
     public static final String TIME_LABEL = "Time";
     public static final String SUPPLIER_LABEL = "SUPPLIER";
     public static final String CUSTOMER_LABEL = "CUSTOMER";
+    public static final String MEDICINELOT_LABEL = "MEDICINE LOT";
     public static final String SALES_LABEL = "SALES";
     public static final String HOMESCREEN_LABEL = "HOMESCREEN";
+    public static final String STOCK_LABEL = "STOCKS";
 
     public static final String BUTTON_CUSTOMER_LABEL = "Customer";
     public static final String BUTTON_SALES_LABEL = "Sales";
@@ -48,9 +50,10 @@ public class Constants {
     public static final String TABLE_MEDICINE_SALT = "medicine_salt";
     public static final String TABLE_ROLE = "role";
     public static final String TABLE_USER_ROLE = "user_role";
-    
+
     public static final String VIEW_STOCK_VIEW = "stock_view";
-    
+    //public static final String VIEW_CUSTOMER_VIEW = "customer_view";
+
     public static final String INVALID_PASSWORD_MSG = "Incorrect password. Kindly enter again.";
     public static final String INVALID_USERNAME_MSG = "Incorrect username. Kindly enter again.";
     public static final String LOGIN_ERROR_MSG = "Login Error";

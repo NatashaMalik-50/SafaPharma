@@ -8,11 +8,11 @@ package com.safapharma.Home;
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
+import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -30,13 +30,16 @@ import javax.swing.table.TableRowSorter;
 public class HomeScreenPanel extends MainScreenPanel {
 
     private MainWindow manager;
-    private JTable stockTable;
+    private JTable billEntriesTable;
     private DefaultTableModel tableModel;
     private final HomeScreenBackend homeScreenBackend;
     private TableRowSorter sorter;
+    private DataWithColumn stockData;
+    private final HomeScreenPanel thisHome;
 
     public HomeScreenPanel(MainWindow manager) {
         this.manager = manager;
+        this.thisHome = this;
         homeScreenBackend = new HomeScreenBackend();
         initUI();
         setListeners();
@@ -44,48 +47,53 @@ public class HomeScreenPanel extends MainScreenPanel {
 
     private void initUI() {
 
+        tableModel = new CustomDefaultTableModel();
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
-                loadData();
+                loadStockData();
                 return null;
             }
         }.execute();
-
-        tableModel = new DefaultTableModel();
-        stockTable = new JTable(tableModel);
+        billEntriesTable = new JTable(tableModel);
         sorter = new TableRowSorter(tableModel);
-        stockTable.setRowSorter(sorter);
-        stockTable.getTableHeader().setResizingAllowed(false);
-        stockTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
-        stockTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
-        stockTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        getTableScrollPane().setViewportView(stockTable);
+        billEntriesTable.setRowSorter(sorter);
+        billEntriesTable.getTableHeader().setResizingAllowed(false);
+        billEntriesTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
+        billEntriesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
+        billEntriesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        getTableScrollPane().setViewportView(billEntriesTable);
 
     }
 
-    private void loadData() throws Exception {
-        DataWithColumn dataWithColumn = homeScreenBackend.setStockInfoIntoTable(stockTable, tableModel);
-        tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
-
+    private void loadStockData() throws Exception {
+        stockData = homeScreenBackend.setStockInfoIntoTable();
+        tableModel.setDataVector(null, stockData.getColumnNames());
     }
 
     private void setListeners() {
-        stockTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                enableButtons();
-            }
-
-        });
+//        billEntriesTable.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                enableAddButtons();
+//                enableUpdateButtons();
+//                enableRemoveButtons();
+//                enableViewButtons();
+//            }
+//
+//        });
 
         //on add button click
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //create new form
-                    manager.createNewStockViewForm(); //the appropriate function call
+                    if (stockData == null) {
+                        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                        loadStockData();
+                        setCursor(Cursor.getDefaultCursor());
+                    }
+                    manager.createNewStockViewForm(thisHome);
                     manager.showNewStockViewForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,14 +121,19 @@ public class HomeScreenPanel extends MainScreenPanel {
                 if (str.length() == 0) {
                     sorter.setRowFilter(null);
                 } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" +str));
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + str));
                 }
             }
         });
     }
 
-    /*
-    To get selected row, do stockTable.getSelectedRow();
-    to access cell value, do tableModel.getValueAt(selectedRowIndex, columnIdx);
-     */
+    public DataWithColumn getStockData() {
+        return stockData;
+    }
+
+    public void addRow(int rowIndex) {
+        System.out.println("found row : " + rowIndex + " with value" + stockData.getDataOf(rowIndex) + " --with id-- " + stockData.getIdData());
+        DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
+        model.addRow(stockData.getDataOf(rowIndex));
+    }
 }

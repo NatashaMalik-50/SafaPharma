@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.safapharma.Home;
+package com.safapharma.Stock;
 
+import com.safapharma.Home.*;
 import com.safapharma.DataAccessObjects.StockDAO;
 import com.safapharma.ModelObjects.DataWithColumn;
 import javax.swing.JTable;
@@ -14,15 +15,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Natasha Malik
  */
-public class HomeScreenBackend {
+public class StockBackend {
 
     private StockDAO stockDAO;
 
-    public HomeScreenBackend() {
+    public StockBackend() {
         stockDAO = new StockDAO();
     }
 
-    public DataWithColumn setStockInfoIntoTable() throws Exception {
+    public DataWithColumn setStockInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
         DataWithColumn dataWithColumn = stockDAO.getAllStockDetails();
         return dataWithColumn;
     }

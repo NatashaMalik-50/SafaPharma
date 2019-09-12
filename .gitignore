@@ -1,3 +1,7 @@
 /build/
+<<<<<<< HEAD
+/nbproject/
+=======
 /dist/
 /nbproject/
+>>>>>>> master

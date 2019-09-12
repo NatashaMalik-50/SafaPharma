@@ -15,10 +15,17 @@ public class DataWithColumn {
 
     Vector<Vector<Object>> data;
     Vector<String> columnNames;
+    Vector<Object> idData;
 
     public DataWithColumn() {
         columnNames = new Vector<String>();
         data = new Vector<Vector<Object>>();
+    }
+
+    public DataWithColumn(boolean hasId) {
+        columnNames = new Vector<String>();
+        data = new Vector<Vector<Object>>();
+        idData = new Vector<>();
     }
 
     public Vector<Vector<Object>> getData() {
@@ -35,6 +42,22 @@ public class DataWithColumn {
 
     public void setColumnNames(Vector<String> columnNames) {
         this.columnNames = columnNames;
+    }
+
+    public Vector<Object> getIdData() {
+        return idData;
+    }
+
+    public void setIdData(Vector<Object> idData) {
+        this.idData = idData;
+    }
+
+    public Vector<Object> getDataOf(int index) {
+        return data.get(index);
+    }
+
+    public int getIdOf(int index) {
+        return (Integer) idData.get(index);
     }
 
 }

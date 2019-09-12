@@ -53,7 +53,7 @@ public class SupplierDAO {
     }
 
     public DataWithColumn getAllSupplierDetails() throws Exception {
-        final String SQL_QUERY = "SELECT name,address,contact_no,email FROM " + Constants.TABLE_SUPPLIER;
-        return DAOHelper.getDetailsForTable(SQL_QUERY);
+        final String SQL_QUERY = "SELECT id, name,address,contact_no,email FROM " + Constants.TABLE_SUPPLIER;
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
 }

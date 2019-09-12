@@ -14,7 +14,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -55,6 +54,11 @@ public class MainScreenPanel extends javax.swing.JPanel {
         toolbarPanel.add(Box.createHorizontalStrut(10));
         toolbarPanel.add(updateButton);
 
+        //disableButtons();
+        disableRemoveButtons();
+        disableUpdateButtons();
+        disableViewButtons();
+
         statusLabel.setText("Bill Status");
         statusLabel.setHorizontalAlignment(JLabel.CENTER);
         statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
@@ -67,7 +71,7 @@ public class MainScreenPanel extends javax.swing.JPanel {
         searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
         searchBox = new JTextField();
         searchBox.setFont(DesignConstants.FONT_SIZE_16_CALIBRI);
-        searchButton = new ToolbarButton("Search",new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
+        searchButton = new ToolbarButton("Search", new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
         searchButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
 //        searchPanel.add(comboBox);
         searchPanel.add(searchBox);
@@ -81,18 +85,50 @@ public class MainScreenPanel extends javax.swing.JPanel {
         viewButton.setEnabled(true);
     }
 
+    protected void enableAddButtons() {
+        addButton.setEnabled(true);
+    }
+
+    protected void enableUpdateButtons() {
+        updateButton.setEnabled(true);
+    }
+
+    protected void enableRemoveButtons() {
+        removeButton.setEnabled(true);
+    }
+
+    protected void enableViewButtons() {
+        viewButton.setEnabled(true);
+    }
+
+    protected void disableAddButtons() {
+        addButton.setEnabled(false);
+    }
+
+    protected void disableUpdateButtons() {
+        updateButton.setEnabled(false);
+    }
+
+    protected void disableRemoveButtons() {
+        removeButton.setEnabled(false);
+    }
+
+    protected void disableViewButtons() {
+        viewButton.setEnabled(false);
+    }
+
     protected void disableButtons() {
         addButton.setEnabled(false);
         updateButton.setEnabled(false);
         removeButton.setEnabled(false);
         viewButton.setEnabled(false);
     }
-    
-    protected JPanel getToolbar(){
+
+    protected JPanel getToolbar() {
         return toolbarPanel;
     }
-    
-    protected JScrollPane getTableScrollPane(){
+
+    protected JScrollPane getTableScrollPane() {
         return tableScrollPane;
     }
 
@@ -190,7 +226,7 @@ public class MainScreenPanel extends javax.swing.JPanel {
     protected class ToolbarButton extends JButton {
 
         ToolbarButton(String text, ImageIcon icon) {
-            super(text,icon);
+            super(text, icon);
             init();
         }
 
