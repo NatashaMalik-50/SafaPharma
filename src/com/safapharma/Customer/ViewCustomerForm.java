@@ -9,6 +9,7 @@ import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.DialogForm;
+import com.safapharma.Templates.DummyPanel;
 import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -17,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
+import javax.swing.JLabel;
 
 /**
  *
@@ -31,15 +33,14 @@ public class ViewCustomerForm extends DialogForm {
     private JPanel viewPanel;
     private DialogForm.FormLabel nameLabel;
     private DialogForm.FormText nameText;
-    private DialogForm.ErrorLabel nameErrorLabel;
 
     private DialogForm.FormLabel contactLabel;
     private DialogForm.FormText contactText;
-    private DialogForm.ErrorLabel contactErrorLabel;
 
     private DialogForm.FormLabel addressLabel;
     private DialogForm.FormText addressText;
-    private DialogForm.ErrorLabel addressErrorLabel;
+    
+    private FormLabel customerBillLabel;
 
     private final CustomerBackend customerBackend;
     private final ViewCustomerForm thisForm;
@@ -91,87 +92,54 @@ public class ViewCustomerForm extends DialogForm {
 
         nameLabel = new DialogForm.FormLabel("Name");
         nameText = new DialogForm.FormText();
-        nameErrorLabel = new DialogForm.ErrorLabel();
 
         contactLabel = new DialogForm.FormLabel("Contact Number");
         contactText = new DialogForm.FormText();
-        contactErrorLabel = new DialogForm.ErrorLabel();
 
         addressLabel = new DialogForm.FormLabel("Address");
-        addressText = new DialogForm.FormText();
-        addressErrorLabel = new DialogForm.ErrorLabel();
+        addressText = new DialogForm.FormText();        
+        
+        customerBillLabel = new FormLabel("Customer Bills");
+        customerBillLabel.setHorizontalAlignment(JLabel.CENTER);
 
         viewPanel.add(nameLabel);
         viewPanel.add(nameText);
-        viewPanel.add(nameErrorLabel);
+        viewPanel.add(new DummyPanel());
 
         viewPanel.add(contactLabel);
         viewPanel.add(contactText);
-        viewPanel.add(contactErrorLabel);
+        viewPanel.add(new DummyPanel());
 
         viewPanel.add(addressLabel);
         viewPanel.add(addressText);
-        viewPanel.add(addressErrorLabel);
+        viewPanel.add(new DummyPanel());
+        
+        viewPanel.add(new DummyPanel());
+        viewPanel.add(customerBillLabel);
+        viewPanel.add(new DummyPanel());
 
         nameText.setText(currentCustomer.get(1).toString());
         addressText.setText(currentCustomer.get(2).toString());
         contactText.setText(currentCustomer.get(3).toString());
+        
 
-        //getFormPanel().add(submitButton);
-        //getFormPanel().add(resetButton);
         getFormPanel().add(viewPanel);
-//        scrollPane.add(customerTable);
         getFormPanel().add(scrollPane);
         this.pack();
-        hideErrorLabels();
+        disableTextFields();
     }
 
     private void loadData() throws Exception {
-        System.out.println("in load data");
         DataWithColumn dataWithColumn = customerBackend.setSelectedInfoIntoTable(selectedId);
         if (dataWithColumn != null) {
             tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
-            System.out.println("value --- " + dataWithColumn.getData());
         }
-    }
+    }  
 
-    private boolean validateInfo() {
-        resetErrorLabels();
-        boolean isValid = true;
-        if (nameText.getText().length() < 3) {
-            nameErrorLabel.setErrorText("Name must be atleast of length 3");
-            nameErrorLabel.setVisible(true);
-            isValid = false;
-        }
-        if (nameText.getText().length() > 45) {
-            nameErrorLabel.setErrorText("Name can be maximum of length 45");
-            nameErrorLabel.setVisible(true);
-            isValid = false;
-        }
-        if (contactText.getText().length() != 10) {
-            contactErrorLabel.setErrorText("Contact no. must be of 10 digits");
-            contactErrorLabel.setVisible(true);
-            isValid = false;
-        }
-        if (addressText.getText().length() < 8 || addressText.getText().length() > 45) {
-            addressErrorLabel.setErrorText("Address length should be between 8 and 45.");
-            addressErrorLabel.setVisible(true);
-            isValid = false;
-        }
-        return isValid;
-    }
-
-    private void hideErrorLabels() {
-        nameErrorLabel.setVisible(false);
-        addressErrorLabel.setVisible(false);
-        contactErrorLabel.setVisible(false);
-    }
-
-    private void resetErrorLabels() {
-        nameErrorLabel.setErrorText("");
-        addressErrorLabel.setErrorText("");
-        contactErrorLabel.setErrorText("");
-        hideErrorLabels();
+    private void disableTextFields() {
+        nameText.setEditable(false);
+        contactText.setEditable(false);
+        addressText.setEditable(false);
     }
 
     @Override
