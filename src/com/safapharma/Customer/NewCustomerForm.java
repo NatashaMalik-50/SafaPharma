@@ -112,8 +112,8 @@ public class NewCustomerForm extends DialogForm {
 
 
 
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton,getGBC(1));
         
         
         

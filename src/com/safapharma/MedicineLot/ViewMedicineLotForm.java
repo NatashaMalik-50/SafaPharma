@@ -119,9 +119,7 @@ public class ViewMedicineLotForm extends DialogForm {
         getFormPanel().add(inStockText);
         getFormPanel().add(new JPanel());
         
-        getFormPanel().add(closeButton);
-        getFormPanel().add(new JPanel());
-        getFormPanel().add(new JPanel());
+        getButtonPanel().add(closeButton);
         
 
         this.pack();

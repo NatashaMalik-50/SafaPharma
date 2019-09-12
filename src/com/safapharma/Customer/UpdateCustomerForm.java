@@ -90,8 +90,8 @@ public class UpdateCustomerForm extends DialogForm {
         getFormPanel().add(addressErrorLabel);
         
         
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton,getGBC(1));
         
         this.pack();
         hideErrorLabels();

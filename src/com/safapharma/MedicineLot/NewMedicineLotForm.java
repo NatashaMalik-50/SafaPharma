@@ -187,9 +187,9 @@ public class NewMedicineLotForm extends DialogForm {
         getFormPanel().add(rateErrorLabel);
 //        getFormPanel().add(new JPanel());
         
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
-        getFormPanel().add(new JPanel());
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton,getGBC(1));
+//        getFormPanel().add(new JPanel());
 //        getFormPanel().add(new JPanel());
 
         this.pack();

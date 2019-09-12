@@ -8,6 +8,8 @@ package com.safapharma.Home.Supplier;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.Templates.DialogForm;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
@@ -98,9 +100,9 @@ public class AddOrUpdateSupplierForm extends DialogForm {
         getFormPanel().add(emailLabel);
         getFormPanel().add(emailText);
         getFormPanel().add(emailErrorLabel);
-        
-        getButtonPanel().add(submitButton);
-        getButtonPanel().add(resetButton);
+
+        getButtonPanel().add(submitButton);        
+        getButtonPanel().add(resetButton, getGBC(1));
 
         this.pack();
         hideErrorLabels();
@@ -189,7 +191,7 @@ public class AddOrUpdateSupplierForm extends DialogForm {
     }
 
     private Supplier generateSupplier() {
-        if(isUpdateForm){
+        if (isUpdateForm) {
             currentSupplier.setName(nameText.getText());
             currentSupplier.setAddress(addressText.getText());
             currentSupplier.setContactNo(contactText.getText());

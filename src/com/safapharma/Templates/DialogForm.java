@@ -10,7 +10,10 @@ import com.safapharma.Helpers.IconConstants;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
@@ -45,8 +48,8 @@ public abstract class DialogForm extends javax.swing.JDialog {
         formPanel = new JPanel(new GridLayout(0, 3));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 20));
+        buttonPanel.setLayout(new GridBagLayout());
+//        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 20));
         panel.add(formPanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
         addListener();
@@ -63,7 +66,12 @@ public abstract class DialogForm extends javax.swing.JDialog {
     protected JPanel getButtonPanel() {
         return buttonPanel;
     }
-
+    protected GridBagConstraints getGBC(int x){
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 1;
+        c.insets = new Insets(0, 5, 0, 0);
+        return c;
+    }
     protected void addListener() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -141,8 +149,8 @@ public abstract class DialogForm extends javax.swing.JDialog {
 
         void init() {
             setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
-            setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            setPreferredSize(new Dimension(200, 50));
+//            setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            setPreferredSize(new Dimension(150, 40));
         }
     }
 
@@ -175,7 +183,7 @@ public abstract class DialogForm extends javax.swing.JDialog {
         void init() {
             setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
             setHorizontalAlignment(JLabel.CENTER);
-            setPreferredSize(new Dimension(DesignConstants.NEW_FORM_WIDTH, 50));
+            setPreferredSize(new Dimension(DesignConstants.NEW_FORM_WIDTH, DesignConstants.NEW_FORM_HEIGHT));
         }
 
     }
