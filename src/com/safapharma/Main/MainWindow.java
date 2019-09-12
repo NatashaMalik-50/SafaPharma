@@ -36,6 +36,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.util.Stack;
+import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -358,13 +359,12 @@ public class MainWindow extends javax.swing.JFrame {
             medicineLotPanel = null;
         }
     }
-    
 
     public void createNewStockViewForm(HomeScreenPanel homeScreenPanel) throws Exception {
         if (newStockViewForm != null) {
             deleteNewStockViewForm();
         }
-        newStockViewForm = new NewStockViewForm(this,homeScreenPanel);
+        newStockViewForm = new NewStockViewForm(this, homeScreenPanel);
     }
 
     public void showNewStockViewForm() {
@@ -439,18 +439,18 @@ public class MainWindow extends javax.swing.JFrame {
 //            newSaleForm = null;
 //        }
     }
-    
-    public void createSaleViewForm(int sale_id,String customeName) throws Exception {
+
+    public void createSaleViewForm(int sale_id, Vector<Object> currentSale) throws Exception {
         if (saleViewForm != null) {
             deleteSaleViewForm();
         }
-        saleViewForm = new SaleViewForm(this, sale_id, customeName);        
+        saleViewForm = new SaleViewForm(this, sale_id, currentSale);
     }
 
     public void showSaleViewForm() {
         if (saleViewForm != null) {
             saleViewForm.setVisible(true);
-         }
+        }
     }
 
     public void deleteSaleViewForm() {
@@ -480,6 +480,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     /* For Viewing of MedicineLotForms */
+
     public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
         if (viewMedicineLotForm != null) {
             deleteViewMedicineLotForm();
@@ -500,6 +501,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     /* For showing update medicine lot panel */
+
     public void createUpdateMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
         if (updateMedicineLotForm != null) {
             deleteUpdateMedicineLotForm();
@@ -519,6 +521,7 @@ public class MainWindow extends javax.swing.JFrame {
             updateMedicineLotForm = null;
         }
     }
+
     public void createNewCustomerForm(CustomerBackend customerBackend) throws Exception {
         {
             if (newCustomerForm != null) {
