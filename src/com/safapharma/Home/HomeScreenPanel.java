@@ -248,11 +248,16 @@ public class HomeScreenPanel extends MainScreenPanel {
       
         DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
         Object[] ob = new Object[5];
-        ob[0]=billEntriesTable.getValueAt(rowIndex-1, 0).toString();
-        ob[1]=billEntriesTable.getValueAt(rowIndex-1, 2).toString();
-        ob[2]=billEntriesTable.getValueAt(rowIndex-1, 3).toString();
-        ob[3]=billEntriesTable.getValueAt(rowIndex-1, 7).toString();
-        ob[4]=billEntriesTable.getValueAt(rowIndex-1, 4).toString();
+        ob[0]=stockData.getDataOf(rowIndex-1).get(0).toString();
+        ob[1]=stockData.getDataOf(rowIndex-1).get(2).toString();
+        ob[2]=stockData.getDataOf(rowIndex-1).get(3).toString();
+        ob[3]=stockData.getDataOf(rowIndex-1).get(7).toString();
+        ob[4]=stockData.getDataOf(rowIndex-1).get(4).toString();
+//        ob[0]=billEntriesTable.getValueAt(rowIndex-1, 0).toString();
+//        ob[1]=billEntriesTable.getValueAt(rowIndex-1, 2).toString();
+//        ob[2]=billEntriesTable.getValueAt(rowIndex-1, 3).toString();
+//        ob[3]=billEntriesTable.getValueAt(rowIndex-1, 7).toString();
+//        ob[4]=billEntriesTable.getValueAt(rowIndex-1, 4).toString();
         //model.addRow(stockData.getDataOf(rowIndex-1));
         model.addRow(ob);
         
