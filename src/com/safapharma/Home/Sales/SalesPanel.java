@@ -1,4 +1,4 @@
-/*
+/*  
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,6 +22,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -60,7 +62,8 @@ public class SalesPanel extends javax.swing.JPanel {
     private JComboBox filterSelectBox;
     private TableRowSorter sorter;
     protected MainWindow manager;
-    
+    private DataWithColumn dataWithColumn;
+
     /**
      * Creates new form NewJPanel
      */
@@ -74,60 +77,60 @@ public class SalesPanel extends javax.swing.JPanel {
 
     private void initUI() {
         tableModel = new CustomDefaultTableModel();
-                
+
         summaryLabel = new JLabel("Total Sales:");
         summaryText = new JTextField();
         summaryPanel = new JPanel();
-        
+
         toolbarPanel.setLayout(new GridLayout(1, 4));
         toolbarPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         removeButton = new ToolbarButton(Constants.BUTTON_REMOVE_SALES_LABEL);
         viewButton = new ToolbarButton(Constants.BUTTON_VIEW_SALES_LABEL);
- 
+
         searchBox = new JTextField();
         searchBox.setFont(DesignConstants.FONT_SIZE_16_CALIBRI);
-        searchButton = new ToolbarButton("Search",new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
+        searchButton = new ToolbarButton("Apply Filter", new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
         searchButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
-        
-        searchBox.setForeground(Color.GRAY);
-        searchBox.setText(Constants.PLACEHOLDER_TEXT_SEARCH);
-        
-        filterTextBefore = new JTextField();  
-        filterTextBefore.setForeground(Color.GRAY);
-        filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_DATE_FROM);
 
-        filterTextTo = new JTextField();        
-        filterTextTo.setForeground(Color.GRAY);
-        filterTextTo.setText(Constants.PLACEHOLDER_TEXT_DATE_TO);
-        
+//        searchBox.setForeground(Color.GRAY);
+//        searchBox.setText(Constants.PLACEHOLDER_TEXT_SEARCH);
+//        
+        filterTextBefore = new JTextField();
+//        filterTextBefore.setForeground(Color.GRAY);
+//        filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_DATE_FROM);
+
+        filterTextTo = new JTextField();
+//        filterTextTo.setForeground(Color.GRAY);
+//        filterTextTo.setText(Constants.PLACEHOLDER_TEXT_DATE_TO);
+//        
         toolbarPanel.add(viewButton);
         toolbarPanel.add(removeButton);
         toolbarPanel.add(searchBox);
         toolbarPanel.add(searchButton);
-     
+
         disableRemoveButtons();
-        disableViewButtons(); 
-        
+        disableViewButtons();
+
         // Status
         statusLabel.setText("Bill Status");
         statusLabel.setHorizontalAlignment(JLabel.CENTER);
         statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
         statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        salesAnalytics = new ToolbarButton("Sales Analysis",new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
-        
+        salesAnalytics = new ToolbarButton("Sales Analysis", new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
+
         statusPanel.add(salesAnalytics);
         statusPanel.add(summaryPanel);
-        
+
         filterSelectBox = new JComboBox();
-        filterSelectBox.addItem(Constants.COMBOBOX_FILTER_BY_DATE);
+//        filterSelectBox.addItem(Constants.COMBOBOX_FILTER_BY_DATE);
         filterSelectBox.addItem(Constants.COMBOBOX_FILTER_BY_AMOUNT);
-        
-        filterPanel.setLayout(new GridLayout(1, 3)); 
+
+        filterPanel.setLayout(new GridLayout(1, 3));
         filterPanel.add(filterSelectBox);
         filterPanel.add(filterTextBefore);
         filterPanel.add(filterTextTo);
-           
+
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -142,33 +145,31 @@ public class SalesPanel extends javax.swing.JPanel {
         salesTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         salesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         salesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        sorter =  new TableRowSorter(tableModel);
+        sorter = new TableRowSorter(tableModel);
         salesTable.setRowSorter(sorter);
+
+        //sorter.setRowFilter(RowFilter.dateFilter(RowFilter.ComparisonType.AFTER, null, indices));
         //salesTable.setAutoCreateRowSorter(true);
         tableScrollPane.setViewportView(salesTable);
-        
 
         summaryPanel.setLayout(new GridLayout(1, 2));
         summaryPanel.add(summaryLabel);
         summaryPanel.add(summaryText);
     }
-    
-    public void getSum()
-    {
+
+    public void getSum() {
         float sum1 = 0;
-        for(int i = 0; i < salesTable.getRowCount(); i++)
-        { 
-            try{
+        for (int i = 0; i < salesTable.getRowCount(); i++) {
+            try {
                 sum1 = sum1 + Float.parseFloat(salesTable.getValueAt(i, 5).toString());
-             }
-            catch(Exception e){
-               java.util.logging.Logger.getLogger(SalesPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
-                }
-        }    
-         summaryText.setText(Float.toString(sum1));
-         summaryText.setHorizontalAlignment(JTextField.CENTER);
+            } catch (Exception e) {
+                java.util.logging.Logger.getLogger(SalesPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
+            }
+        }
+        summaryText.setText(Float.toString(sum1));
+        summaryText.setHorizontalAlignment(JTextField.CENTER);
     }
-            
+
     private void setListeners() {
         salesTable.addMouseListener(new MouseAdapter() {
             @Override
@@ -176,28 +177,26 @@ public class SalesPanel extends javax.swing.JPanel {
                 enableButtons();
             }
         });
-        
-         filterSelectBox.addItemListener(new ItemListener() {
+
+        filterSelectBox.addItemListener(new ItemListener() {
             // Listening if a new items of the combo box has been selected.
             public void itemStateChanged(ItemEvent event) {
                 //JComboBox comboBox = (JComboBox) event.getSource();
 
                 // The item affected by the event.
-                String item = (String)event.getItem();
+                String item = (String) event.getItem();
 
-             
-                if (item == Constants.COMBOBOX_FILTER_BY_DATE ) {
-                    filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_DATE_FROM);
-                    filterTextTo.setText(Constants.PLACEHOLDER_TEXT_DATE_TO);
-                }
-
+//                if (item == Constants.COMBOBOX_FILTER_BY_DATE ) {
+//                    filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_DATE_FROM);
+//                    filterTextTo.setText(Constants.PLACEHOLDER_TEXT_DATE_TO);
+//                }
                 if (item == Constants.COMBOBOX_FILTER_BY_AMOUNT) {
-                    filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_AMOUNT_FROM);
-                    filterTextTo.setText(Constants.PLACEHOLDER_TEXT_AMOUNT_TO);
+//                    filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_AMOUNT_FROM);
+//                    filterTextTo.setText(Constants.PLACEHOLDER_TEXT_AMOUNT_TO);
                 }
             }
         });
-         
+
         //on view button click
         viewButton.addActionListener(new ActionListener() {
             @Override
@@ -205,75 +204,40 @@ public class SalesPanel extends javax.swing.JPanel {
                 try {
                     //create new form
                     int row = salesTable.getSelectedRow();
-                    int sale_id = (Integer)tableModel.getValueAt(row, 0);
-                    String customerName = (String)tableModel.getValueAt(row, 1);
+                    int saleTableRowId = (Integer) tableModel.getValueAt(row, 0);
+                    int saleId = dataWithColumn.getIdOf(saleTableRowId);
 
-                    manager.createSaleViewForm(sale_id, customerName); //the appropriate function call
+                    manager.createSaleViewForm(saleId,dataWithColumn.getDataOf(saleTableRowId)); //the appropriate function call
                     manager.showSaleViewForm();
                 } catch (Exception ex) {
                     Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-  
-    // placeholder for the JTextField         
-        filterTextBefore.addFocusListener(new FocusListener() {
+        searchButton.addActionListener(new ActionListener() {
+
             @Override
-            public void focusGained(FocusEvent e) {
-                if(filterSelectBox.getSelectedItem() == Constants.COMBOBOX_FILTER_BY_DATE){
-                    if (filterTextBefore.getText().equals(Constants.PLACEHOLDER_TEXT_DATE_FROM)) {
-                        filterTextBefore.setText("");
-                        filterTextBefore.setForeground(Color.BLACK);
-                    }
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if(filterSelectBox.getSelectedItem() == Constants.COMBOBOX_FILTER_BY_DATE){
-                    if (filterTextBefore.getText().isEmpty()) {
-                        filterTextBefore.setForeground(Color.GRAY);
-                        filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_DATE_FROM);
-                    }
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double low = Double.parseDouble(filterTextBefore.getText());
+                    double high = Double.parseDouble(filterTextTo.getText());
+//                    for(int i = 0 ; i < dataWithColumn.getData().size(); i++)
+//                    {
+//                        double value = (Double) dataWithColumn.getDataOf(i).get(5);  
+//                       if(value >=low && value <=high){
+                    List<RowFilter<Object, Object>> filters = new ArrayList<RowFilter<Object, Object>>(2);
+                    filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.AFTER, low - 1, 5));
+                    filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.BEFORE, high + 1, 5));
+                    RowFilter<Object, Object> rangeFilter = RowFilter.andFilter(filters);
+
+                    sorter.setRowFilter(rangeFilter);
+//                       }
+//                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-
-        filterTextTo.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if(filterSelectBox.getSelectedItem() == Constants.COMBOBOX_FILTER_BY_DATE){
-                    if (filterTextTo.getText().equals(Constants.PLACEHOLDER_TEXT_DATE_TO)) {
-                        filterTextTo.setText("");
-                        filterTextTo.setForeground(Color.BLACK);
-                    }
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                    if (filterTextTo.getText().isEmpty()) {
-                        filterTextTo.setForeground(Color.GRAY);
-                        filterTextTo.setText(Constants.PLACEHOLDER_TEXT_DATE_TO);
-                    }
-            }
-        });        
-
-        searchBox.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-            if (searchBox.getText().equals(Constants.PLACEHOLDER_TEXT_SEARCH)) {
-                searchBox.setText("");
-                searchBox.setForeground(Color.BLACK);
-            }
-        }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (searchBox.getText().isEmpty()) {
-                    searchBox.setForeground(Color.GRAY);
-                    searchBox.setText(Constants.PLACEHOLDER_TEXT_SEARCH);
-                }
-            }
-        });
-
         searchBox.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -294,46 +258,47 @@ public class SalesPanel extends javax.swing.JPanel {
                 if (str.length() == 0) {
                     sorter.setRowFilter(null);
                 } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" +str));
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + str));
                 }
             }
-        });    
+        });
     }
-    
+
     private void loadData() throws Exception {
-       DataWithColumn dataWithColumn = salesBackend.setSaleInfoIntoTable(salesTable, tableModel);
-       tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
-       getSum();
+        dataWithColumn = salesBackend.setSaleInfoIntoTable(salesTable, tableModel);
+        tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
+        getSum();
     }
 
     protected void enableButtons() {
         removeButton.setEnabled(true);
         viewButton.setEnabled(true);
     }
-  
+
     protected void enableRemoveButtons() {
         removeButton.setEnabled(true);
     }
+
     protected void enableViewButtons() {
         viewButton.setEnabled(true);
     }
-        
+
     protected void disableRemoveButtons() {
         removeButton.setEnabled(false);
     }
+
     protected void disableViewButtons() {
         viewButton.setEnabled(false);
     }
-    
+
     protected void disableButtons() {
         removeButton.setEnabled(false);
         viewButton.setEnabled(false);
     }
-    
-    protected JPanel getToolbar(){
+
+    protected JPanel getToolbar() {
         return toolbarPanel;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -427,10 +392,10 @@ public class SalesPanel extends javax.swing.JPanel {
                 .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(summaryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -447,7 +412,7 @@ public class SalesPanel extends javax.swing.JPanel {
     protected class ToolbarButton extends JButton {
 
         ToolbarButton(String text, ImageIcon icon) {
-            super(text,icon);
+            super(text, icon);
             init();
         }
 

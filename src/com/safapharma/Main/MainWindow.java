@@ -455,11 +455,11 @@ public class MainWindow extends javax.swing.JFrame {
 //        }
     }
 
-    public void createSaleViewForm(int sale_id, String customeName) throws Exception {
+    public void createSaleViewForm(int sale_id, Vector<Object> currentSale) throws Exception {
         if (saleViewForm != null) {
             deleteSaleViewForm();
         }
-        saleViewForm = new SaleViewForm(this, sale_id, customeName);
+        saleViewForm = new SaleViewForm(this, sale_id, currentSale);
     }
 
     public void showSaleViewForm() {

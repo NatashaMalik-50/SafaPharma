@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import javax.swing.JTable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -38,11 +39,11 @@ public class SaleViewForm extends DialogForm{
     private JTextField aggregateTextField, customerNameField;
 
     final private int sale_id;
-    final private String customerName;
-    public SaleViewForm(MainWindow manager, int id, String customerName) {
+    final private Vector<Object> currentSale;
+    public SaleViewForm(MainWindow manager, int id, Vector<Object> currentSale) {
         this.manager = manager;
         this.sale_id = id;
-        this.customerName = customerName;
+        this.currentSale = currentSale;
         this.remove(getFormLabel());
         initUI();
     }
@@ -98,7 +99,7 @@ public class SaleViewForm extends DialogForm{
         
         customerDetailPanel.add(customerNameLabel);
         customerDetailPanel.add(customerNameField);           
-        customerNameField.setText(customerName);
+        customerNameField.setText((String)currentSale.get(1));
         customerNameField.setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
         
         scrollPane.setViewportView(viewSalesTable);
@@ -122,7 +123,7 @@ public class SaleViewForm extends DialogForm{
         for(int i = 0; i < viewSalesTable.getRowCount(); i++)
         { 
             try{
-                sum1 = sum1 + Float.parseFloat(viewSalesTable.getValueAt(i, 4).toString());
+                sum1 = sum1 + Float.parseFloat(viewSalesTable.getValueAt(i, 5).toString());
              }
             catch(Exception e){
                java.util.logging.Logger.getLogger(SaleViewForm.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
