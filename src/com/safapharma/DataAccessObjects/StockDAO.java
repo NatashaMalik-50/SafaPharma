@@ -87,4 +87,15 @@ public class StockDAO {
         final String SQL_QUERY = "select stock_entry_id, company_name, medicine_name,quantity,rate,batch_no,expiry,supplier_name from " + Constants.VIEW_STOCK_VIEW; //see query
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
+    public DataWithColumn getBillInfo(int Stockid) throws Exception {
+        final String SQL_QUERY = "select s.id, s.name, s.email,s.contact_no,ml.batch_no,ml.expiry,ml.rate,c.name,m_c.name from (select * from stock_entry where stock_entry.id="+ Stockid +") se " +
+                                    "inner join supply_bill sb on se.bill_id=sb.id " +
+                                    "inner join supplier s on sb.supplier_id=s.id " +
+                                    "inner join medicine_lot ml on se.medicine_lot_id=ml.id " +
+                                    "inner join medicine m on ml.medicine_id=m.id " +
+                                    "inner join company c on m.company_id=c.id " +
+                                    "inner join medicine_category m_c on m.category_id=m_c.id; ";
+        System.out.println("in dao");
+        return  DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
 }

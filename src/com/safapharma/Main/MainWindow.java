@@ -15,6 +15,8 @@ import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
+import com.safapharma.Home.NewUpdateBillForm;
+import com.safapharma.Home.NewBillMedicineEntryViewForm;
 import com.safapharma.Home.Sales.SaleViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
@@ -65,6 +67,8 @@ public class MainWindow extends javax.swing.JFrame {
     private SalesPanel salesPanel;
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
+    private NewUpdateBillForm newUpdateBillForm;
+    private NewBillMedicineEntryViewForm newBillInfoViewForm;
     private AddOrUpdateSupplierForm newSupplierForm;
     private SaleViewForm saleViewForm;
     private NewStockForm newStockForm;
@@ -585,6 +589,49 @@ public class MainWindow extends javax.swing.JFrame {
       }
     }
     
+    
+    
+    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel) throws Exception {
+        if (newUpdateBillForm != null) {
+            deleteNewUpdateBillForm();
+        }
+        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel);
+    }
+    
+    public void showNewUpdateBillForm() {
+        if (newUpdateBillForm != null) {
+            newUpdateBillForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewUpdateBillForm() {
+        if (newUpdateBillForm != null) {
+            newUpdateBillForm.setVisible(false);
+            newUpdateBillForm = null;
+        }
+    }
+    
+    
+    public void createNewBillInfoViewForm(HomeScreenPanel homeScreenPanel, int id) throws Exception {
+        if (newBillInfoViewForm != null) {
+            deleteNewBillInfoViewForm();
+        }
+        newBillInfoViewForm = new NewBillMedicineEntryViewForm(this, homeScreenPanel,id);
+    }
+    
+    public void showNewBillInfoViewForm() {
+        if (newBillInfoViewForm != null) {
+            newBillInfoViewForm.setVisible(true);
+        }
+    }
+
+    public void deleteNewBillInfoViewForm() {
+        if (newBillInfoViewForm != null) {
+            newBillInfoViewForm.setVisible(false);
+            newBillInfoViewForm = null;
+        }
+    }
+    
     public void createUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
         if(updateCustomerForm!=null)
             {
@@ -601,7 +648,6 @@ public class MainWindow extends javax.swing.JFrame {
         }
        
     }
-
     public void deleteUpdateCustomerForm() {
       if(updateCustomerForm!=null)
       {
