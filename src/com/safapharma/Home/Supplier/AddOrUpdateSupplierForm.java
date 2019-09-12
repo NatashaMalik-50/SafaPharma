@@ -98,8 +98,9 @@ public class AddOrUpdateSupplierForm extends DialogForm {
         getFormPanel().add(emailLabel);
         getFormPanel().add(emailText);
         getFormPanel().add(emailErrorLabel);
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
+        
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton);
 
         this.pack();
         hideErrorLabels();
