@@ -5,6 +5,9 @@
  */
 package com.safapharma.ModelObjects;
 
+import com.safapharma.Helpers.Constants;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Vector;
 
 /**
@@ -16,6 +19,7 @@ public class DataWithColumn {
     Vector<Vector<Object>> data;
     Vector<String> columnNames;
     Vector<Object> idData;
+    HashMap<Integer,Integer> idSnoHashmap;
 
     public DataWithColumn() {
         columnNames = new Vector<String>();
@@ -26,6 +30,7 @@ public class DataWithColumn {
         columnNames = new Vector<String>();
         data = new Vector<Vector<Object>>();
         idData = new Vector<>();
+        idSnoHashmap = new HashMap<>();
     }
 
     public Vector<Vector<Object>> getData() {
@@ -60,4 +65,15 @@ public class DataWithColumn {
         return (Integer) idData.get(index);
     }
 
+    public void addToIdSNoHashMap(int sNo,int id){
+        idSnoHashmap.put(sNo, id);
+    }
+    
+    public int getIdBySerialNo(int sNo){
+        if(idSnoHashmap.containsKey(sNo))
+                return idSnoHashmap.get(sNo);
+        else
+            return Constants.INVALID;
+    }
+    
 }

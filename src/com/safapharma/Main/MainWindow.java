@@ -10,14 +10,14 @@ import com.safapharma.Customer.CustomerPanel;
 import com.safapharma.Customer.NewCustomerForm;
 import com.safapharma.Customer.UpdateCustomerForm;
 import com.safapharma.Customer.ViewCustomerForm;
-import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.*;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
+import com.safapharma.Home.Sales.SaleViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
 import com.safapharma.Home.SidePanel;
-import com.safapharma.Home.Supplier.NewSupplierForm;
+import com.safapharma.Home.Supplier.AddOrUpdateSupplierForm;
 import com.safapharma.Home.Supplier.SupplierBackend;
 import com.safapharma.Home.Supplier.SupplierPanel;
 import com.safapharma.Login.LoginDialog;
@@ -26,6 +26,7 @@ import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.MedicineLot.NewMedicineLotForm;
 import com.safapharma.MedicineLot.UpdateMedicineLotForm;
 import com.safapharma.MedicineLot.ViewMedicineLotForm;
+import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.StockPanel;
@@ -41,7 +42,6 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import com.safapharma.Customer.CustomerBackend;
 
 /**
  *
@@ -63,7 +63,8 @@ public class MainWindow extends javax.swing.JFrame {
     private SalesPanel salesPanel;
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
-    private NewSupplierForm newSupplierForm;
+    private AddOrUpdateSupplierForm newSupplierForm;
+    private SaleViewForm saleViewForm;
     private NewStockForm newStockForm;
     private HomeScreenPanel home;
     private NewMedicineLotForm newMedicineLotForm;
@@ -402,20 +403,27 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewSupplierForm(SupplierBackend supplierBackend) throws Exception {
+    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend) throws Exception {
         if (newSupplierForm != null) {
-            deleteNewSupplierForm();
+            deleteNewOrUpdateSupplierForm();
         }
-        newSupplierForm = new NewSupplierForm(this, supplierBackend);
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend);
     }
 
-    public void showNewSupplierForm() {
+    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier) throws Exception {
+        if (newSupplierForm != null) {
+            deleteNewOrUpdateSupplierForm();
+        }
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend, isUpdateForm, supplier);
+    }
+
+    public void showNewOrUpdateSupplierForm() {
         if (newSupplierForm != null) {
             newSupplierForm.setVisible(true);
         }
     }
 
-    public void deleteNewSupplierForm() {
+    public void deleteNewOrUpdateSupplierForm() {
         if (newSupplierForm != null) {
             newSupplierForm.setVisible(false);
             newSupplierForm = null;
@@ -442,11 +450,31 @@ public class MainWindow extends javax.swing.JFrame {
 //        }
     }
 
-    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+    public void createSaleViewForm(int sale_id, String customeName) throws Exception {
+        if (saleViewForm != null) {
+            deleteSaleViewForm();
+        }
+        saleViewForm = new SaleViewForm(this, sale_id, customeName);
+    }
+
+    public void showSaleViewForm() {
+        if (saleViewForm != null) {
+            saleViewForm.setVisible(true);
+        }
+    }
+
+    public void deleteSaleViewForm() {
+        if (saleViewForm != null) {
+            saleViewForm.setVisible(false);
+            saleViewForm = null;
+        }
+    }
+
+    public void createNewMedicineLotForm(MedicineLotBackend medicineLotBackend, Vector selectedObject) throws Exception {
         if (newMedicineLotForm != null) {
             deleteNewMedicineLotForm();
         }
-        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend);
+        newMedicineLotForm = new NewMedicineLotForm(this, medicineLotBackend, selectedObject);
     }
 
     public void showNewMedicineLotForm() {
@@ -463,11 +491,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     /* For Viewing of MedicineLotForms */
-    public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend) throws Exception {
+    public void createViewMedicineLotForm(MedicineLotBackend medicineLotBackend, Vector selectedObject) throws Exception {
         if (viewMedicineLotForm != null) {
             deleteViewMedicineLotForm();
         }
-        viewMedicineLotForm = new ViewMedicineLotForm(this, medicineLotBackend);
+        viewMedicineLotForm = new ViewMedicineLotForm(this, medicineLotBackend, selectedObject);
     }
 
     public void showViewMedicineLotForm() {
@@ -526,11 +554,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createViewCustomerForm(CustomerBackend customerBackend, Vector selectedObject, int id) throws Exception {
+    public void createViewCustomerForm(CustomerBackend customerBackend, Vector<Object> obj, int id) throws Exception {
         if (viewCustomerForm != null) {
             deleteViewCustomerForm();
         }
-        viewCustomerForm = new ViewCustomerForm(this, customerBackend, selectedObject, id);
+        viewCustomerForm = new ViewCustomerForm(this, customerBackend, obj, id);
 
     }
 
@@ -674,7 +702,6 @@ public class MainWindow extends javax.swing.JFrame {
     public Icon resizeIcon(ImageIcon imageIcon) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

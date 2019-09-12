@@ -43,8 +43,10 @@ public class NewStockForm extends DialogForm {
         getFormPanel().add(nameText);
         getFormPanel().add(contactLabel);
         getFormPanel().add(contactText);
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
+        
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton,getGBC(1));
+        
         this.pack();
 
     }

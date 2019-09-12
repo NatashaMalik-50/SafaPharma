@@ -50,10 +50,10 @@ public class DAOHelper {
             PreparedStatement pst = con.prepareStatement(SQL_QUERY);
             ResultSet rs = pst.executeQuery();
             ResultSetMetaData metaData = rs.getMetaData();
-            DataWithColumn dataWithColumn = new DataWithColumn();
+            DataWithColumn dataWithColumn = new DataWithColumn(true);
 
             int columnCount = metaData.getColumnCount();
-            dataWithColumn.getColumnNames().add("S.No");
+            dataWithColumn.getColumnNames().add("S.No.");
             //leaving first id column
             for (int i = 2; i <= columnCount; i++) {
                 dataWithColumn.getColumnNames().add(metaData.getColumnName(i));
@@ -70,6 +70,8 @@ public class DAOHelper {
                     } else {
                         //first id column
                         idRow.add(rs.getObject(i));
+                        System.out.println("id is--" +(Integer)rs.getObject(i));
+                        dataWithColumn.addToIdSNoHashMap(sNo, (Integer) rs.getObject(i));
                     }
                 }
                 dataWithColumn.getData().add(row);

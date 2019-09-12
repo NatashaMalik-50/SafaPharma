@@ -112,7 +112,11 @@ public class NewStockViewForm extends DialogForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int rowIndex = stockTable.getSelectedRow();
-                homeScreenPanel.addRow(rowIndex);
+                String exactSrno = stockTable.getValueAt(rowIndex, 0).toString();
+                int srno = Integer.parseInt(exactSrno);
+                //System.out.println(sr);
+                
+                homeScreenPanel.addRow(srno);
             }
         });
         resetButton.addActionListener(new ActionListener() {

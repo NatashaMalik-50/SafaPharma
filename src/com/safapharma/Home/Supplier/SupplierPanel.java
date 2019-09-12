@@ -10,13 +10,17 @@ import com.safapharma.Home.HomeScreenBackend;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
+import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
@@ -30,12 +34,13 @@ import javax.swing.table.TableRowSorter;
  * @author Natasha Malik
  */
 public class SupplierPanel extends MainScreenPanel {
-    
-     private MainWindow manager;
+
+    private MainWindow manager;
     private JTable supplierTable;
     private DefaultTableModel tableModel;
     private final SupplierBackend supplierBackend;
     private TableRowSorter sorter;
+    private DataWithColumn supplierDataWithColumn;
 
     public SupplierPanel(MainWindow manager) {
         this.manager = manager;
@@ -67,9 +72,10 @@ public class SupplierPanel extends MainScreenPanel {
     }
 
     private void loadData() throws Exception {
-        DataWithColumn dataWithColumn = supplierBackend.setSupplierInfoIntoTable(supplierTable, tableModel);
-        tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
-
+        this.supplierDataWithColumn = supplierBackend.setSupplierInfoIntoTable(supplierTable, tableModel);
+        if (supplierDataWithColumn != null) {
+            tableModel.setDataVector(supplierDataWithColumn.getData(), supplierDataWithColumn.getColumnNames());
+        }
     }
 
     private void setListeners() {
@@ -77,6 +83,9 @@ public class SupplierPanel extends MainScreenPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 //                enableButtons();
+                enableUpdateButtons();
+                enableRemoveButtons();
+                enableViewButtons();
             }
 
         });
@@ -85,8 +94,8 @@ public class SupplierPanel extends MainScreenPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    manager.createNewSupplierForm(supplierBackend);
-                    manager.showNewSupplierForm();
+                    manager.createNewOrUpdateSupplierForm(supplierBackend);
+                    manager.showNewOrUpdateSupplierForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -113,11 +122,27 @@ public class SupplierPanel extends MainScreenPanel {
                 if (str.length() == 0) {
                     sorter.setRowFilter(null);
                 } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" +str));
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + str));
+                }
+            }
+        });
+
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int rowIdx = supplierTable.getSelectedRow();
+                Vector<Object> data = supplierDataWithColumn.getDataOf(rowIdx);
+                Supplier supplier = new Supplier((String) data.get(1), (String) data.get(2), ""+(BigDecimal)data.get(3), (String) data.get(4));
+                supplier.setId(supplierDataWithColumn.getIdOf(rowIdx));
+                System.out.println("supplier found: " + supplier);
+                try {
+                    manager.createNewOrUpdateSupplierForm(supplierBackend, true, supplier);
+                    manager.showNewOrUpdateSupplierForm();
+                } catch (Exception ex) {
+                    Logger.getLogger(SupplierPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
-    
 }

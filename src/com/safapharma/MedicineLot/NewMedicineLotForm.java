@@ -5,15 +5,20 @@
  */
 package com.safapharma.MedicineLot;
 
+
 import com.safapharma.Main.MainWindow;
+import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.DialogForm;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import com.safapharma.ModelObjects.MedicineLot;
 
 /**
  *
@@ -22,6 +27,12 @@ import javax.swing.JPanel;
 public class NewMedicineLotForm extends DialogForm {
     
     private MainWindow manager;
+    
+    private FormLabel supplierNameLabel;
+    private JComboBox supplierNameCombo;
+//    private ErrorLabel supplierNameErrorLabel;
+    private FormButton supplierNameAddButton;
+    
         
     private FormLabel medicineNameLabel;
     private JComboBox medicineNameCombo;
@@ -43,37 +54,99 @@ public class NewMedicineLotForm extends DialogForm {
     private FormButton submitButton;
     private FormButton resetButton;
     
-    private MedicineLotBackend medicineLotBackend;    
+    private MedicineLotBackend medicineLotBackend;
+
+    private Vector<Vector> fullList;
+    private Vector fullNameList;
+    
+    private Vector fullSupplierNameList;
     
     
 
-    public NewMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend) {
+    public NewMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend,Vector fullList) {
         this.manager = manager;
         this.medicineLotBackend = medicineLotBackend;
+        this.fullList = fullList;
+        
         initUI();        
-        addListeners();
+        addListeners();  
+     
     }
     
-    private void setComboBox(JComboBox mbox){
-        mbox.setEditable(true);    
+    private void setComboBox(JComboBox mbox,JComboBox sbox){
+        try{
+            mbox.setEditable(true);    
+            AutoCompleteDecorator.decorate(mbox);       
+            
+            sbox.setEditable(true);
+            AutoCompleteDecorator.decorate(sbox);       
+        }
+        catch(Exception e){
+            System.out.println("Exception at setComboBox");
+        }
     }
     
-
+    private void setSupplierNameList(){
+        try{   
+            DataWithColumn details =  medicineLotBackend.getAllSupplierFromBillDetails();
+            Vector<Vector<Object>> allDetails = details.getData();
+            System.out.println("All supplier details are"+allDetails);
+            Vector supplierName = new Vector();
+            for(Vector v : allDetails){
+    //            System.out.println(v.get(2).toString());
+                supplierName.add(v.get(1));
+            }
+            fullSupplierNameList=supplierName;
+        }
+        catch(Exception e){
+            System.out.println("Exception at setFullNameList");
+        }
+    }
+    
+    
+    private void setMediceNameList(){
+//        Vector medName = new Vector();
+//        for(Vector v : fullList){
+////            System.out.println(v.get(2).toString());
+//            medName.add(v.get(2));
+//        }
+//        fullNameList=medName;
+        try{   
+            DataWithColumn details =  medicineLotBackend.getAllMedicineLotDetails();
+            Vector<Vector<Object>> allDetails = details.getData();
+//            System.out.println("All details are"+allDetails);
+            Vector medName = new Vector();
+            for(Vector v : allDetails){
+    //            System.out.println(v.get(2).toString());
+                medName.add(v.get(2));
+            }
+            fullNameList=medName;
+        }
+        catch(Exception e){
+            System.out.println("Exception at setFullNameList");
+        }
+    }
+    
     private void initUI() {
         
         //Set and configure layout
         getFormLabel().setText("Add MedicineLotForm");
-        getFormPanel().setLayout(new GridLayout(0, 4));
         System.out.println("Creating and Adding Medicine Lot Form ");
-
-        String[] someString = { "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine" };
+        
+//        String[] someString = {"", "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine","Karan","Manan","Raghav","Parman" };
+        setMediceNameList();
+        setSupplierNameList();
+        
+        supplierNameLabel = new FormLabel("Supplier Name");
+        supplierNameCombo = new JComboBox(fullSupplierNameList);
+        supplierNameAddButton = new FormButton("Add");
         
         medicineNameLabel = new FormLabel("Medicine Name");
-        medicineNameCombo = new JComboBox(someString);
+        medicineNameCombo = new JComboBox(fullNameList);
         medicineNameAddButton = new FormButton("Add");
         medicineNameErrorLabel = new ErrorLabel();
         
-        setComboBox(medicineNameCombo);
+        setComboBox(medicineNameCombo,supplierNameCombo);
 
         batchNumLabel = new FormLabel("Batch Number");
         batchNumText = new FormText();
@@ -90,43 +163,68 @@ public class NewMedicineLotForm extends DialogForm {
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
         
+        getFormPanel().add(supplierNameLabel);
+        getFormPanel().add(supplierNameCombo);
+        getFormPanel().add(supplierNameAddButton);
+        
         getFormPanel().add(medicineNameLabel);
         getFormPanel().add(medicineNameCombo);
         getFormPanel().add(medicineNameAddButton);
-        getFormPanel().add(medicineNameErrorLabel);        
+//        getFormPanel().add(medicineNameErrorLabel);        
         
         getFormPanel().add(batchNumLabel);
         getFormPanel().add(batchNumText);
         getFormPanel().add(batchNumErrorLabel);
-        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
         
         getFormPanel().add(expiryLabel);
         getFormPanel().add(expiryText);
         getFormPanel().add(expiryErrorLabel);
-        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
         
         getFormPanel().add(rateLabel);
         getFormPanel().add(rateText);
         getFormPanel().add(rateErrorLabel);
-        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
         
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
-        getFormPanel().add(new JPanel());
-        getFormPanel().add(new JPanel());
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton,getGBC(1));
+//        getFormPanel().add(new JPanel());
+//        getFormPanel().add(new JPanel());
 
         this.pack();
         hideErrorLabels();
     }
+ 
+    private int getIdOfMedicine(String medName){
+        for(Vector v : fullList){
+            //fullList does not contain medicineId , need to get a view which contains medicine Id as well then check for that value.
+            // if v.getItem(2).toString().equals(medName)
+            //     int a = Integer.apseInt( v.getItem(1));
+        }
+        return -1;
+    }
 
     private void addListeners() {
+        System.out.println("addListereners initiated");
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Submit Button called");
                 boolean isValid = validateInfo();
                 if (isValid) {
                     try {
                         // Add the content provided in the form.
+                        MedicineLot ml = new MedicineLot();
+                        String medName = (String)medicineNameCombo.getSelectedItem();
+                        int medId = getIdOfMedicine(medName);
+                        
+                        ml.setMedicine_id(medId);
+                        ml.setBatchNo(batchNumText.getText());
+                        double d = Double.parseDouble(rateText.getText());
+                        ml.setRate(d);
+                        ml.setExpiry(expiryText.getText());
+                        medicineLotBackend.insertMedicineLotDetails(ml);
                     } catch (Exception ex) {
                         createOptionPane("Database Error", "Error");
                     }
@@ -136,12 +234,20 @@ public class NewMedicineLotForm extends DialogForm {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                resetText();
             }
         });
-        medicineNameCombo.addActionListener(new ActionListener() {
+        medicineNameAddButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Add Button called");
+                System.out.println("Add Medicine called");
+            }
+        });
+        
+        supplierNameAddButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Add Supplier called");
             }
         });
     }
@@ -225,6 +331,15 @@ public class NewMedicineLotForm extends DialogForm {
         batchNumErrorLabel.setErrorText("");
         expiryErrorLabel.setErrorText("");
         rateErrorLabel.setErrorText("");
+        hideErrorLabels();
+    }
+    
+    private void resetText() {
+        supplierNameCombo.getEditor().setItem("");
+        medicineNameCombo.getEditor().setItem("");
+        batchNumText.setText("");
+        expiryText.setText("");
+        rateText.setText("");
         hideErrorLabels();
     }
 

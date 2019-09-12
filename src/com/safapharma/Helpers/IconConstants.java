@@ -11,6 +11,7 @@ package com.safapharma.Helpers;
  */
 public class IconConstants {
 
+    public static final String ANALYTICS_ICON = "/icons/analytics.png";
     public static final String CUSTOMER_ICON = "/icons/customer.png";
     public static final String SALES_ICON = "/icons/sales.png";
     public static final String STOCK_ICON = "/icons/stock.png";
@@ -25,6 +26,6 @@ public class IconConstants {
     public static final String BACK_BUTTON_ICON = "/icons/back.png";
     public static final String LOG_OUT_ICON = "/icons/logout.png";
     public static final String SEARCH_ICON = "/icons/search.png";
-    public static final String ERROR_ICON = "/icons/error.png";
-
+    public static final String ERROR_ICON = "/icons/close.png";
+    
 }

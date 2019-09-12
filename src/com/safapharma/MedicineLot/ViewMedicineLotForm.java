@@ -11,6 +11,7 @@ import com.safapharma.Templates.DialogForm;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author Karan
  */
-public class ViewMedicineLotForm extends DialogForm {
+public class ViewMedicineLotForm extends DialogForm {    
     private MainWindow manager;
         
     private FormLabel medicineNameLabel;
@@ -41,15 +42,25 @@ public class ViewMedicineLotForm extends DialogForm {
     
     private FormButton closeButton;    
     
-    private MedicineLotBackend medicineLotBackend;    
+    private MedicineLotBackend medicineLotBackend;   
     
     
 
-    public ViewMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend) {
+    public ViewMedicineLotForm(MainWindow manager, MedicineLotBackend medicineLotBackend,Vector selectedObject) {
         this.manager = manager;
         this.medicineLotBackend = medicineLotBackend;
         initUI();        
         addListeners();
+        
+        System.out.println(selectedObject);
+        System.out.println("View object clicked");
+        
+        medicineNameText.setText(selectedObject.get(2).toString());
+        batchNumText.setText(selectedObject.get(4).toString());
+        expiryText.setText(selectedObject.get(3).toString());
+        rateText.setText(selectedObject.get(5).toString());
+        
+        
     }
 
     public ViewMedicineLotForm(MainWindow aThis, CustomerBackend customerBackend) {
@@ -87,11 +98,11 @@ public class ViewMedicineLotForm extends DialogForm {
         rateText.setEditable(false);        
         inStockText.setEditable(false);
         
-        medicineNameText.setEnabled(false);
-        batchNumText.setEnabled(false);
-        expiryText.setEnabled(false);
-        rateText.setEnabled(false);        
-        inStockText.setEnabled(false);
+//        medicineNameText.setEnabled(false);
+//        batchNumText.setEnabled(false);
+//        expiryText.setEnabled(false);
+//        rateText.setEnabled(false);        
+//        inStockText.setEnabled(false);
         
         getFormPanel().add(medicineNameLabel);
         getFormPanel().add(medicineNameText);
@@ -113,9 +124,7 @@ public class ViewMedicineLotForm extends DialogForm {
         getFormPanel().add(inStockText);
         getFormPanel().add(new JPanel());
         
-        getFormPanel().add(closeButton);
-        getFormPanel().add(new JPanel());
-        getFormPanel().add(new JPanel());
+        getButtonPanel().add(closeButton);
         
 
         this.pack();

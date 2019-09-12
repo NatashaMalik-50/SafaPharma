@@ -105,9 +105,8 @@ public class UpdateMedicineLotForm extends DialogForm {
         getFormPanel().add(rateErrorLabel);
         
         
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
-        getFormPanel().add(new JPanel());
+        getButtonPanel().add(submitButton);
+        getButtonPanel().add(resetButton,getGBC(1));
         
 
         this.pack();

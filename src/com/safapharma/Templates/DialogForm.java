@@ -7,12 +7,17 @@ package com.safapharma.Templates;
 
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Helpers.IconConstants;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -27,6 +32,8 @@ import javax.swing.JTextField;
  */
 public abstract class DialogForm extends javax.swing.JDialog {
 
+    private JPanel formPanel, buttonPanel;
+
     /**
      * Creates new form DialogForm
      */
@@ -35,10 +42,16 @@ public abstract class DialogForm extends javax.swing.JDialog {
         this.setLocation(160, 50);
         this.setAlwaysOnTop(true);
         this.setModal(true);
+        panel.setLayout(new BorderLayout());
         formLabel.setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
         formLabel.setHorizontalAlignment(JLabel.CENTER);
-        formPanel.setLayout(new GridLayout(0, 3));
+        formPanel = new JPanel(new GridLayout(0, 3));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridBagLayout());
+//        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 20));
+        panel.add(formPanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
         addListener();
     }
 
@@ -50,6 +63,15 @@ public abstract class DialogForm extends javax.swing.JDialog {
         return formPanel;
     }
 
+    protected JPanel getButtonPanel() {
+        return buttonPanel;
+    }
+    protected GridBagConstraints getGBC(int x){
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 1;
+        c.insets = new Insets(0, 5, 0, 0);
+        return c;
+    }
     protected void addListener() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -60,6 +82,7 @@ public abstract class DialogForm extends javax.swing.JDialog {
     }
 
     abstract protected void deleteScreen();
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,21 +93,21 @@ public abstract class DialogForm extends javax.swing.JDialog {
     private void initComponents() {
 
         formLabel = new javax.swing.JLabel();
-        formPanel = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         formLabel.setText("Form");
 
-        javax.swing.GroupLayout formPanelLayout = new javax.swing.GroupLayout(formPanel);
-        formPanel.setLayout(formPanelLayout);
-        formPanelLayout.setHorizontalGroup(
-            formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 770, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        formPanelLayout.setVerticalGroup(
-            formPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -94,8 +117,8 @@ public abstract class DialogForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(formPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(formLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(formLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                    .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -103,9 +126,9 @@ public abstract class DialogForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(formLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(formPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -114,7 +137,7 @@ public abstract class DialogForm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel formLabel;
-    private javax.swing.JPanel formPanel;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 
     protected class FormButton extends JButton {
@@ -126,6 +149,8 @@ public abstract class DialogForm extends javax.swing.JDialog {
 
         void init() {
             setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
+//            setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            setPreferredSize(new Dimension(150, 40));
         }
     }
 
@@ -158,12 +183,13 @@ public abstract class DialogForm extends javax.swing.JDialog {
         void init() {
             setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
             setHorizontalAlignment(JLabel.CENTER);
-            setPreferredSize(new Dimension(DesignConstants.NEW_FORM_WIDTH, HEIGHT));
+            setPreferredSize(new Dimension(DesignConstants.NEW_FORM_WIDTH, DesignConstants.NEW_FORM_HEIGHT));
         }
 
     }
 
     protected class ErrorLabel extends JLabel {
+
         public ErrorLabel() {
             super();
             setForeground(Color.red);

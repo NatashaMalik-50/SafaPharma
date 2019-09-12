@@ -8,6 +8,8 @@ package com.safapharma.Home.Supplier;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.Templates.DialogForm;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
@@ -17,7 +19,7 @@ import java.util.regex.Pattern;
  *
  * @author Natasha Malik
  */
-public class NewSupplierForm extends DialogForm {
+public class AddOrUpdateSupplierForm extends DialogForm {
 
     private MainWindow manager;
     private FormLabel nameLabel;
@@ -35,16 +37,33 @@ public class NewSupplierForm extends DialogForm {
     private FormButton submitButton;
     private FormButton resetButton;
     private SupplierBackend supplierBackend;
+    private boolean isUpdateForm;
+    private Supplier currentSupplier;
 
-    public NewSupplierForm(MainWindow manager, SupplierBackend supplierBackend) {
+    public AddOrUpdateSupplierForm(MainWindow manager, SupplierBackend supplierBackend) {
         this.manager = manager;
         this.supplierBackend = supplierBackend;
+        this.isUpdateForm = false;
+        this.currentSupplier = null;
+        initUI();
+        addListeners();
+    }
+
+    public AddOrUpdateSupplierForm(MainWindow manager, SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier) {
+        this.manager = manager;
+        this.supplierBackend = supplierBackend;
+        this.isUpdateForm = isUpdateForm;
+        this.currentSupplier = supplier;
         initUI();
         addListeners();
     }
 
     private void initUI() {
-        getFormLabel().setText("Add Supplier");
+        if (isUpdateForm) {
+            getFormLabel().setText("Update Supplier");
+        } else {
+            getFormLabel().setText("Add Supplier");
+        }
 
         nameLabel = new FormLabel("Name");
         nameText = new FormText();
@@ -62,7 +81,11 @@ public class NewSupplierForm extends DialogForm {
         emailText = new FormText();
         emailErrorLabel = new ErrorLabel();
 
-        submitButton = new FormButton("Submit");
+        if (isUpdateForm) {
+            submitButton = new FormButton("Update");
+        } else {
+            submitButton = new FormButton("Submit");
+        }
         resetButton = new FormButton("Reset");
 
         getFormPanel().add(nameLabel);
@@ -77,11 +100,15 @@ public class NewSupplierForm extends DialogForm {
         getFormPanel().add(emailLabel);
         getFormPanel().add(emailText);
         getFormPanel().add(emailErrorLabel);
-        getFormPanel().add(submitButton);
-        getFormPanel().add(resetButton);
+
+        getButtonPanel().add(submitButton);        
+        getButtonPanel().add(resetButton, getGBC(1));
 
         this.pack();
         hideErrorLabels();
+        if (currentSupplier != null) {
+            setFields();
+        }
     }
 
     private void addListeners() {
@@ -92,12 +119,22 @@ public class NewSupplierForm extends DialogForm {
                 if (isValid) {
                     try {
                         Supplier supplier = generateSupplier();
-                        boolean isAdded = supplierBackend.addSupplier(supplier);
-                        if (isAdded) {
-                            createOptionPane("Supplier Added", "");
-                            manager.deleteNewSupplierForm();
+                        if (isUpdateForm) {
+                            boolean isUpated = supplierBackend.updateSupplier(supplier);
+                            if (isUpated) {
+                                createOptionPane("Supplier Updated", "");
+                                manager.deleteNewOrUpdateSupplierForm();
+                            } else {
+                                createOptionPane("Not Able to update supplier! Please try again.", "Error");
+                            }
                         } else {
-                            createOptionPane("Not Able to add supplier! Please try again.", "Error");
+                            boolean isAdded = supplierBackend.addSupplier(supplier);
+                            if (isAdded) {
+                                createOptionPane("Supplier Added", "");
+                                manager.deleteNewOrUpdateSupplierForm();
+                            } else {
+                                createOptionPane("Not Able to add supplier! Please try again.", "Error");
+                            }
                         }
                     } catch (Exception ex) {
                         createOptionPane("Database Error", "Error");
@@ -108,6 +145,7 @@ public class NewSupplierForm extends DialogForm {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                resetFields();
             }
         });
     }
@@ -153,6 +191,13 @@ public class NewSupplierForm extends DialogForm {
     }
 
     private Supplier generateSupplier() {
+        if (isUpdateForm) {
+            currentSupplier.setName(nameText.getText());
+            currentSupplier.setAddress(addressText.getText());
+            currentSupplier.setContactNo(contactText.getText());
+            currentSupplier.setEmail(emailText.getText());
+            return currentSupplier;
+        }
         Supplier supplier = new Supplier(nameText.getText(), addressText.getText(), contactText.getText(), emailText.getText());
         return supplier;
     }
@@ -174,7 +219,28 @@ public class NewSupplierForm extends DialogForm {
 
     @Override
     protected void deleteScreen() {
-        manager.deleteNewSupplierForm();
+        manager.deleteNewOrUpdateSupplierForm();
+    }
+
+    private void resetFields() {
+        if (isUpdateForm) {
+            //orig values
+            setFields();
+        } else {
+            nameText.setText("");
+            contactText.setText("");
+            addressText.setText("");
+            emailText.setText("");
+        }
+    }
+
+    private void setFields() {
+        if (currentSupplier != null) {
+            nameText.setText(currentSupplier.getName());
+            contactText.setText(currentSupplier.getContactNo());
+            addressText.setText(currentSupplier.getAddress());
+            emailText.setText(currentSupplier.getEmail());
+        }
     }
 
 }
