@@ -134,7 +134,9 @@ public class MainScreenPanel extends javax.swing.JPanel {
     protected JPanel getTotalPanel(){
         return TotalPanel;
     }
-
+    protected JPanel getSearchPanel(){
+        return searchPanel;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

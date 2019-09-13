@@ -1,136 +1,82 @@
-/*  
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.safapharma.Home.Sales;
 
-import com.safapharma.Helpers.Constants;
-import com.safapharma.Templates.*;
 import com.safapharma.Helpers.DesignConstants;
-import com.safapharma.Helpers.IconConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
-import java.awt.Color;
-import java.awt.Cursor;
+import com.safapharma.Templates.MainScreenPanel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingWorker;
-import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import javax.swing.RowFilter;
+import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 
 /**
  *
- * @author Akshit
+ * @author akshit
  */
-public class SalesPanel extends javax.swing.JPanel {
-
-    protected ToolbarButton removeButton, viewButton;
-    private JLabel summaryLabel;
-    protected JTextField searchBox, summaryText, filterTextBefore, filterTextTo;
-    protected ToolbarButton searchButton, salesAnalytics;
+public class SalesPanel extends MainScreenPanel{
+    
+    private MainWindow manager;
     private JTable salesTable;
-    private CustomDefaultTableModel tableModel;
-    private final SalesBackend salesBackend;
-    private JComboBox filterSelectBox;
+    private DefaultTableModel tableModel;
+    private SalesBackend salesBackend;
     private TableRowSorter sorter;
-    protected MainWindow manager;
-    private DataWithColumn dataWithColumn;
-
-    /**
-     * Creates new form NewJPanel
-     */
+    private DataWithColumn salesDataWithColumn;
+    private JLabel summaryLabel;
+    private JTextField filterTextBefore, filterTextTo, summaryText;
+    private JComboBox filterSelectBox;
+    private ToolbarButton resetButton;
+    
     public SalesPanel(MainWindow manager) {
-        salesBackend = new SalesBackend();
+
         this.manager = manager;
-        initComponents();
+        salesBackend = new SalesBackend();
         initUI();
         setListeners();
     }
 
     private void initUI() {
-        tableModel = new CustomDefaultTableModel();
-
-        summaryLabel = new JLabel("Total Sales:");
-        summaryText = new JTextField();
-        summaryPanel = new JPanel();
-
-        toolbarPanel.setLayout(new GridLayout(1, 4));
-        toolbarPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        removeButton = new ToolbarButton(Constants.BUTTON_REMOVE_SALES_LABEL);
-        viewButton = new ToolbarButton(Constants.BUTTON_VIEW_SALES_LABEL);
-
-        searchBox = new JTextField();
-        searchBox.setFont(DesignConstants.FONT_SIZE_16_CALIBRI);
-        searchButton = new ToolbarButton("Apply Filter", new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
-        searchButton.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
-
-//        searchBox.setForeground(Color.GRAY);
-//        searchBox.setText(Constants.PLACEHOLDER_TEXT_SEARCH);
-//        
-        filterTextBefore = new JTextField();
-//        filterTextBefore.setForeground(Color.GRAY);
-//        filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_DATE_FROM);
-
-        filterTextTo = new JTextField();
-//        filterTextTo.setForeground(Color.GRAY);
-//        filterTextTo.setText(Constants.PLACEHOLDER_TEXT_DATE_TO);
-//        
-        toolbarPanel.add(viewButton);
-        toolbarPanel.add(removeButton);
-        toolbarPanel.add(searchBox);
-        toolbarPanel.add(searchButton);
-
-        disableRemoveButtons();
-        disableViewButtons();
-
-        // Status
-        statusLabel.setText("Bill Status");
-        statusLabel.setHorizontalAlignment(JLabel.CENTER);
-        statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
-        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
-        statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        salesAnalytics = new ToolbarButton("Sales Analysis", new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
-
-        statusPanel.add(salesAnalytics);
-        statusPanel.add(summaryPanel);
-
         filterSelectBox = new JComboBox();
-//        filterSelectBox.addItem(Constants.COMBOBOX_FILTER_BY_DATE);
-        filterSelectBox.addItem(Constants.COMBOBOX_FILTER_BY_AMOUNT);
-
-        filterPanel.setLayout(new GridLayout(1, 3));
-        filterPanel.add(filterSelectBox);
-        filterPanel.add(filterTextBefore);
-        filterPanel.add(filterTextTo);
-
+        filterSelectBox.addItem("Filter By Amount");
+        filterTextBefore = new JTextField();
+        filterTextTo = new JTextField();
+        summaryText = new JTextField();
+        summaryLabel = new JLabel("Total Amount");
+        
+        getToolbar().remove(addButton);
+        getToolbar().remove(updateButton);
+        getToolbar().remove(removeButton);
+        getToolbar().remove(viewButton);
+        
+        getToolbar().setLayout(new GridLayout(1, 3));
+        getToolbar().add(viewButton);
+        getToolbar().add(removeButton);
+        getToolbar().add(searchBox);
+        
+        searchButton.setText("Apply Filter");
+        resetButton = new ToolbarButton("Reset Filter");
+        
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -139,25 +85,37 @@ public class SalesPanel extends javax.swing.JPanel {
             }
         }.execute();
 
-        // Sales Table
+        tableModel = new DefaultTableModel();
         salesTable = new JTable(tableModel);
+        sorter = new TableRowSorter(tableModel);
+        salesTable.setRowSorter(sorter);
         salesTable.getTableHeader().setResizingAllowed(false);
         salesTable.getTableHeader().setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         salesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         salesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        sorter = new TableRowSorter(tableModel);
-        salesTable.setRowSorter(sorter);
+        getTableScrollPane().setViewportView(salesTable);
+    
+        getSearchPanel().setLayout(new GridLayout(1, 5));
+        getSearchPanel().add(filterSelectBox);
+        getSearchPanel().add(filterTextBefore);
+        getSearchPanel().add(filterTextTo);
+        getSearchPanel().add(searchButton);
+        getSearchPanel().add(resetButton);
 
-        //sorter.setRowFilter(RowFilter.dateFilter(RowFilter.ComparisonType.AFTER, null, indices));
-        //salesTable.setAutoCreateRowSorter(true);
-        tableScrollPane.setViewportView(salesTable);
+        getTotalPanel().setLayout( new GridLayout(1, 2));
+        getTotalPanel().add(summaryLabel);
+        getTotalPanel().add(summaryText);    
+        }
 
-        summaryPanel.setLayout(new GridLayout(1, 2));
-        summaryPanel.add(summaryLabel);
-        summaryPanel.add(summaryText);
+    private void loadData() throws Exception {
+        this.salesDataWithColumn = salesBackend.setSaleInfoIntoTable(salesTable, tableModel);
+        if (salesDataWithColumn != null) {
+            tableModel.setDataVector(salesDataWithColumn.getData(), salesDataWithColumn.getColumnNames());
+        }
+        getTotalSales();
     }
 
-    public void getSum() {
+        public void getTotalSales() {
         float sum1 = 0;
         for (int i = 0; i < salesTable.getRowCount(); i++) {
             try {
@@ -170,33 +128,19 @@ public class SalesPanel extends javax.swing.JPanel {
         summaryText.setHorizontalAlignment(JTextField.CENTER);
     }
 
+
     private void setListeners() {
         salesTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                enableButtons();
+                enableRemoveButtons();
+                enableViewButtons();
             }
+
         });
-
-        filterSelectBox.addItemListener(new ItemListener() {
-            // Listening if a new items of the combo box has been selected.
-            public void itemStateChanged(ItemEvent event) {
-                //JComboBox comboBox = (JComboBox) event.getSource();
-
-                // The item affected by the event.
-                String item = (String) event.getItem();
-
-//                if (item == Constants.COMBOBOX_FILTER_BY_DATE ) {
-//                    filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_DATE_FROM);
-//                    filterTextTo.setText(Constants.PLACEHOLDER_TEXT_DATE_TO);
-//                }
-                if (item == Constants.COMBOBOX_FILTER_BY_AMOUNT) {
-//                    filterTextBefore.setText(Constants.PLACEHOLDER_TEXT_AMOUNT_FROM);
-//                    filterTextTo.setText(Constants.PLACEHOLDER_TEXT_AMOUNT_TO);
-                }
-            }
-        });
-
+        
+        
+        
         //on view button click
         viewButton.addActionListener(new ActionListener() {
             @Override
@@ -205,15 +149,16 @@ public class SalesPanel extends javax.swing.JPanel {
                     //create new form
                     int row = salesTable.getSelectedRow();
                     int saleTableRowId = (Integer) tableModel.getValueAt(row, 0);
-                    int saleId = dataWithColumn.getIdOf(saleTableRowId);
+                    int saleId = salesDataWithColumn.getIdOf(saleTableRowId);
 
-                    manager.createSaleViewForm(saleId,dataWithColumn.getDataOf(saleTableRowId)); //the appropriate function call
+                    manager.createSaleViewForm(saleId,salesDataWithColumn.getDataOf(saleTableRowId)); //the appropriate function call
                     manager.showSaleViewForm();
                 } catch (Exception ex) {
                     Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
+        
         searchButton.addActionListener(new ActionListener() {
 
             @Override
@@ -221,23 +166,35 @@ public class SalesPanel extends javax.swing.JPanel {
                 try {
                     double low = Double.parseDouble(filterTextBefore.getText());
                     double high = Double.parseDouble(filterTextTo.getText());
-//                    for(int i = 0 ; i < dataWithColumn.getData().size(); i++)
-//                    {
-//                        double value = (Double) dataWithColumn.getDataOf(i).get(5);  
-//                       if(value >=low && value <=high){
+                    // incase when value of high is lower
+                    if (high < low)
+                    {
+                        double temp = low;
+                        low = high;
+                        high = temp;
+                    }
+                    
                     List<RowFilter<Object, Object>> filters = new ArrayList<RowFilter<Object, Object>>(2);
                     filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.AFTER, low - 1, 5));
                     filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.BEFORE, high + 1, 5));
                     RowFilter<Object, Object> rangeFilter = RowFilter.andFilter(filters);
 
                     sorter.setRowFilter(rangeFilter);
-//                       }
-//                    }
+                    
                 } catch (Exception ex) {
                     Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
+        resetButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    sorter.setRowFilter(null);;
+            }
+        });
+        
+
         searchBox.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -263,169 +220,5 @@ public class SalesPanel extends javax.swing.JPanel {
             }
         });
     }
-
-    private void loadData() throws Exception {
-        dataWithColumn = salesBackend.setSaleInfoIntoTable(salesTable, tableModel);
-        tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
-        getSum();
-    }
-
-    protected void enableButtons() {
-        removeButton.setEnabled(true);
-        viewButton.setEnabled(true);
-    }
-
-    protected void enableRemoveButtons() {
-        removeButton.setEnabled(true);
-    }
-
-    protected void enableViewButtons() {
-        viewButton.setEnabled(true);
-    }
-
-    protected void disableRemoveButtons() {
-        removeButton.setEnabled(false);
-    }
-
-    protected void disableViewButtons() {
-        viewButton.setEnabled(false);
-    }
-
-    protected void disableButtons() {
-        removeButton.setEnabled(false);
-        viewButton.setEnabled(false);
-    }
-
-    protected JPanel getToolbar() {
-        return toolbarPanel;
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        toolbarPanel = new javax.swing.JPanel();
-        statusPanel = new javax.swing.JPanel();
-        statusLabel = new javax.swing.JLabel();
-        tableScrollPane = new javax.swing.JScrollPane();
-        filterPanel = new javax.swing.JPanel();
-        summaryPanel = new javax.swing.JPanel();
-
-        toolbarPanel.setPreferredSize(new java.awt.Dimension(450, 40));
-
-        javax.swing.GroupLayout toolbarPanelLayout = new javax.swing.GroupLayout(toolbarPanel);
-        toolbarPanel.setLayout(toolbarPanelLayout);
-        toolbarPanelLayout.setHorizontalGroup(
-            toolbarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 936, Short.MAX_VALUE)
-        );
-        toolbarPanelLayout.setVerticalGroup(
-            toolbarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        statusLabel.setText("jLabel1");
-
-        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
-        statusPanel.setLayout(statusPanelLayout);
-        statusPanelLayout.setHorizontalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        statusPanelLayout.setVerticalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 731, Short.MAX_VALUE))
-        );
-
-        filterPanel.setPreferredSize(new java.awt.Dimension(450, 40));
-
-        javax.swing.GroupLayout filterPanelLayout = new javax.swing.GroupLayout(filterPanel);
-        filterPanel.setLayout(filterPanelLayout);
-        filterPanelLayout.setHorizontalGroup(
-            filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        filterPanelLayout.setVerticalGroup(
-            filterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 41, Short.MAX_VALUE)
-        );
-
-        summaryPanel.setPreferredSize(new java.awt.Dimension(450, 40));
-
-        javax.swing.GroupLayout summaryPanelLayout = new javax.swing.GroupLayout(summaryPanel);
-        summaryPanel.setLayout(summaryPanelLayout);
-        summaryPanelLayout.setHorizontalGroup(
-            summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        summaryPanelLayout.setVerticalGroup(
-            summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 46, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(toolbarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
-                    .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
-                    .addComponent(filterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
-                    .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(toolbarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(filterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-    }// </editor-fold>//GEN-END:initComponents
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel filterPanel;
-    private javax.swing.JLabel statusLabel;
-    private javax.swing.JPanel statusPanel;
-    private javax.swing.JPanel summaryPanel;
-    private javax.swing.JScrollPane tableScrollPane;
-    private javax.swing.JPanel toolbarPanel;
-    // End of variables declaration//GEN-END:variables
-
-    protected class ToolbarButton extends JButton {
-
-        ToolbarButton(String text, ImageIcon icon) {
-            super(text, icon);
-            init();
-        }
-
-        ToolbarButton(String text) {
-            super(text);
-            init();
-        }
-
-        void init() {
-//          setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.yellow));
-            setFont(DesignConstants.FONT_SIZE_16_CALIBRI_BOLD);
-            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        }
-
-    }
+ 
 }
