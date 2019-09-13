@@ -95,9 +95,25 @@ public class StockDAO {
                                     "inner join medicine m on ml.medicine_id=m.id " +
                                     "inner join company c on m.company_id=c.id " +
                                     "inner join medicine_category m_c on m.category_id=m_c.id; ";
-        System.out.println("in dao");
+        //System.out.println("in dao");
         return  DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
+    public DataWithColumn getQuantity(int Stockid) throws Exception {
+        final String SQL_QUERY = "select id,quantity from stock_entry where id="+Stockid ;
+        
+        return  DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
+    public String setQuantity(int qty,int Stockid) throws Exception {
+        final String SQL_QUERY = "update stock_entry set quantity= ? where id= ?";
+        try (Connection con = DbHelper.getConnection();) {
+           
+            
+          //  SQL_QUERY.executeUpdate();
+              return SQL_QUERY;
+        
+    }
+    
+}
     
     public DataWithColumn getAllExpiredMedicinesDetails() throws Exception{
         final String SQL_QUERY = "select * from " + Constants.VIEW_EXPIRED_MEDICINES;

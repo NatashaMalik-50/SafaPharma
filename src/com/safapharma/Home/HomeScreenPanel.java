@@ -53,6 +53,7 @@ public class HomeScreenPanel extends MainScreenPanel {
     protected ToolbarButton btnAddCustomer;
     private ToolbarButton btnGenerateBill;
     private static int  Srno=0;
+    
 
     public HomeScreenPanel(MainWindow manager) {
         this.manager = manager;
@@ -152,10 +153,26 @@ public class HomeScreenPanel extends MainScreenPanel {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    manager.createNewUpdateBillForm(thisHome);
-                    manager.showNewUpdateBillForm();
-                } catch (Exception ex) {
+                try
+                {
+                if(billEntriesTable.getSelectedRow()>=0)
+                    {
+                        int rowIndex = billEntriesTable.getSelectedRow();
+                        String exactSrno = billEntriesTable.getValueAt(rowIndex, 0).toString();
+                        int id = Integer.parseInt(exactSrno);
+                        int currQuantity = Integer.parseInt(billEntriesTable.getValueAt(rowIndex, 2).toString());
+                        int maxQuantity=Integer.parseInt(billData.getDataOf(0).get(1).toString());
+                        
+                        //System.out.println(" id -- "+id);
+                        manager.createNewUpdateBillForm(thisHome,id,currQuantity,maxQuantity);
+                        manager.showNewUpdateBillForm();
+                    }
+                    else
+                    {
+                        //Alert ob = new Alert(Alert.AlertType.WARNING,"Select Atleast One Row",ButtonType.OK);
+                    } 
+                }
+                catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -278,7 +295,13 @@ public class HomeScreenPanel extends MainScreenPanel {
         totalBox.setText("₹ " + Float.toString(sum1));
         totalBox.setHorizontalAlignment(JTextField.CENTER);
     }
-
+    public void updateQuantity(int quantity,int id)
+    {
+        //System.out.println(id);
+        //System.out.println(quantity+" "+id);
+        billEntriesTable.setValueAt(quantity, id-1, 2);
+        
+    }
     public void addRow(int rowIndex) {
         //System.out.println("found row : "+rowIndex+ " with value"+stockData.getDataOf(rowIndex)+ " --with id-- "+stockData.getIdData());
         JTextField obc = new JTextField();
@@ -295,7 +318,8 @@ public class HomeScreenPanel extends MainScreenPanel {
         
         System.out.println("next field - "+stockData.getDataOf(rowIndex - 1).get(2).toString());
         //newRow.add();
-        newRow.add(stockData.getDataOf(rowIndex - 1).get(3).toString());
+        //newRow.add(stockData.getDataOf(rowIndex - 1).get(3).toString());
+        newRow.add(1);
         System.out.println("next field2 - "+stockData.getDataOf(rowIndex - 1).get(3).toString());
         newRow.add(stockData.getDataOf(rowIndex - 1).get(5).toString());
         System.out.println("next field3 - "+stockData.getDataOf(rowIndex - 1).get(5).toString());
@@ -312,7 +336,7 @@ public class HomeScreenPanel extends MainScreenPanel {
         //bill row also stores id of the object
         Vector<Object> billRow = new Vector<>();
         billRow.add(stockData.getIdBySerialNo((Integer)(stockData.getDataOf(rowIndex - 1).get(0))));
-        billRow.addAll(newRow);
+        billRow.add(stockData.getDataOf(rowIndex - 1).get(3).toString());
         System.out.println("Bill row "+billRow);
         billData.getData().add(billRow);
         System.out.print("Vec -- " + billData.getData());
