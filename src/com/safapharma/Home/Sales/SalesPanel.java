@@ -178,9 +178,9 @@ public class SalesPanel extends MainScreenPanel{
                     filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.AFTER, low - 1, 5));
                     filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.BEFORE, high + 1, 5));
                     RowFilter<Object, Object> rangeFilter = RowFilter.andFilter(filters);
-
                     sorter.setRowFilter(rangeFilter);
                     
+                    getTotalSales();
                 } catch (Exception ex) {
                     Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -190,7 +190,8 @@ public class SalesPanel extends MainScreenPanel{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                    sorter.setRowFilter(null);;
+                    sorter.setRowFilter(null);
+                    getTotalSales();
             }
         });
         
