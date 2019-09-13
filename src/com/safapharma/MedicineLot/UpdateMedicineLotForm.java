@@ -6,6 +6,7 @@
 package com.safapharma.MedicineLot;
 
 import com.safapharma.Main.MainWindow;
+import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.DialogForm;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,7 @@ public class UpdateMedicineLotForm extends DialogForm {
     private MainWindow manager;
         
     private DialogForm.FormLabel medicineNameLabel;
-    private JComboBox medicineNameCombo;
+    private FormText medicineNameInfoLabel;
     private DialogForm.ErrorLabel medicineNameErrorLabel;
     
     
@@ -42,7 +43,8 @@ public class UpdateMedicineLotForm extends DialogForm {
     private DialogForm.FormButton submitButton;
     private DialogForm.FormButton resetButton;
     
-    private MedicineLotBackend medicineLotBackend;    
+    private MedicineLotBackend medicineLotBackend; 
+    private Vector fullNameList;
     
     
 
@@ -52,26 +54,44 @@ public class UpdateMedicineLotForm extends DialogForm {
         initUI();        
         addListeners();
         
+        medicineNameInfoLabel.setText(selectedObject.get(2).toString());
+        batchNumText.setText(selectedObject.get(4).toString());
+        expiryText.setText(selectedObject.get(3).toString());
+        rateText.setText(selectedObject.get(5).toString());
     }
     
     private void setComboBox(JComboBox mbox){
         mbox.setEditable(false);    // It is false by default
     }
     
+    private void setMediceNameList(){
+        try{   
+            DataWithColumn details =  medicineLotBackend.getAllMedicineLotDetails();
+            Vector<Vector<Object>> allDetails = details.getData();
+            Vector medName = new Vector();
+            for(Vector v : allDetails){
+                medName.add(v.get(2));
+            }
+            fullNameList = medName;
+            
+        }
+        catch(Exception e){
+            System.out.println("Exception at setFullNameList");
+        }
+    }
+    
 
     private void initUI() {
         
         //Set and configure layout
-        getFormLabel().setText("Update MedicineLotForm");
-        
+        getFormLabel().setText("Update MedicineLotForm");        
         System.out.println("Updating Medicine Lot Form ");
-
-        String[] someString = { "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine" };
-        medicineNameLabel = new DialogForm.FormLabel("Medicine Name");
-        medicineNameCombo = new JComboBox(someString);        
-        medicineNameErrorLabel = new DialogForm.ErrorLabel();
         
-        setComboBox(medicineNameCombo);
+        medicineNameLabel = new DialogForm.FormLabel("Medicine Name");
+        medicineNameInfoLabel = new FormText();        
+        medicineNameErrorLabel = new DialogForm.ErrorLabel();    
+        
+        medicineNameInfoLabel.setEditable(false);
 
         batchNumLabel = new DialogForm.FormLabel("Batch Number");
         batchNumText = new DialogForm.FormText();
@@ -89,7 +109,7 @@ public class UpdateMedicineLotForm extends DialogForm {
         resetButton = new DialogForm.FormButton("Reset");
         
         getFormPanel().add(medicineNameLabel);
-        getFormPanel().add(medicineNameCombo);        
+        getFormPanel().add(medicineNameInfoLabel);        
         getFormPanel().add(medicineNameErrorLabel);        
         
         getFormPanel().add(batchNumLabel);
@@ -132,6 +152,7 @@ public class UpdateMedicineLotForm extends DialogForm {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                resetText();
             }
         });
         
@@ -152,7 +173,7 @@ public class UpdateMedicineLotForm extends DialogForm {
         try{
         
             /*Checking if the respective textfields are empty or not. */
-            if(medicineNameCombo.getSelectedItem().toString().isEmpty()){
+            if(medicineNameInfoLabel.getText().isEmpty()){
                 isValid = false;
                 medicineNameErrorLabel.setText("Incorrect Medicine Name");
             }
@@ -224,6 +245,14 @@ public class UpdateMedicineLotForm extends DialogForm {
         manager.deleteNewMedicineLotForm();
     }
 
+    private void resetText() {
+     
+        medicineNameInfoLabel.setText("");
+        batchNumText.setText("");
+        expiryText.setText("");
+        rateText.setText("");
+//        hideErrorLabels();
+    }
 
     
 }

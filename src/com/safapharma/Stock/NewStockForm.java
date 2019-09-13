@@ -6,9 +6,12 @@
 package com.safapharma.Stock;
 
 import com.safapharma.Main.MainWindow;
+import com.safapharma.MedicineLot.MedicineLotBackend;
 import com.safapharma.Templates.DialogForm;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 
 /**
  *
@@ -17,12 +20,10 @@ import java.awt.event.ActionListener;
 public class NewStockForm extends DialogForm {
 
     private MainWindow manager;
-    private FormLabel nameLabel;
-    private FormText nameText;
-    private FormLabel contactLabel;
-    private FormText contactText;
-    private FormButton submitButton;
-    private FormButton resetButton;
+    private JPanel upperPanel;
+    private JPanel lowerPanel;
+    
+    private MedicineLotBackend medicineLotBackend;
 
     public NewStockForm(MainWindow manager) {
         this.manager = manager;
@@ -32,36 +33,25 @@ public class NewStockForm extends DialogForm {
 
     private void initUI() {
         getFormLabel().setText("Add New Stock");
-        nameLabel = new FormLabel("Name");
-        nameText = new FormText();
-        contactLabel = new FormLabel("Contact No.");
-        contactText = new FormText();
-        submitButton = new FormButton("Submit");
-        resetButton = new FormButton("Reset");
-
-        getFormPanel().add(nameLabel);
-        getFormPanel().add(nameText);
-        getFormPanel().add(contactLabel);
-        getFormPanel().add(contactText);
         
-        getButtonPanel().add(submitButton);
-        getButtonPanel().add(resetButton,getGBC(1));
+        medicineLotBackend = new MedicineLotBackend();
+        
+        
+        upperPanel = new JPanel(new FlowLayout());
+        
+        
+        lowerPanel = new JPanel(new FlowLayout());
+        
+        
+        getFormPanel().add(upperPanel);
+        getFormPanel().add(lowerPanel);
         
         this.pack();
 
     }
 
     private void addListeners() {
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+        
     }
 
     @Override

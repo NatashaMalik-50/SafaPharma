@@ -46,7 +46,7 @@ public class MedicineLotPanel extends MainScreenPanel{
         medicineLotBackend = new MedicineLotBackend();
         initUI();
         setListeners();
-        removeButton.setText("Previous Add Button");
+        removeButton.setText("Soft Remove");
     }
     
     private void loadData() throws Exception {
@@ -102,7 +102,7 @@ public class MedicineLotPanel extends MainScreenPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println("Add Button Called");
+                    System.out.println("Add Medicine Lot Called");
 //                    System.out.println(fullList);
                     manager.createNewMedicineLotForm(medicineLotBackend,fullList);
                     manager.showNewMedicineLotForm();                  
@@ -116,7 +116,7 @@ public class MedicineLotPanel extends MainScreenPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println("Update Button Called");
+                    System.out.println("Update Medicine Lot Button Called");
                     manager.createUpdateMedicineLotForm(medicineLotBackend,selectedObject);
                     manager.showUpdateMedicineLotForm();                  
                 } catch (Exception ex) {

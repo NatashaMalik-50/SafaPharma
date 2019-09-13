@@ -32,6 +32,7 @@ import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
+import com.safapharma.Stock.NewStockFormTwo;
 import com.safapharma.Stock.StockPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -70,7 +71,7 @@ public class MainWindow extends javax.swing.JFrame {
     private NewBillMedicineEntryViewForm newBillInfoViewForm;
     private AddOrUpdateSupplierForm newSupplierForm;
     private SaleViewForm saleViewForm;
-    private NewStockForm newStockForm;
+    private NewStockFormTwo newStockForm;
     private HomeScreenPanel home;
     private NewMedicineLotForm newMedicineLotForm;
     private ViewMedicineLotForm viewMedicineLotForm;
@@ -392,7 +393,8 @@ public class MainWindow extends javax.swing.JFrame {
         if (newStockForm != null) {
             deleteNewStockForm();
         }
-        newStockForm = new NewStockForm(this);
+        
+        newStockForm = new NewStockFormTwo(this,new MedicineLotBackend());
     }
 
     public void showNewStockForm() {
