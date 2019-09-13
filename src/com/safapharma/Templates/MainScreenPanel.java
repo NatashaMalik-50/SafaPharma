@@ -134,6 +134,13 @@ public class MainScreenPanel extends javax.swing.JPanel {
     protected JPanel getTotalPanel(){
         return TotalPanel;
     }
+    
+    protected void hideAllButtons(){
+        addButton.setVisible(false);
+        updateButton.setVisible(false);
+        removeButton.setVisible(false);
+        viewButton.setVisible(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

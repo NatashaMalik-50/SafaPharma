@@ -98,4 +98,9 @@ public class StockDAO {
         System.out.println("in dao");
         return  DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
+    
+    public DataWithColumn getAllExpiredMedicinesDetails() throws Exception{
+        final String SQL_QUERY = "select * from " + Constants.VIEW_EXPIRED_MEDICINES;
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
 }
