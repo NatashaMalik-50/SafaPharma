@@ -28,6 +28,7 @@ import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import com.safapharma.Templates.CustomDefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 
@@ -39,7 +40,7 @@ public class SalesPanel extends MainScreenPanel{
     
     private MainWindow manager;
     private JTable salesTable;
-    private DefaultTableModel tableModel;
+    private CustomDefaultTableModel tableModel;
     private SalesBackend salesBackend;
     private TableRowSorter sorter;
     private DataWithColumn salesDataWithColumn;
@@ -62,6 +63,7 @@ public class SalesPanel extends MainScreenPanel{
         filterTextBefore = new JTextField();
         filterTextTo = new JTextField();
         summaryText = new JTextField();
+        summaryText.setEditable(false);
         summaryLabel = new JLabel("Total Amount");
         
         getToolbar().remove(addButton);
@@ -85,7 +87,7 @@ public class SalesPanel extends MainScreenPanel{
             }
         }.execute();
 
-        tableModel = new DefaultTableModel();
+        tableModel = new CustomDefaultTableModel();
         salesTable = new JTable(tableModel);
         sorter = new TableRowSorter(tableModel);
         salesTable.setRowSorter(sorter);
