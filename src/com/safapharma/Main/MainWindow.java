@@ -591,11 +591,11 @@ public class MainWindow extends javax.swing.JFrame {
     
     
     
-    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel) throws Exception {
+    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel,int id,int currQuantity,int maxQuantity) throws Exception {
         if (newUpdateBillForm != null) {
             deleteNewUpdateBillForm();
         }
-        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel);
+        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel,id,currQuantity,maxQuantity);
     }
     
     public void showNewUpdateBillForm() {
