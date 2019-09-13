@@ -355,4 +355,9 @@ public class HomeScreenPanel extends MainScreenPanel {
         getSum();
 
     }
+
+    @Override
+    protected void addAlerts() {
+        manager.viewExpiredMedicineThroughStatusPanel();
+    }
 }

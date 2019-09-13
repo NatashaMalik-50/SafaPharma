@@ -176,6 +176,10 @@ public class MedicineLotPanel extends MainScreenPanel{
             }
         });
     }
+    @Override
+    protected void addAlerts() {
+        manager.viewExpiredMedicineThroughStatusPanel();
+    }
     
     
     

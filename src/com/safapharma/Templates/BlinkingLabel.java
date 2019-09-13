@@ -5,6 +5,7 @@
  */
 package com.safapharma.Templates;
 
+import com.safapharma.Helpers.DesignConstants;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +18,14 @@ import javax.swing.Timer;
  */
 public class BlinkingLabel extends JLabel {
 
-    private static final int BLINKING_RATE = 1000; // in ms
+    private static final int BLINKING_RATE = 500; // in ms
 
     private boolean blinkingOn = true;
 
     public BlinkingLabel(String text) {
         super(text);
+        setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
+        setForeground(Color.red);
         Timer timer = new Timer(BLINKING_RATE, new TimerListener(this));
         timer.setInitialDelay(0);
         timer.start();

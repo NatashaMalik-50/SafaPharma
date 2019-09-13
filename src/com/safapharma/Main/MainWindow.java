@@ -664,6 +664,10 @@ public class MainWindow extends javax.swing.JFrame {
             expiredMedicinesPanel = null;
         }
     }
+    
+    public void viewExpiredMedicineThroughStatusPanel(){
+        sidePanel.expiredMedicineButton();
+    }
 
     public void deleteCurrentPanel() {
         Component component = componentStack.pop();
@@ -677,6 +681,8 @@ public class MainWindow extends javax.swing.JFrame {
             deleteSalesPanel();
         } else if (component == stockPanel) {
             deleteStockPanel();
+        } else if(component == expiredMedicinesPanel){
+            deleteExpiredMedicinesPanel();
         }
         sidePanel.backPressedChangeActive();
     }

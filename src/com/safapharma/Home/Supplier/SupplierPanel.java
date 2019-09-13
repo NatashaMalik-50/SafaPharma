@@ -144,5 +144,9 @@ public class SupplierPanel extends MainScreenPanel {
             }
         });
     }
+    @Override
+    protected void addAlerts() {
+        manager.viewExpiredMedicineThroughStatusPanel();
+    }
 
 }

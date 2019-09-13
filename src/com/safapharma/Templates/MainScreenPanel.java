@@ -9,6 +9,8 @@ import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Helpers.IconConstants;
 import java.awt.Cursor;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,12 +26,13 @@ import javax.swing.border.BevelBorder;
  *
  * @author Natasha Malik
  */
-public class MainScreenPanel extends javax.swing.JPanel {
+public abstract class MainScreenPanel extends javax.swing.JPanel {
 
     protected ToolbarButton addButton, removeButton, viewButton, updateButton;
 //    protected JComboBox<String> comboBox;
     protected JTextField searchBox;
     protected ToolbarButton searchButton;
+    protected BlinkingLabel blinkingLabel;
 
     /**
      * Creates new form NewJPanel
@@ -37,6 +40,7 @@ public class MainScreenPanel extends javax.swing.JPanel {
     public MainScreenPanel() {
         initComponents();
         initUI();
+        statusListener();
     }
 
     private void initUI() {
@@ -59,11 +63,14 @@ public class MainScreenPanel extends javax.swing.JPanel {
         disableUpdateButtons();
         disableViewButtons();
 
-        statusLabel.setText("Bill Status");
-        statusLabel.setHorizontalAlignment(JLabel.CENTER);
-        statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
+//        statusLabel.setText("Bill Status");
+//        statusLabel.setHorizontalAlignment(JLabel.CENTER);
+//        statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
         statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        blinkingLabel = new BlinkingLabel("To View Expired Medicines, Click Here");
+        blinkingLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        statusPanel.add(blinkingLabel);
 
 //        comboBox = new JComboBox<String>();
 //        comboBox.addItem("Search By Name");
@@ -134,6 +141,9 @@ public class MainScreenPanel extends javax.swing.JPanel {
     protected JPanel getTotalPanel(){
         return TotalPanel;
     }
+    protected JPanel getStatusPanel(){
+        return statusPanel;
+    }
     
     protected void hideAllButtons(){
         addButton.setVisible(false);
@@ -141,6 +151,18 @@ public class MainScreenPanel extends javax.swing.JPanel {
         removeButton.setVisible(false);
         viewButton.setVisible(false);
     }
+    
+    protected void statusListener(){
+        blinkingLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                addAlerts();
+            }
+
+        });
+    }
+    
+    abstract protected void addAlerts();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,7 +175,6 @@ public class MainScreenPanel extends javax.swing.JPanel {
 
         toolbarPanel = new javax.swing.JPanel();
         statusPanel = new javax.swing.JPanel();
-        statusLabel = new javax.swing.JLabel();
         tableScrollPane = new javax.swing.JScrollPane();
         searchPanel = new javax.swing.JPanel();
         TotalPanel = new javax.swing.JPanel();
@@ -171,19 +192,15 @@ public class MainScreenPanel extends javax.swing.JPanel {
             .addGap(0, 40, Short.MAX_VALUE)
         );
 
-        statusLabel.setText("jLabel1");
-
         javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(0, 51, Short.MAX_VALUE)
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         searchPanel.setPreferredSize(new java.awt.Dimension(450, 40));
@@ -248,7 +265,6 @@ public class MainScreenPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel TotalPanel;
     private javax.swing.JPanel searchPanel;
-    private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JScrollPane tableScrollPane;
     private javax.swing.JPanel toolbarPanel;

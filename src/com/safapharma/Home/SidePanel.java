@@ -142,7 +142,13 @@ public class SidePanel extends javax.swing.JPanel {
         buttonExpiredMedicines.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                manager.createExpiredMedicinesPanel();
+                expiredMedicineButton();
+            }
+        });
+    }
+    
+    public void expiredMedicineButton(){
+        manager.createExpiredMedicinesPanel();
                 manager.showExpiredMedicinesPanel();
                 if (lastActiveLabel != null) {
                     lastActiveLabel.makeLabelInactive();
@@ -150,8 +156,6 @@ public class SidePanel extends javax.swing.JPanel {
                 buttonExpiredMedicines.makeLabelActive();
                 lastActiveLabel = buttonExpiredMedicines;
                 buttonExpiredMedicines.setIcon(new ImageIcon(getClass().getResource(IconConstants.EXPIRED_MEDICINES_RED_ICON)));
-            }
-        });
     }
 
     public void backPressedChangeActive() {

@@ -59,5 +59,8 @@ public class ExpiredMedicinesPanel extends MainScreenPanel{
             tableModel.setDataVector(expiredDataWithColumn.getData(), expiredDataWithColumn.getColumnNames());
         }
     }
+    @Override
+    protected void addAlerts() {
+    }
     
 }
