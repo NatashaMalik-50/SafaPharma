@@ -49,17 +49,25 @@ public class NewStockFormTwo extends DialogForm {
     private ErrorLabel medicineNameErrorLabel;
     private FormButton medicineNameAddButton;
     
-    private FormLabel batchNumLabel;
-    private FormText batchNumText;
-    private ErrorLabel batchNumErrorLabel;
+    private FormLabel medicineLotBatchLabel;
+    private JComboBox medicineLotBatchCombo;
+    private FormButton medicineLotBatchButton;
     
-    private FormLabel expiryLabel;
-    private FormText expiryText;
-    private ErrorLabel expiryErrorLabel;
+    private FormLabel quantityLabel;
+    private FormText quantityText;
+    private ErrorLabel quantityErrorLabel;
     
-    private FormLabel rateLabel;
-    private FormText rateText;
-    private ErrorLabel rateErrorLabel;
+    private FormLabel discountPercentageLabel;
+    private FormText discountPercentageText;
+    private ErrorLabel discountPercentageErrorLabel;
+    
+    private FormLabel gstLabel;
+    private FormText gstText;
+    private ErrorLabel gstErrorLabel;
+    
+    private FormLabel amountLabel;
+    private FormText amountText;
+    private ErrorLabel amountErrorLabel;
     
     private FormButton submitButton;
     private FormButton resetButton;
@@ -67,9 +75,9 @@ public class NewStockFormTwo extends DialogForm {
     private MedicineLotBackend medicineLotBackend;
 
     private Vector<Vector> fullList;
-    private Vector fullNameList;
-    
+    private Vector fullNameList;    
     private Vector fullSupplierNameList;
+    private Vector fullBatchNameList;
     
     private JPanel upperPanel;
     private JPanel lowerPanel;
@@ -78,7 +86,7 @@ public class NewStockFormTwo extends DialogForm {
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
     private NewStockFormTwo thisForm;
-    private Object[] columnNames = {"Medicine Name","Batch No","Expiry", "Rate"};
+    private Object[] columnNames = {"Medicine Name","Medicine Batch","Quantity","DiscountPercentage", "GSTPercentage","Amount"};
 
     public NewStockFormTwo(MainWindow manager, MedicineLotBackend medicineLotBackend) {
         this.manager = manager;
@@ -89,74 +97,17 @@ public class NewStockFormTwo extends DialogForm {
      
     }
     
-    private void setComboBox(JComboBox mbox,JComboBox sbox){
-        try{
-            mbox.setEditable(true);    
-            AutoCompleteDecorator.decorate(mbox);       
-            
-            sbox.setEditable(true);
-            AutoCompleteDecorator.decorate(sbox);       
-        }
-        catch(Exception e){
-            System.out.println("Exception at setComboBox");
-        }
-    }
-    
-    private void setSupplierNameList(){
-        try{   
-            DataWithColumn details =  medicineLotBackend.getAllSupplierFromBillDetails();
-            Vector<Vector<Object>> allDetails = details.getData();
-            System.out.println("All supplier details are"+allDetails);
-            Vector supplierName = new Vector();
-            for(Vector v : allDetails){
-    //            System.out.println(v.get(2).toString());
-                supplierName.add(v.get(1));
-            }
-            fullSupplierNameList=supplierName;
-        }
-        catch(Exception e){
-            System.out.println("Exception at setFullNameList");
-        }
-    }
-    
-    private void addRow(){
-        DefaultTableModel model = (DefaultTableModel) stockTable.getModel();
-        Vector<Object> newRow = new Vector<>();
-        
-        newRow.add(medicineNameCombo.getSelectedItem().toString());
-        newRow.add(batchNumText.getText());
-        newRow.add(expiryText.getText());
-        newRow.add(rateText.getText());
-        model.addRow(newRow);
-    }
-    
-    private void setMediceNameList(){
-        try{   
-            DataWithColumn details =  medicineLotBackend.getAllMedicineLotDetails();
-            Vector<Vector<Object>> allDetails = details.getData();
-//            System.out.println("All details are"+allDetails);
-            Vector medName = new Vector();
-            for(Vector v : allDetails){
-    //            System.out.println(v.get(2).toString());
-                medName.add(v.get(2));
-            }
-            fullNameList=medName;
-        }
-        catch(Exception e){
-            System.out.println("Exception at setFullNameList");
-        }
-    }
-    
     private void initUI() {
         
         //Set and configure layout
-        getFormLabel().setText("Add MedicineLotForm");
+        getFormLabel().setText("Add Stock");
         getFormPanel().setLayout(new GridLayout(0,2));
         System.out.println("Creating and Adding Medicine Lot Form ");
         
 //        String[] someString = {"", "Acetaminophen", "Adderall", "Amitriptyline", "Amlodipine","Karan","Manan","Raghav","Parman" };
         setMediceNameList();
         setSupplierNameList();
+        setBatchNameList();
         
         upperPanel = new JPanel(new GridLayout(0,3));
         
@@ -169,22 +120,31 @@ public class NewStockFormTwo extends DialogForm {
         medicineNameAddButton = new FormButton("Add");
         medicineNameErrorLabel = new ErrorLabel();
         
-        setComboBox(medicineNameCombo,supplierNameCombo);
+        medicineLotBatchLabel = new FormLabel("Medicine Lot Batch");
+        medicineLotBatchCombo = new JComboBox(fullBatchNameList);
+        medicineLotBatchButton = new FormButton("Add");
+        
 
-        batchNumLabel = new FormLabel("Batch Number");
-        batchNumText = new FormText();
-        batchNumErrorLabel = new ErrorLabel();
+        quantityLabel = new FormLabel("Quantity");
+        quantityText = new FormText();
+        quantityErrorLabel = new ErrorLabel();
 
-        expiryLabel = new FormLabel("Expiry");
-        expiryText = new FormText();
-        expiryErrorLabel = new ErrorLabel();
+        discountPercentageLabel = new FormLabel("DiscountPercentage");
+        discountPercentageText = new FormText();
+        discountPercentageErrorLabel = new ErrorLabel();
 
-        rateLabel = new FormLabel("Rate");
-        rateText = new FormText();
-        rateErrorLabel = new ErrorLabel();
+        gstLabel = new FormLabel("GSTPercentage");
+        gstText = new FormText();
+        gstErrorLabel = new ErrorLabel();
+        
+        amountLabel = new FormLabel("Amount");
+        amountText = new FormText();
+        amountErrorLabel = new ErrorLabel();
         
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
+        
+        setComboBox(medicineNameCombo,supplierNameCombo,medicineLotBatchCombo);
         
         upperPanel.add(supplierNameLabel);
         upperPanel.add(supplierNameCombo);
@@ -194,21 +154,29 @@ public class NewStockFormTwo extends DialogForm {
         upperPanel.add(medicineNameCombo);
         upperPanel.add(medicineNameAddButton);
 //        upperPanel .add(medicineNameErrorLabel);        
+
+        upperPanel.add(medicineLotBatchLabel);
+        upperPanel.add(medicineLotBatchCombo);
+        upperPanel.add(medicineLotBatchButton);
         
-        upperPanel.add(batchNumLabel);
-        upperPanel.add(batchNumText);
-        upperPanel.add(batchNumErrorLabel);
+        upperPanel.add(quantityLabel);
+        upperPanel.add(quantityText);
+        upperPanel.add(quantityErrorLabel);
 //        upperPanel .add(new JPanel());
         
-        upperPanel.add(expiryLabel);
-        upperPanel.add(expiryText);
-        upperPanel.add(expiryErrorLabel);
+        upperPanel.add(discountPercentageLabel);
+        upperPanel.add(discountPercentageText);
+        upperPanel.add(discountPercentageErrorLabel);
 //        upperPanel .add(new JPanel());
         
-        upperPanel.add(rateLabel);
-        upperPanel.add(rateText);
-        upperPanel.add(rateErrorLabel);
+        upperPanel.add(gstLabel);
+        upperPanel.add(gstText);
+        upperPanel.add(gstErrorLabel);
 //        upperPanel .add(new JPanel());
+
+        upperPanel.add(amountLabel);
+        upperPanel.add(amountText);
+        upperPanel.add(amountErrorLabel);
 
         upperPanel.add(submitButton);
         upperPanel.add(resetButton);
@@ -247,6 +215,87 @@ public class NewStockFormTwo extends DialogForm {
         this.pack();
         hideErrorLabels();
     }
+    
+    private void setComboBox(JComboBox mbox,JComboBox sbox,JComboBox medLotBatch){
+        try{
+            mbox.setEditable(true);    
+            AutoCompleteDecorator.decorate(mbox);       
+            
+            sbox.setEditable(true);
+            AutoCompleteDecorator.decorate(sbox);       
+            
+            medLotBatch.setEditable(true);
+            AutoCompleteDecorator.decorate(medLotBatch);       
+        }
+        catch(Exception e){
+            System.out.println("Exception at setComboBox");
+        }
+    }
+    
+    private void setSupplierNameList(){
+        try{   
+            DataWithColumn details =  medicineLotBackend.getAllSupplierFromBillDetails();
+            Vector<Vector<Object>> allDetails = details.getData();
+            System.out.println("All supplier details are"+allDetails);
+            Vector supplierName = new Vector();
+            for(Vector v : allDetails){
+    //            System.out.println(v.get(2).toString());
+                supplierName.add(v.get(1));
+            }
+            fullSupplierNameList=supplierName;
+        }
+        catch(Exception e){
+            System.out.println("Exception at setFullNameList");
+        }
+    }
+    
+    private void setMediceNameList(){
+        try{   
+            DataWithColumn details =  medicineLotBackend.getAllMedicineLotDetails();
+            Vector<Vector<Object>> allDetails = details.getData();
+//            System.out.println("All details are"+allDetails);
+            Vector medName = new Vector();
+            for(Vector v : allDetails){
+    //            System.out.println(v.get(2).toString());
+                medName.add(v.get(2));
+            }
+            fullNameList=medName;
+        }
+        catch(Exception e){
+            System.out.println("Exception at setFullNameList");
+        }
+    }
+    
+    private void setBatchNameList(){
+        try{   
+            DataWithColumn details =  medicineLotBackend.getAllMedicineLotDetails();
+            Vector<Vector<Object>> allDetails = details.getData();
+//            System.out.println("All details are"+allDetails);
+            Vector medName = new Vector();
+            for(Vector v : allDetails){
+    //            System.out.println(v.get(2).toString());
+                medName.add(v.get(4));
+            }
+            fullBatchNameList=medName;
+        }
+        catch(Exception e){
+            System.out.println("Exception at setFullNameList");
+        }
+    }
+    
+    private void addRow(){
+        DefaultTableModel model = (DefaultTableModel) stockTable.getModel();
+        Vector<Object> newRow = new Vector<>();
+        
+        newRow.add(medicineNameCombo.getSelectedItem().toString());
+        newRow.add(medicineLotBatchCombo.getSelectedItem().toString());
+        newRow.add(quantityText.getText());
+        newRow.add(discountPercentageText.getText());
+        newRow.add(gstText.getText());
+        newRow.add(amountText.getText());
+        
+        model.addRow(newRow);
+    }
  
     private int getIdOfMedicine(String medName){
         for(Vector v : fullList){
@@ -271,7 +320,7 @@ public class NewStockFormTwo extends DialogForm {
             @Override
             public void actionPerformed(ActionEvent e) {              
                 addRow();             
-                
+                // Karan here
             }
         });
         resetButton.addActionListener(new ActionListener() {
@@ -321,21 +370,21 @@ public class NewStockFormTwo extends DialogForm {
                 isValid = false;
                 medicineNameErrorLabel.setText("Incorrect Medicine Name");
             }
-            if(batchNumText.getText().isEmpty()){
+            if(quantityText.getText().isEmpty()){
                 isValid = false;
-                batchNumErrorLabel.setText("Incorrect batch number");
+                quantityErrorLabel.setText("Incorrect batch number");
             }
                 
-            if(expiryText.getText().isEmpty()){
+            if(discountPercentageText.getText().isEmpty()){
                 isValid = false;
-                expiryErrorLabel.setText("Incorrect Expiry ");
+                discountPercentageErrorLabel.setText("Incorrect Expiry ");
             }
-            if(rateText.getText().isEmpty()){
+            if(gstText.getText().isEmpty()){
                 isValid = false;
-                rateErrorLabel.setText("Incorrect Rate");
+                gstErrorLabel.setText("Incorrect Rate");
             }
             if(isValid){
-                double num = Double.parseDouble(rateText.getText());
+                double num = Double.parseDouble(gstText.getText());
                 if(num<=0){
                     isValid = false;
                 }
@@ -364,32 +413,37 @@ public class NewStockFormTwo extends DialogForm {
 
     private void hideErrorLabels() {
         medicineNameErrorLabel.setVisible(false);
-        batchNumErrorLabel.setVisible(false);
-        expiryErrorLabel.setVisible(false);
-        rateErrorLabel.setVisible(false);
+        quantityErrorLabel.setVisible(false);
+        discountPercentageErrorLabel.setVisible(false);
+        gstErrorLabel.setVisible(false);
+        amountErrorLabel.setVisible(false);
     }
     
     private void showErrorLabels() {
         medicineNameErrorLabel.setVisible(true);
-        batchNumErrorLabel.setVisible(true);
-        expiryErrorLabel.setVisible(true);
-        rateErrorLabel.setVisible(true);
+        quantityErrorLabel.setVisible(true);
+        discountPercentageErrorLabel.setVisible(true);
+        gstErrorLabel.setVisible(true);
+        amountErrorLabel.setVisible(false);
     }
 
     private void resetErrorLabels() {
         medicineNameErrorLabel.setErrorText("");
-        batchNumErrorLabel.setErrorText("");
-        expiryErrorLabel.setErrorText("");
-        rateErrorLabel.setErrorText("");
+        quantityErrorLabel.setErrorText("");
+        discountPercentageErrorLabel.setErrorText("");
+        gstErrorLabel.setErrorText("");
+        amountErrorLabel.setErrorText("");
         hideErrorLabels();
     }
     
     private void resetText() {
         supplierNameCombo.getEditor().setItem("");
         medicineNameCombo.getEditor().setItem("");
-        batchNumText.setText("");
-        expiryText.setText("");
-        rateText.setText("");
+        quantityText.setText("");
+        discountPercentageText.setText("");
+        gstText.setText("");
+        medicineLotBatchCombo.getEditor().setItem("");
+        
         hideErrorLabels();
     }
 
