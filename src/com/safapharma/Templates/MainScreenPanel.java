@@ -146,6 +146,9 @@ public abstract class MainScreenPanel extends javax.swing.JPanel {
     protected JPanel getTotalPanel(){
         return TotalPanel;
     }
+    protected JPanel getSearchPanel(){
+        return searchPanel;
+    }
     protected JPanel getStatusPanel(){
         return statusPanel;
     }
