@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/C:/Users/natas/Documents/NetBeansProjects/SafaPharma/src/com/safapharma/Home/HomeScreenPanel.java</file>
             <file>file:/C:/Users/natas/Documents/NetBeansProjects/SafaPharma/src/com/safapharma/ModelObjects/DataWithColumn.java</file>
             <file>file:/C:/Users/natas/Documents/NetBeansProjects/SafaPharma/src/com/safapharma/Stock/StockPanel.java</file>
@@ -19,6 +20,16 @@
             <file>file:/D:/Safa%20Pharma/Sample/safapharma4/src/com/safapharma/Home/Supplier/SupplierPanel.java</file>
             <file>file:/D:/Safa%20Pharma/Sample/safapharma4/src/com/safapharma/Home/Sales/SalesPanel.java</file>
 >>>>>>> origin/akshit3
+=======
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/UpdateMedicineLotForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Main/MainWindow.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/DataAccessObjects/MedicineLotDAO.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/ViewMedicineLotForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/NewMedicineLotForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Stock/NewStockFormTwo.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Customer/ViewCustomerForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Home/HomeScreenPanel.java</file>
+>>>>>>> origin/karan2
         </group>
     </open-files>
 </project-private>
