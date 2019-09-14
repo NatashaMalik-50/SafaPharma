@@ -7,6 +7,7 @@ package com.safapharma.Templates;
 
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Helpers.IconConstants;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -44,18 +45,20 @@ public abstract class MainScreenPanel extends javax.swing.JPanel {
     }
 
     private void initUI() {
-        toolbarPanel.setLayout(new GridLayout(1, 5));
+        setBackground(Color.white);
+        toolbarPanel.setLayout(new GridLayout(1, 0));
+        toolbarPanel.setBackground(Color.white);
         toolbarPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         addButton = new ToolbarButton("Add");
         removeButton = new ToolbarButton("Remove");
         viewButton = new ToolbarButton("View");
         updateButton = new ToolbarButton("Update");
         toolbarPanel.add(addButton);
-        toolbarPanel.add(Box.createHorizontalStrut(10));
+//        toolbarPanel.add(Box.createHorizontalStrut(10));
         toolbarPanel.add(removeButton);
-        toolbarPanel.add(Box.createHorizontalStrut(10));
+//        toolbarPanel.add(Box.createHorizontalStrut(10));
         toolbarPanel.add(viewButton);
-        toolbarPanel.add(Box.createHorizontalStrut(10));
+//        toolbarPanel.add(Box.createHorizontalStrut(10));
         toolbarPanel.add(updateButton);
 
         //disableButtons();
@@ -68,6 +71,7 @@ public abstract class MainScreenPanel extends javax.swing.JPanel {
 //        statusLabel.setFont(DesignConstants.FONT_SIZE_14_CALIBRI_BOLD);
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
         statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        statusPanel.setBackground(Color.white);
         blinkingLabel = new BlinkingLabel("To View Expired Medicines, Click Here");
         blinkingLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         statusPanel.add(blinkingLabel);
@@ -76,6 +80,7 @@ public abstract class MainScreenPanel extends javax.swing.JPanel {
 //        comboBox.addItem("Search By Name");
 //        comboBox.addItem("Search By Contact No.");
         searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
+        searchPanel.setBackground(Color.white);
         searchBox = new JTextField();
         searchBox.setFont(DesignConstants.FONT_SIZE_16_CALIBRI);
         searchButton = new ToolbarButton("Search", new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
@@ -255,10 +260,10 @@ public abstract class MainScreenPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(TotalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

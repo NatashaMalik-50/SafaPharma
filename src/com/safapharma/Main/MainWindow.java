@@ -5,6 +5,7 @@
  */
 package com.safapharma.Main;
 
+import com.seaglasslookandfeel.*;
 import com.safapharma.Customer.CustomerBackend;
 import com.safapharma.Customer.CustomerPanel;
 import com.safapharma.Customer.NewOrUpdateCustomerForm;
@@ -46,6 +47,7 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 /**
  *
@@ -393,8 +395,8 @@ public class MainWindow extends javax.swing.JFrame {
         if (newStockForm != null) {
             deleteNewStockForm();
         }
-        
-        newStockForm = new NewStockFormTwo(this,new MedicineLotBackend());
+
+        newStockForm = new NewStockFormTwo(this, new MedicineLotBackend());
     }
 
     public void showNewStockForm() {
@@ -593,11 +595,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel,int id,int currQuantity,int maxQuantity) throws Exception {
+    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel, int id, int currQuantity, int maxQuantity) throws Exception {
         if (newUpdateBillForm != null) {
             deleteNewUpdateBillForm();
         }
-        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel,id,currQuantity,maxQuantity);
+        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel, id, currQuantity, maxQuantity);
     }
 
     public void showNewUpdateBillForm() {
@@ -664,8 +666,8 @@ public class MainWindow extends javax.swing.JFrame {
             expiredMedicinesPanel = null;
         }
     }
-    
-    public void viewExpiredMedicineThroughStatusPanel(){
+
+    public void viewExpiredMedicineThroughStatusPanel() {
         sidePanel.expiredMedicineButton();
     }
 
@@ -681,7 +683,7 @@ public class MainWindow extends javax.swing.JFrame {
             deleteSalesPanel();
         } else if (component == stockPanel) {
             deleteStockPanel();
-        } else if(component == expiredMedicinesPanel){
+        } else if (component == expiredMedicinesPanel) {
             deleteExpiredMedicinesPanel();
         }
         sidePanel.backPressedChangeActive();
@@ -741,26 +743,27 @@ public class MainWindow extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) throws InterruptedException {
-//        try {
-//            UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
-//        } catch (Exception e) {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+        } catch (Exception e) {
+        
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
                 }
+            } catch (ClassNotFoundException ex) {
+                java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-//        }
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

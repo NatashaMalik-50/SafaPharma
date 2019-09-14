@@ -83,10 +83,10 @@ public class HomeScreenPanel extends MainScreenPanel {
         billEntriesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         billEntriesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         getTableScrollPane().setViewportView(billEntriesTable);
-        //addButton.setText("Add Medicine Inside Bill");
-        //removeButton.setText("Remove Medicine From Bill");
-        //viewButton.setText("View Medicine In Detail");
-        //updateButton.setText("Update Quatity Of Medicine");
+        addButton.setText("Add Medicine Inside Bill");
+        removeButton.setText("Remove Medicine From Bill");
+        viewButton.setText("View Medicine In Detail");
+        updateButton.setText("Update Quatity Of Medicine");
         totalLable = new JLabel();
         totalLable.setText("Total :");
         totalLable.setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
@@ -336,7 +336,7 @@ public class HomeScreenPanel extends MainScreenPanel {
         //bill row also stores id of the object
         Vector<Object> billRow = new Vector<>();
         billRow.add(stockData.getIdBySerialNo((Integer)(stockData.getDataOf(rowIndex - 1).get(0))));
-        billRow.add(stockData.getDataOf(rowIndex - 1).get(3).toString());
+        billRow.add(stockData.getDataOf(rowIndex - 1).get(3).toString());//quantity
         System.out.println("Bill row "+billRow);
         billData.getData().add(billRow);
         System.out.print("Vec -- " + billData.getData());
