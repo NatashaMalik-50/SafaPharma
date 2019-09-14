@@ -39,12 +39,14 @@ public class CustomerPanel extends MainScreenPanel {
     private final CustomerBackend customerBackend;
     private TableRowSorter sorter;
     private DataWithColumn customerDataWithColumns;
-    Vector<Object> selectedObject;
+    private ToolbarButton selectCustomerButton;
+    private boolean viaBilling;
 
-    public CustomerPanel(MainWindow manager) {
+    public CustomerPanel(MainWindow manager, boolean viaBilling) {
 
         this.manager = manager;
         customerBackend = new CustomerBackend();
+        this.viaBilling = viaBilling;
         initUI();
         setListeners();
 
@@ -59,6 +61,12 @@ public class CustomerPanel extends MainScreenPanel {
                 return null;
             }
         }.execute();
+        selectCustomerButton = new ToolbarButton("Select Customer");
+        if (viaBilling) {
+            getToolbar().add(selectCustomerButton, 0);
+            selectCustomerButton.setEnabled(false);
+            removeButton.setVisible(false);
+        }
         addButton.setText("Add Customer");
         viewButton.setText("View Customer");
         updateButton.setText("Update Customer");
@@ -78,19 +86,11 @@ public class CustomerPanel extends MainScreenPanel {
     }
 
     private void loadData() throws Exception {
-        customerDataWithColumns = customerBackend.setCustomerInfoIntoTable(customerTable, tableModel);
+        customerDataWithColumns = customerBackend.setCustomerInfoIntoTable();
         tableModel.setDataVector(customerDataWithColumns.getData(), customerDataWithColumns.getColumnNames());
     }
 
     private void setListeners() {
-        customerTable.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                enableButtons();
-            }
-
-        });
-
         //on add button click
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -155,9 +155,9 @@ public class CustomerPanel extends MainScreenPanel {
                     int selectSNo = Integer.parseInt(customerTable.getValueAt(rowIndex, 0).toString());
                     int currentCustomerId = customerDataWithColumns.getIdBySerialNo(selectSNo);
                     Vector<Object> data = customerDataWithColumns.getDataOf(selectSNo - 1);
-                    Customer customer=new Customer(currentCustomerId,(String) data.get(1), (String) data.get(2), ""+(BigDecimal)data.get(3), (String) data.get(4));
-                    System.out.println("sending customer "+customer);
-                    manager.createNewOrUpdateCustomerForm(customerBackend,customer,true);
+                    Customer customer = new Customer(currentCustomerId, (String) data.get(1), (String) data.get(2), "" + (BigDecimal) data.get(3), (String) data.get(4));
+                    System.out.println("sending customer " + customer);
+                    manager.createNewOrUpdateCustomerForm(customerBackend, customer, true);
                     manager.showNewOrUpdateCustomerForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,11 +172,29 @@ public class CustomerPanel extends MainScreenPanel {
                 enableUpdateButtons();
                 enableRemoveButtons();
                 enableViewButtons();
+
+                if (viaBilling) {
+                    selectCustomerButton.setEnabled(true);
+                }
             }
 
         });
 
+        selectCustomerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int rowIndex = customerTable.getSelectedRow();
+                int selectSNo = Integer.parseInt(customerTable.getValueAt(rowIndex, 0).toString());
+                int currentCustomerId = customerDataWithColumns.getIdBySerialNo(selectSNo);
+                Vector<Object> customerData=customerDataWithColumns.getDataOf(selectSNo-1);
+                Customer customer = new Customer(currentCustomerId,(String)customerData.get(1) ,(String)customerData.get(2), ""+(BigDecimal)customerData.get(3),(String)customerData.get(4));
+                System.out.println("Passing customer :"+customer);
+                manager.passCustomerToBilling(customer);
+                manager.deleteCurrentPanel();
+            }
+        });
     }
+
     @Override
     protected void addAlerts() {
         manager.viewExpiredMedicineThroughStatusPanel();

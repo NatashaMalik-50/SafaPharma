@@ -91,14 +91,7 @@ public class SidePanel extends javax.swing.JPanel {
         buttonCustomer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                manager.createCustomerPanel();
-                manager.showCustomerPanel();
-                if (lastActiveLabel != null) {
-                    lastActiveLabel.makeLabelInactive();
-                }
-                buttonCustomer.makeLabelActive();
-                lastActiveLabel = buttonCustomer;
-                buttonCustomer.setIcon(new ImageIcon(getClass().getResource(IconConstants.CUSTOMER_RED_ICON)));
+                customerButton(false);
             }
         });
         buttonMedicineLot.addMouseListener(new MouseAdapter() {
@@ -146,16 +139,27 @@ public class SidePanel extends javax.swing.JPanel {
             }
         });
     }
-    
-    public void expiredMedicineButton(){
+
+    public void expiredMedicineButton() {
         manager.createExpiredMedicinesPanel();
-                manager.showExpiredMedicinesPanel();
-                if (lastActiveLabel != null) {
-                    lastActiveLabel.makeLabelInactive();
-                }
-                buttonExpiredMedicines.makeLabelActive();
-                lastActiveLabel = buttonExpiredMedicines;
-                buttonExpiredMedicines.setIcon(new ImageIcon(getClass().getResource(IconConstants.EXPIRED_MEDICINES_RED_ICON)));
+        manager.showExpiredMedicinesPanel();
+        if (lastActiveLabel != null) {
+            lastActiveLabel.makeLabelInactive();
+        }
+        buttonExpiredMedicines.makeLabelActive();
+        lastActiveLabel = buttonExpiredMedicines;
+        buttonExpiredMedicines.setIcon(new ImageIcon(getClass().getResource(IconConstants.EXPIRED_MEDICINES_RED_ICON)));
+    }
+
+    public void customerButton(boolean viaBilling) {
+        manager.createCustomerPanel(viaBilling);
+        manager.showCustomerPanel();
+        if (lastActiveLabel != null) {
+            lastActiveLabel.makeLabelInactive();
+        }
+        buttonCustomer.makeLabelActive();
+        lastActiveLabel = buttonCustomer;
+        buttonCustomer.setIcon(new ImageIcon(getClass().getResource(IconConstants.CUSTOMER_RED_ICON)));
     }
 
     public void backPressedChangeActive() {

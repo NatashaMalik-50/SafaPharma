@@ -29,7 +29,7 @@ public class CustomerBackend {
         customerDAO = new CustomerDAO();
     }
 
-    public DataWithColumn setCustomerInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
+    public DataWithColumn setCustomerInfoIntoTable() throws Exception {
         DataWithColumn dataWithColumn = customerDAO.getAllCustomerDetails();
         return dataWithColumn;
     }

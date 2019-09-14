@@ -206,13 +206,13 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createCustomerPanel() {
+    public void createCustomerPanel(boolean viaBilling) {
         try {
             setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             if (customerPanel != null) {
                 deleteSupplierPanel();
             }
-            customerPanel = new CustomerPanel(this);
+            customerPanel = new CustomerPanel(this,viaBilling);
             screenPanel.add(CUSTOMER_LABEL, customerPanel);
             componentStack.push(customerPanel);
         } finally {
@@ -669,6 +669,14 @@ public class MainWindow extends javax.swing.JFrame {
 
     public void viewExpiredMedicineThroughStatusPanel() {
         sidePanel.expiredMedicineButton();
+    }
+    public void viewCustomerThroughStatusPanel() {
+        sidePanel.customerButton(true);
+    }
+    public void passCustomerToBilling(Customer customer){
+        if(home!=null){
+            home.receiveCustomer(customer);
+        }
     }
 
     public void deleteCurrentPanel() {

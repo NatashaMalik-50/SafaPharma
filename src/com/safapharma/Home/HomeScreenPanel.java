@@ -7,6 +7,7 @@ package com.safapharma.Home;
 
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
+import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
@@ -52,7 +53,8 @@ public class HomeScreenPanel extends MainScreenPanel {
     private JLabel totalBox;
     protected ToolbarButton btnAddCustomer;
     private ToolbarButton btnGenerateBill;
-    private static int  Srno=0;
+    private int  Srno=0;
+    private Customer currentCustomer;
     
 
     public HomeScreenPanel(MainWindow manager) {
@@ -237,8 +239,7 @@ public class HomeScreenPanel extends MainScreenPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    manager.createCustomerPanel();
-                    manager.showCustomerPanel();
+                    manager.viewCustomerThroughStatusPanel();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -354,6 +355,11 @@ public class HomeScreenPanel extends MainScreenPanel {
          */
         getSum();
 
+    }
+    
+    public void receiveCustomer(Customer customer){
+        btnGenerateBill.setEnabled(true);
+        currentCustomer = customer;
     }
 
     @Override
