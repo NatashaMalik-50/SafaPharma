@@ -34,6 +34,28 @@ public class MedicineLotBackend {
         return dataWithColumn;
     }
     
+    public DataWithColumn getAllMedicineLotDetailsBatch(String batchNum) throws Exception {
+        DataWithColumn dataWithColumn = medicineLotDAO.getAllMedicineLotDetailsBatch(batchNum);        
+        return dataWithColumn;
+    }
+    
+    public DataWithColumn getIdNameFromMedicine () throws Exception {
+        DataWithColumn dataWithColumn = medicineLotDAO.getIdNameFromMedicine();        
+        return dataWithColumn;
+    }
+    
+    
+    public DataWithColumn getIdNameFromMedicineName(String name) throws Exception {
+        DataWithColumn dataWithColumn = medicineLotDAO.getIdNameFromMedicineName(name);        
+        return dataWithColumn;
+    }
+    
+    public DataWithColumn getMedicineLotDetailsId(String id) throws Exception {
+        DataWithColumn dataWithColumn = medicineLotDAO.getMedicineLotDetailsId(id);        
+        return dataWithColumn;
+    }
+    
+    
     public DataWithColumn getAllSupplierFromBillDetails() throws Exception{
         
         DataWithColumn dataWithColumn = medicineLotDAO.getAllSupplierFromBillDetails();        

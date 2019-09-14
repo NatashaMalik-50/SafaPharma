@@ -27,6 +27,13 @@ public class MedicineLotDAO {
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
      
+     public DataWithColumn getAllMedicineLotDetailsBatch(String batchNum) throws Exception {
+         System.out.println("Running View medicine lot query");
+        final String SQL_QUERY = "select lot_id, company_name,medicine_name,expiry,batch_no,rate from " + Constants.VIEW_MEDICINE_LOT_VIEW + "where batch_no="+batchNum;
+        
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
+     
      public DataWithColumn getAllSupplierFromBillDetails() throws Exception {
         final String SQL_QUERY = "select supplier_id, supplier_name,bill_id from " + Constants.VIEW_SUPPLIER_FROM_BILL_VIEW;
         
@@ -48,6 +55,21 @@ public class MedicineLotDAO {
             int rowsAdded = statement.executeUpdate();
             return (rowsAdded > 0) ? rowsAdded : Constants.INVALID;
         }
+    }
+     
+     public DataWithColumn getIdNameFromMedicine() throws Exception {
+        final String SQL_QUERY = "select id, name from " + Constants.TABLE_MEDICINE;
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
+     
+     public DataWithColumn getIdNameFromMedicineName(String name) throws Exception {
+        final String SQL_QUERY = "select id from " + Constants.TABLE_MEDICINE+ "where name ="+name ;
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
+     
+     public DataWithColumn getMedicineLotDetailsId(String id) throws Exception {
+        final String SQL_QUERY = "select batch_no from " + Constants.TABLE_MEDICINE_LOT+ "where medicine_id="+id ;
+        return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
 
 }
