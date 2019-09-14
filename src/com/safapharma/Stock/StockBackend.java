@@ -10,6 +10,8 @@ import com.safapharma.DataAccessObjects.StockDAO;
 import com.safapharma.ModelObjects.DataWithColumn;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import com.safapharma.ModelObjects.StockEntry;
+import java.util.Vector;
 
 /**
  *
@@ -26,6 +28,18 @@ public class StockBackend {
     public DataWithColumn setStockInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
         DataWithColumn dataWithColumn = stockDAO.getAllStockDetails();
         return dataWithColumn;
+    }
+    
+    public void insertStockDetails(Vector<Vector> allStock){
+        for(Vector object : allStock){
+//            System.out.println(object);
+            int quantity =(int) object.get(2);
+            double discountPercentage = (double)object.get(3);
+            double gstPercentage = (double)object.get(4);
+            double amount = (double) object.get(5);
+            System.out.println(quantity+"\t"+discountPercentage+"\t"+gstPercentage+"\t"+amount);
+        }
+        
     }
 
 }

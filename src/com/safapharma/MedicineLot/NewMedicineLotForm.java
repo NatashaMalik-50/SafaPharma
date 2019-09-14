@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import com.safapharma.ModelObjects.MedicineLot;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,7 +42,7 @@ public class NewMedicineLotForm extends DialogForm {
     private FormLabel medicineNameLabel;
     private JComboBox medicineNameCombo;
     private ErrorLabel medicineNameErrorLabel;
-    private FormButton medicineNameAddButton;
+    private FormLabel medicineNameAddButton;
     
     private FormLabel batchNumLabel;
     private FormText batchNumText;
@@ -146,7 +148,7 @@ public class NewMedicineLotForm extends DialogForm {
         
         medicineNameLabel = new FormLabel("Medicine Name");
         medicineNameCombo = new JComboBox(fullNameList);
-        medicineNameAddButton = new FormButton("Add");
+        medicineNameAddButton = new FormLabel("Add Medicine Name");
         medicineNameErrorLabel = new ErrorLabel();
         
         setComboBox(medicineNameCombo,supplierNameCombo);
@@ -166,9 +168,9 @@ public class NewMedicineLotForm extends DialogForm {
         submitButton = new FormButton("Submit");
         resetButton = new FormButton("Reset");
         
-        getFormPanel().add(supplierNameLabel);
-        getFormPanel().add(supplierNameCombo);
-        getFormPanel().add(supplierNameAddButton);
+//        getFormPanel().add(supplierNameLabel);
+//        getFormPanel().add(supplierNameCombo);
+//        getFormPanel().add(supplierNameAddButton);
         
         getFormPanel().add(medicineNameLabel);
         getFormPanel().add(medicineNameCombo);
@@ -242,12 +244,6 @@ public class NewMedicineLotForm extends DialogForm {
                 resetText();
             }
         });
-        medicineNameAddButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Add Medicine called");
-            }
-        });
         
         supplierNameAddButton.addActionListener(new ActionListener() {
             @Override
@@ -262,6 +258,21 @@ public class NewMedicineLotForm extends DialogForm {
                 
             }
         });
+        
+        medicineNameAddButton.addMouseListener(new MouseAdapter()  
+        {  
+            public void mouseClicked(MouseEvent e)  
+            {  
+                System.out.println("Add Medicine Name called");                 
+            }  
+        });
+        
+        //        medicineNameAddButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("Add Medicine called");
+//            }
+//        });
     }
     
     private boolean isEmpty(String str){

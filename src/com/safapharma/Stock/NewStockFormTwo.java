@@ -31,6 +31,9 @@ import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import jdk.nashorn.internal.runtime.JSType;
+import com.safapharma.ModelObjects.StockEntry;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -43,17 +46,17 @@ public class NewStockFormTwo extends DialogForm {
     private FormLabel supplierNameLabel;
     private JComboBox supplierNameCombo;
     private ErrorLabel combinedErrorLabel;
-    private FormButton supplierNameAddButton;
+    private FormLabel supplierNameAddButton;
     
         
     private FormLabel medicineNameLabel;
     private JComboBox medicineNameCombo;
     private ErrorLabel medicineNameErrorLabel;
-    private FormButton medicineNameAddButton;
+    private FormLabel medicineNameAddButton;
     
     private FormLabel medicineLotBatchLabel;
     private JComboBox medicineLotBatchCombo;
-    private FormButton medicineLotBatchButton;
+    private FormLabel medicineLotBatchButton;
     
     private FormLabel quantityLabel;
     private FormText quantityText;
@@ -75,11 +78,13 @@ public class NewStockFormTwo extends DialogForm {
     private FormButton resetButton;
     
     private MedicineLotBackend medicineLotBackend;
+    private StockBackend stockBackend;
 
     private Vector<Vector> fullList;
     private Vector fullNameList;    
     private Vector fullSupplierNameList;
     private Vector fullBatchNameList;
+    private Vector medicineLotIdList;
     
     private JPanel upperPanel;
     private JPanel lowerPanel;
@@ -97,10 +102,11 @@ public class NewStockFormTwo extends DialogForm {
     public NewStockFormTwo(MainWindow manager, MedicineLotBackend medicineLotBackend) {
         this.manager = manager;
         this.medicineLotBackend = medicineLotBackend;        
+        stockBackend = new StockBackend();
+        
         thisForm = this;
         initUI();        
-        addListeners();  
-     
+        addListeners();      
     }
     
     private void initUI() {
@@ -119,16 +125,16 @@ public class NewStockFormTwo extends DialogForm {
         
         supplierNameLabel = new FormLabel("Supplier Name");
         supplierNameCombo = new JComboBox(fullSupplierNameList);
-        supplierNameAddButton = new FormButton("Add Supplier Name");
+        supplierNameAddButton = new FormLabel("Add Supplier Name");
         
         medicineNameLabel = new FormLabel("Medicine Name");
         medicineNameCombo = new JComboBox(fullNameList);
-        medicineNameAddButton = new FormButton("Add Medicine Name");
+        medicineNameAddButton = new FormLabel("Add Medicine Name");
         medicineNameErrorLabel = new ErrorLabel();
         
         medicineLotBatchLabel = new FormLabel("Medicine Lot Batch");
         medicineLotBatchCombo = new JComboBox(fullBatchNameList);
-        medicineLotBatchButton = new FormButton("Add Medicine Lot Batch");
+        medicineLotBatchButton = new FormLabel("Add Medicine Lot Batch");
         
 
         quantityLabel = new FormLabel("Quantity");
@@ -292,11 +298,14 @@ public class NewStockFormTwo extends DialogForm {
             Vector<Vector<Object>> allDetails = details.getData();
 //            System.out.println("All details are"+allDetails);
             Vector medName = new Vector();
+            Vector batchId = new Vector();
             for(Vector v : allDetails){
     //            System.out.println(v.get(2).toString());
                 medName.add(v.get(4));
+                batchId.add(v.get(1));
             }
-            fullBatchNameList=medName;
+            fullBatchNameList= medName;
+            medicineLotIdList =  batchId;
         }
         catch(Exception e){
             System.out.println("Exception at setFullNameList");
@@ -361,16 +370,11 @@ public class NewStockFormTwo extends DialogForm {
                 resetText();
             }
         });
-        medicineNameAddButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Add Medicine called");
-            }
-        });
-        
-        supplierNameAddButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        // Add Supplier Name
+        supplierNameAddButton.addMouseListener(new MouseAdapter()  
+        {  
+            public void mouseClicked(MouseEvent e)  
+            {  
                 System.out.println("Add Supplier called");
                 try {
                     manager.createNewOrUpdateSupplierForm(new SupplierBackend());
@@ -378,24 +382,71 @@ public class NewStockFormTwo extends DialogForm {
                 } catch (Exception ex) {
                     Logger.getLogger(NewStockFormTwo.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-            }
+                  
+            }  
         });
         
-        medicineLotBatchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Add Medicine Lot Batch Called");
+        //Medicine Name listener
+        medicineNameAddButton.addMouseListener(new MouseAdapter()  
+        {  
+            public void mouseClicked(MouseEvent e)  
+            {  
+                System.out.println("Add Medicine called");            
+            }  
+        }); 
+        
+        // Add Medicine lot batch listener
+        medicineLotBatchButton.addMouseListener(new MouseAdapter()  
+        {  
+            public void mouseClicked(MouseEvent e)  
+            {  
+               System.out.println("Add Medicine Lot Batch Called");
                 try {
                     manager.createNewMedicineLotForm(new MedicineLotBackend(), null);
                     manager.showNewMedicineLotForm();
                 } catch (Exception ex) {
                     Logger.getLogger(NewStockFormTwo.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-        });
+                }                          
+            }  
+        }); 
         
+        
+//        supplierNameAddButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("Add Supplier called");
+//                try {
+//                    manager.createNewOrUpdateSupplierForm(new SupplierBackend());
+//                    manager.showNewOrUpdateSupplierForm();
+//                } catch (Exception ex) {
+//                    Logger.getLogger(NewStockFormTwo.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                  
+//                
+//            }
+//        });
+
+//        medicineNameAddButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("Add Medicine called");
+//            }
+//        });
+        
+//        medicineLotBatchButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("Add Medicine Lot Batch Called");
+//                try {
+//                    manager.createNewMedicineLotForm(new MedicineLotBackend(), null);
+//                    manager.showNewMedicineLotForm();
+//                } catch (Exception ex) {
+//                    Logger.getLogger(NewStockFormTwo.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                
+//            }
+//        });
+//        
         
         submitStock.addActionListener(new ActionListener() {
             @Override
@@ -403,12 +454,10 @@ public class NewStockFormTwo extends DialogForm {
                 System.out.println("Submit Stock button clicked");
                 
                 DefaultTableModel model = (DefaultTableModel) stockTable.getModel();                                
-                System.out.println("All data in add stock table");
+                System.out.println("All data in add stock table");    
                 
                 Vector<Vector>  submitLotData = model.getDataVector();
-                for(Vector object : submitLotData){
-                    System.out.println(object);
-                }
+                stockBackend.insertStockDetails(submitLotData);               
             }
         });
         

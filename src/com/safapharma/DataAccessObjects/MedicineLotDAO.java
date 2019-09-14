@@ -34,7 +34,10 @@ public class MedicineLotDAO {
     }
      
      public int insertMedicineLotDetails(MedicineLot medLot) throws Exception {
-        //INSERT INTO medicine_lot(medicine_id,batch_no,expiry,rate) VALUES (m_id,ml_batch_no,ml_expiry,ml_rate);                
+        //INSERT INTO medicine_lot(medicine_id,batch_no,expiry,rate) VALUES (m_id,ml_batch_no,ml_expiry,ml_rate);       
+        
+        
+        
         String sql = "INSERT INTO " + Constants.TABLE_MEDICINE_LOT + " (medicine_id,batch_no,expiry,rate) VALUES (?,?,?,?);";
         try (Connection connection = DbHelper.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(sql);
