@@ -11,7 +11,10 @@ import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -31,6 +34,7 @@ public class ExpiredMedicinesPanel extends MainScreenPanel{
         this.manager = manager;
         expiredMedicinesBackend = new ExpiredMedicinesBackend();
         initUI();
+        addListeners();
     }
     public void initUI(){
         hideAllButtons();
@@ -58,6 +62,32 @@ public class ExpiredMedicinesPanel extends MainScreenPanel{
         if (expiredDataWithColumn != null) {
             tableModel.setDataVector(expiredDataWithColumn.getData(), expiredDataWithColumn.getColumnNames());
         }
+    }
+    private void addListeners(){
+        searchBox.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search(searchBox.getText());
+            }
+
+            public void search(String str) {
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + str));
+                }
+            }
+        });
     }
     @Override
     protected void addAlerts() {

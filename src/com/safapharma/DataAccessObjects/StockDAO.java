@@ -116,7 +116,7 @@ public class StockDAO {
 }
     
     public DataWithColumn getAllExpiredMedicinesDetails() throws Exception{
-        final String SQL_QUERY = "select * from " + Constants.VIEW_EXPIRED_MEDICINES;
+        final String SQL_QUERY = "select id,company_name,medicine_name,quantity,amount,batch_no,expiry,supplier_name from " + Constants.VIEW_EXPIRED_MEDICINES;
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
 }
