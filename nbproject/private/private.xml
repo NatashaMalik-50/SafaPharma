@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Templates/DialogPanel.java</file>
-            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/NewMedicineLotForm.java</file>
-            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/ViewMedicineLotForm.java</file>
-            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Stock/NewMedicineLotFormForStock.java</file>
             <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/UpdateMedicineLotForm.java</file>
             <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Main/MainWindow.java</file>
-            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Stock/NewStockForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/DataAccessObjects/MedicineLotDAO.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/ViewMedicineLotForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/MedicineLot/NewMedicineLotForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Stock/NewStockFormTwo.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Customer/ViewCustomerForm.java</file>
+            <file>file:/C:/BVPPrject_pharmacy/project2/safapharma/src/com/safapharma/Home/HomeScreenPanel.java</file>
         </group>
     </open-files>
 </project-private>
