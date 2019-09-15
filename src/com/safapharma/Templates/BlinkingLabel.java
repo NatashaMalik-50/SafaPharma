@@ -10,22 +10,31 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 
 /**
  *
  * @author Natasha Malik
  */
-public class BlinkingLabel extends JLabel {
+public class BlinkingLabel extends JTextArea {
 
     private static final int BLINKING_RATE = 500; // in ms
 
     private boolean blinkingOn = true;
 
     public BlinkingLabel(String text) {
-        super(text);
+        super(text, 4, 12);
         setFont(DesignConstants.FONT_SIZE_18_CALIBRI_BOLD);
         setForeground(Color.red);
+        setWrapStyleWord(true);
+        setLineWrap(true);
+        setOpaque(false);
+        setEditable(false);
+        setFocusable(false);
+        setBackground(UIManager.getColor("Label.background"));
+        setBorder(UIManager.getBorder("Label.border"));
         Timer timer = new Timer(BLINKING_RATE, new TimerListener(this));
         timer.setInitialDelay(0);
         timer.start();
