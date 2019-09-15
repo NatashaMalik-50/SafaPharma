@@ -45,6 +45,7 @@ public class AddOrUpdateSupplierForm extends DialogForm {
         this.supplierBackend = supplierBackend;
         this.isUpdateForm = false;
         this.currentSupplier = null;
+        this.setLocation(160,10);
         initUI();
         addListeners();
     }

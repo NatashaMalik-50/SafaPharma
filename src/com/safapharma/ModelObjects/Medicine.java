@@ -79,4 +79,11 @@ public class Medicine {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return "Medicine{" + "id=" + id + ", companyId=" + companyId + ", categoryId=" + categoryId + ", name=" + name + ", otherDetails=" + otherDetails + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+    }
+    
+    
+
 }
