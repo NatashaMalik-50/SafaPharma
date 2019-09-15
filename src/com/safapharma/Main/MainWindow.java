@@ -12,6 +12,7 @@ import com.safapharma.Customer.NewOrUpdateCustomerForm;
 import com.safapharma.Customer.ViewCustomerForm;
 import com.safapharma.ExpiredMedicines.ExpiredMedicinesPanel;
 import static com.safapharma.Helpers.Constants.*;
+import com.safapharma.Home.GenerateBillPanel;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
@@ -49,6 +50,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -83,6 +85,7 @@ public class MainWindow extends javax.swing.JFrame {
     private NewOrUpdateCustomerForm newOrUpdateCustomerForm;
     private ViewCustomerForm viewCustomerForm;
     private ExpiredMedicinesPanel expiredMedicinesPanel;
+    private GenerateBillPanel generateBillPanel;
 
     /**
      * Creates new form MainWindow
@@ -595,11 +598,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel, int id, int currQuantity, int maxQuantity) throws Exception {
+    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel, int id, int currQuantity, int maxQuantity,int sNo) throws Exception {
         if (newUpdateBillForm != null) {
             deleteNewUpdateBillForm();
         }
-        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel, id, currQuantity, maxQuantity);
+        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel, id, currQuantity, maxQuantity,sNo);
     }
 
     public void showNewUpdateBillForm() {
@@ -632,6 +635,25 @@ public class MainWindow extends javax.swing.JFrame {
         if (newBillInfoViewForm != null) {
             newBillInfoViewForm.setVisible(false);
             newBillInfoViewForm = null;
+        }
+    }
+    public void createGenerateBillPanel(HomeScreenPanel homeScreenPanel,DefaultTableModel billData,float totalValue) throws Exception {
+        if (generateBillPanel != null) {
+            deleteGenerateBillPanel();
+        }
+        generateBillPanel = new GenerateBillPanel(this, homeScreenPanel,billData,totalValue);
+    }
+    
+    public void showGenerateBillPanel() {
+        if (generateBillPanel != null) {
+            generateBillPanel.setVisible(true);
+        }
+    }
+
+    public void deleteGenerateBillPanel() {
+        if (generateBillPanel != null) {
+            generateBillPanel.setVisible(false);
+            generateBillPanel = null;
         }
     }
 

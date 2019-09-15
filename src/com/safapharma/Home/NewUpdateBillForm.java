@@ -27,10 +27,10 @@ public class NewUpdateBillForm extends DialogForm {
     private DialogForm.ErrorLabel QuantityLabelError;
     private DialogForm.FormButton Btnsubmit;
     
-     public NewUpdateBillForm(MainWindow manager, HomeScreenPanel homeScreenPanel,int id,int currQuantity,int maxQuantity) {
+     public NewUpdateBillForm(MainWindow manager, HomeScreenPanel homeScreenPanel,int id,int currQuantity,int maxQuantity,int srno) {
         this.manager = manager;
         this.homeScreenPanel = homeScreenPanel;
-        newUpdateBillFormBackend = new NewUpdateBillFormBackend(id,currQuantity,maxQuantity);
+        newUpdateBillFormBackend = new NewUpdateBillFormBackend(id,currQuantity,maxQuantity,srno);
         initUI();        
         addListeners();
     }
@@ -40,14 +40,7 @@ public class NewUpdateBillForm extends DialogForm {
     }
 
     private void initUI() {
-        try{
-            loadBillData();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-            //System.out.println("HEllo");
-        } 
+       
         
         getFormLabel().setText("Update Bill Form");
         QuantityLabel = new FormLabel("Quantity :");
@@ -58,7 +51,7 @@ public class NewUpdateBillForm extends DialogForm {
         //QuantityText.setAlignmentX(10);
         QuantityLabelError = new ErrorLabel();
         QuantityLabelError.setVisible(false);
-        QuantityLabelError.setText("This Much Quantity Not In Stock");
+        QuantityLabelError.setText("Quantity Not In Stock");
         Btnsubmit = new FormButton("Submit");
         getFormPanel().add(QuantityLabel);
         getFormPanel().add(QuantityText);
@@ -84,10 +77,10 @@ public class NewUpdateBillForm extends DialogForm {
             Btnsubmit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
+                
                     int MaxQuant = newUpdateBillFormBackend.getMaxQuantity();
                     
-                    if(Integer.parseInt(QuantityText.getText())>MaxQuant)
+                    if(Integer.parseInt(QuantityText.getText())>MaxQuant || Integer.parseInt(QuantityText.getText())<1)
                     {
                         QuantityLabelError.setVisible(true);
                     }
@@ -95,14 +88,12 @@ public class NewUpdateBillForm extends DialogForm {
                     {
                         //String exactSrno =(String);
                         int qtn = Integer.parseInt(QuantityText.getText());
-                        homeScreenPanel.updateQuantity(qtn,newUpdateBillFormBackend.getMyId());
+                        System.out.println(qtn);
+                        homeScreenPanel.updateQuantity(qtn,newUpdateBillFormBackend.getSrno());
                         manager.deleteNewUpdateBillForm();
                     }
-                }
-                catch(Exception em)
-                {
-                    System.out.println(em);
-                }
+                
+               
             }
             });
     }    

@@ -48,12 +48,14 @@ public class HomeScreenPanel extends MainScreenPanel {
     private DataWithColumn stockData;
     private DataWithColumn billData;
     private final HomeScreenPanel thisHome;
-    private Object[] column = {"Sr.No", "Medicine Name", "Quantity", "Batch Number", "Rate"};
+    private Object[] column = {"Sr.No", "Medicine Name", "Quantity", "Batch Number", "Rate","Total"};
     private JLabel totalLable;
     private JLabel totalBox;
     protected ToolbarButton btnAddCustomer;
     private ToolbarButton btnGenerateBill;
     private int  Srno=0;
+    private float sum1 = 0;
+    DefaultTableModel model ;
     private Customer currentCustomer;
     
 
@@ -101,8 +103,8 @@ public class HomeScreenPanel extends MainScreenPanel {
         btnAddCustomer = new ToolbarButton("AddCustomer");
         //btnAddCustomer = new ToolbarButton("Search",new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
         btnAddCustomer.setText("ADD CUSTOMER");
-        btnGenerateBill.setText("Generate Bill");
-        btnGenerateBill.setEnabled(false);
+        btnGenerateBill.setText("GENERATE BILL");
+        //btnGenerateBill.setEnabled(false);
         //TotalBox.
         getTotalPanel().setLayout(new GridLayout(0, 2));
 
@@ -160,13 +162,16 @@ public class HomeScreenPanel extends MainScreenPanel {
                 if(billEntriesTable.getSelectedRow()>=0)
                     {
                         int rowIndex = billEntriesTable.getSelectedRow();
-                        String exactSrno = billEntriesTable.getValueAt(rowIndex, 0).toString();
-                        int id = Integer.parseInt(exactSrno);
+                        //String exactSrno = billEntriesTable.getValueAt(rowIndex, 0).toString();
+                        int id = Integer.parseInt(billData.getDataOf(rowIndex).get(0).toString());
+                        int srno = Integer.parseInt(billEntriesTable.getValueAt(rowIndex, 0).toString());
                         int currQuantity = Integer.parseInt(billEntriesTable.getValueAt(rowIndex, 2).toString());
                         int maxQuantity=Integer.parseInt(billData.getDataOf(0).get(1).toString());
                         
-                        //System.out.println(" id -- "+id);
-                        manager.createNewUpdateBillForm(thisHome,id,currQuantity,maxQuantity);
+                        System.out.println(" id -- "+id);
+                        System.out.println(" currQuantity -- "+currQuantity);
+                        System.out.println(" maxQuantity -- "+maxQuantity);
+                        manager.createNewUpdateBillForm(thisHome,id,currQuantity,maxQuantity,srno);
                         manager.showNewUpdateBillForm();
                     }
                     else
@@ -245,6 +250,17 @@ public class HomeScreenPanel extends MainScreenPanel {
                 }
             }
         });
+        btnGenerateBill.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    manager.createGenerateBillPanel(thisHome,model,sum1);
+                    manager.showGenerateBillPanel();
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         billEntriesTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -285,10 +301,10 @@ public class HomeScreenPanel extends MainScreenPanel {
     }
 
     public void getSum() {
-        float sum1 = 0;
+        
         for (int i = 0; i < billEntriesTable.getRowCount(); i++) {
             try {
-                sum1 = sum1 + Float.parseFloat(billEntriesTable.getValueAt(i, 4).toString());
+                sum1 = sum1 + Float.parseFloat(billEntriesTable.getValueAt(i, 5).toString());
             } catch (Exception e) {
                 java.util.logging.Logger.getLogger(HomeScreenPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
             }
@@ -296,21 +312,38 @@ public class HomeScreenPanel extends MainScreenPanel {
         totalBox.setText("₹ " + Float.toString(sum1));
         totalBox.setHorizontalAlignment(JTextField.CENTER);
     }
-    public void updateQuantity(int quantity,int id)
+    public void updateQuantity(int quantity,int srno)
     {
         //System.out.println(id);
-        //System.out.println(quantity+" "+id);
-        billEntriesTable.setValueAt(quantity, id-1, 2);
+        try
+        {
+        System.out.println(quantity+" "+srno);
+        billEntriesTable.setValueAt(quantity, srno-1, 2);
+        String rate=(String)billEntriesTable.getValueAt(srno-1, 4);
+        
+        float rate1 = Float.parseFloat(rate);
+        float quan1 = (float)quantity; 
+        //System.out.println(rate1);
+        float total = quan1 * rate1;
+          //  System.out.println(rate + " " + total);
+        billEntriesTable.setValueAt(total, srno-1, 5);
+        getSum();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
         
     }
     public void addRow(int rowIndex) {
+        //System.out.println(rowIndex);
         //System.out.println("found row : "+rowIndex+ " with value"+stockData.getDataOf(rowIndex)+ " --with id-- "+stockData.getIdData());
         JTextField obc = new JTextField();
         String str;
         str=stockData.getDataOf(rowIndex - 1).get(5).toString();
         obc.setText(str);
         System.out.println("Str -- "+str);
-        DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
+        model = (DefaultTableModel) billEntriesTable.getModel();
         Vector<Object> newRow = new Vector<>();
         Srno++;
         newRow.add(Srno);
@@ -326,6 +359,7 @@ public class HomeScreenPanel extends MainScreenPanel {
         System.out.println("next field3 - "+stockData.getDataOf(rowIndex - 1).get(5).toString());
         newRow.add(stockData.getDataOf(rowIndex - 1).get(4).toString());
         System.out.println("next field - "+stockData.getDataOf(rowIndex - 1).get(4).toString());
+        newRow.add(stockData.getDataOf(rowIndex - 1).get(4).toString());
 //        ob[0]=billEntriesTable.getValueAt(rowIndex-1, 0).toString();
 //        ob[1]=billEntriesTable.getValueAt(rowIndex-1, 2).toString();
 //        ob[2]=billEntriesTable.getValueAt(rowIndex-1, 3).toString();
