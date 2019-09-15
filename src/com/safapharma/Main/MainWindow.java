@@ -30,6 +30,7 @@ import com.safapharma.MedicineLot.NewMedicineLotForm;
 import com.safapharma.MedicineLot.UpdateMedicineLotForm;
 import com.safapharma.MedicineLot.ViewMedicineLotForm;
 import com.safapharma.ModelObjects.Customer;
+import com.safapharma.ModelObjects.MedicineLot;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
@@ -695,6 +696,12 @@ public class MainWindow extends javax.swing.JFrame {
     public void passUpdatedSupplierBackToPanel(Supplier supplier) {
         if (supplierPanel != null) {
             supplierPanel.receiveUpdatedSupplier(supplier);
+        }
+    }
+
+    public void passMedicineLotToStock(MedicineLot medicineLot) {
+        if (newMedicineLotForm != null) {
+            newStockForm.receiveMedicineLot(medicineLot);
         }
     }
 

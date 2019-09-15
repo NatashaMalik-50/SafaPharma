@@ -79,4 +79,9 @@ public class MedicineLot {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return "MedicineLot{" + "id=" + id + ", medicine_id=" + medicine_id + ", batchNo=" + batchNo + ", expiry=" + expiry + ", rate=" + rate + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
+    }
+
 }

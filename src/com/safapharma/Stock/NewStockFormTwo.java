@@ -676,7 +676,18 @@ public class NewStockFormTwo extends DialogForm {
         supplierNameCombo.setSelectedIndex(supplierIdNameList.size()-1);
         System.out.println("Supplier selected : "+supplier);
     }
-
+    public void receiveMedicine(Medicine medicine){
+        medicineIdNameList.add(medicine);
+        medicineNameCombo.addItem(medicine.getName());
+        medicineNameCombo.setSelectedIndex(medicineIdNameList.size()-1);
+        System.out.println("Medicine selected : "+medicine);
+    }
+    public void receiveMedicineLot(MedicineLot medicineLot){
+        lotIdBatchList.add(medicineLot);
+        medicineLotBatchCombo.addItem(medicineLot.getBatchNo());
+        medicineLotBatchCombo.setSelectedIndex(lotIdBatchList.size()-1);
+        System.out.println("Batch selected : "+medicineLot);
+    }
     @Override
     protected void deleteScreen() {
         manager.deleteNewMedicineLotForm();
