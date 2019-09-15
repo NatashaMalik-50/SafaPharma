@@ -22,7 +22,7 @@ public class SalesBackend {
         salesDAO = new SalesDAO();
     }
 
-    public DataWithColumn setSaleInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
+    public DataWithColumn setSaleInfoIntoTable() throws Exception {
         DataWithColumn dataWithColumn = salesDAO.getAllSaleDetails();
         return dataWithColumn;
     }

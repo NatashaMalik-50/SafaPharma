@@ -6,6 +6,7 @@
 package com.safapharma.Home.Sales;
 
 import com.safapharma.Helpers.DesignConstants;
+import com.safapharma.Helpers.IconConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.Templates.MainScreenPanel;
@@ -29,15 +30,15 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import com.safapharma.Templates.CustomDefaultTableModel;
+import javax.swing.ImageIcon;
 import javax.swing.table.TableRowSorter;
-
 
 /**
  *
  * @author akshit
  */
-public class SalesPanel extends MainScreenPanel{
-    
+public class SalesPanel extends MainScreenPanel {
+
     private MainWindow manager;
     private JTable salesTable;
     private CustomDefaultTableModel tableModel;
@@ -48,7 +49,7 @@ public class SalesPanel extends MainScreenPanel{
     private JTextField filterTextBefore, filterTextTo, summaryText;
     private JComboBox filterSelectBox;
     private ToolbarButton resetButton;
-    
+
     public SalesPanel(MainWindow manager) {
 
         this.manager = manager;
@@ -65,20 +66,21 @@ public class SalesPanel extends MainScreenPanel{
         summaryText = new JTextField();
         summaryText.setEditable(false);
         summaryLabel = new JLabel("Total Amount");
-        
+
         getToolbar().remove(addButton);
         getToolbar().remove(updateButton);
         getToolbar().remove(removeButton);
         getToolbar().remove(viewButton);
-        
+
         getToolbar().setLayout(new GridLayout(1, 3));
         getToolbar().add(viewButton);
         getToolbar().add(removeButton);
         getToolbar().add(searchBox);
-        
+        getToolbar().add(new ToolbarButton("Search", new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON))));
+
         searchButton.setText("Apply Filter");
         resetButton = new ToolbarButton("Reset Filter");
-        
+
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -96,7 +98,7 @@ public class SalesPanel extends MainScreenPanel{
         salesTable.setFont(DesignConstants.FONT_SIZE_14_CALIBRI);
         salesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         getTableScrollPane().setViewportView(salesTable);
-    
+
         getSearchPanel().setLayout(new GridLayout(1, 5));
         getSearchPanel().add(filterSelectBox);
         getSearchPanel().add(filterTextBefore);
@@ -104,20 +106,20 @@ public class SalesPanel extends MainScreenPanel{
         getSearchPanel().add(searchButton);
         getSearchPanel().add(resetButton);
 
-        getTotalPanel().setLayout( new GridLayout(1, 2));
+        getTotalPanel().setLayout(new GridLayout(1, 2));
         getTotalPanel().add(summaryLabel);
-        getTotalPanel().add(summaryText);    
-        }
+        getTotalPanel().add(summaryText);
+    }
 
     private void loadData() throws Exception {
-        this.salesDataWithColumn = salesBackend.setSaleInfoIntoTable(salesTable, tableModel);
+        this.salesDataWithColumn = salesBackend.setSaleInfoIntoTable();
         if (salesDataWithColumn != null) {
             tableModel.setDataVector(salesDataWithColumn.getData(), salesDataWithColumn.getColumnNames());
         }
         getTotalSales();
     }
 
-        public void getTotalSales() {
+    public void getTotalSales() {
         float sum1 = 0;
         for (int i = 0; i < salesTable.getRowCount(); i++) {
             try {
@@ -130,7 +132,6 @@ public class SalesPanel extends MainScreenPanel{
         summaryText.setHorizontalAlignment(JTextField.CENTER);
     }
 
-
     private void setListeners() {
         salesTable.addMouseListener(new MouseAdapter() {
             @Override
@@ -140,27 +141,25 @@ public class SalesPanel extends MainScreenPanel{
             }
 
         });
-        
-        
-        
+
         //on view button click
         viewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     //create new form
-                    int row = salesTable.getSelectedRow();
-                    int saleTableRowId = (Integer) tableModel.getValueAt(row, 0);
-                    int saleId = salesDataWithColumn.getIdOf(saleTableRowId);
+                    int rowIndex = salesTable.getSelectedRow();
+                    int saleTableRowId = Integer.parseInt(salesTable.getValueAt(rowIndex, 0).toString());
+                    int saleId = salesDataWithColumn.getIdBySerialNo(saleTableRowId);
 
-                    manager.createSaleViewForm(saleId,salesDataWithColumn.getDataOf(saleTableRowId)); //the appropriate function call
+                    manager.createSaleViewForm(saleId, salesDataWithColumn.getDataOf(saleTableRowId-1)); 
                     manager.showSaleViewForm();
                 } catch (Exception ex) {
                     Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
         searchButton.addActionListener(new ActionListener() {
 
             @Override
@@ -169,19 +168,18 @@ public class SalesPanel extends MainScreenPanel{
                     double low = Double.parseDouble(filterTextBefore.getText());
                     double high = Double.parseDouble(filterTextTo.getText());
                     // incase when value of high is lower
-                    if (high < low)
-                    {
+                    if (high < low) {
                         double temp = low;
                         low = high;
                         high = temp;
                     }
-                    
+
                     List<RowFilter<Object, Object>> filters = new ArrayList<RowFilter<Object, Object>>(2);
                     filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.AFTER, low - 1, 5));
                     filters.add(RowFilter.numberFilter(RowFilter.ComparisonType.BEFORE, high + 1, 5));
                     RowFilter<Object, Object> rangeFilter = RowFilter.andFilter(filters);
                     sorter.setRowFilter(rangeFilter);
-                    
+
                     getTotalSales();
                 } catch (Exception ex) {
                     Logger.getLogger(SalesPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -192,11 +190,10 @@ public class SalesPanel extends MainScreenPanel{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                    sorter.setRowFilter(null);
-                    getTotalSales();
+                sorter.setRowFilter(null);
+                getTotalSales();
             }
         });
-        
 
         searchBox.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -222,11 +219,23 @@ public class SalesPanel extends MainScreenPanel{
                 }
             }
         });
+        
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str = searchBox.getText();
+                if (str.length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + str));
+                }
+            }
+        });
     }
 
     @Override
     protected void addAlerts() {
         manager.viewExpiredMedicineThroughStatusPanel();
     }
- 
+
 }
