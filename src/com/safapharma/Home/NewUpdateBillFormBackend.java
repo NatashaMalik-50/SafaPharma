@@ -17,16 +17,21 @@ public class NewUpdateBillFormBackend {
      private int myid;
      private int currQuantity;
      private int maxQuantity;
-
-    public NewUpdateBillFormBackend(int id,int currQuantity,int maxQuatity) {
+     private int srno;
+    public NewUpdateBillFormBackend(int id,int currQuantity,int maxQuatity,int srno) {
         stockDAO = new StockDAO();
         myid=id;
         this.currQuantity=currQuantity;
         this.maxQuantity=maxQuatity;
+        this.srno=srno;
     }
     public int getMyId()
     {
         return this.myid;
+    }
+    public int getSrno()
+    {
+        return this.srno;
     }
      public int getCurrQuantity()
     {

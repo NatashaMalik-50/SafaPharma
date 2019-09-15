@@ -53,7 +53,7 @@ public class GenerateBillPanel extends DialogForm {
     
         
     
-    public GenerateBillPanel(MainWindow manager,HomeScreenPanel homeScreenPanel,DefaultTableModel billData){
+    public GenerateBillPanel(MainWindow manager,HomeScreenPanel homeScreenPanel,DefaultTableModel billData,float totalValue){
         this.homeScreenPanel = homeScreenPanel;
         this.manager = manager;
         this.tableModel = (this.homeScreenPanel != null) ? billData : null;
@@ -66,7 +66,14 @@ public class GenerateBillPanel extends DialogForm {
             dispose();
         }
         initUI();
+        setValues(totalValue);
 //        addListeners();
+    }
+    private void setValues(float totalValues)
+    {
+        String s = Float.toString(totalValues);
+        lblTotalNumber.setText(s);
+        
     }
     private void initUI() 
     {
@@ -128,7 +135,7 @@ public class GenerateBillPanel extends DialogForm {
         PanelBottom = new JPanel();
         lblTotal.setText("Total Amount : ");
         lblTotalNumber.setText("100");
-        btnPrint.setText("Print");
+        btnPrint.setText("Confirm");
         PanelBottom.add(btnPrint);
         PanelBottom.add(lblTotal);
         PanelBottom.add(lblTotalNumber);

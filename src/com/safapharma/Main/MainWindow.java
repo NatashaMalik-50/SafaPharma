@@ -597,11 +597,11 @@ public class MainWindow extends javax.swing.JFrame {
     
     
     
-    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel,int id,int currQuantity,int maxQuantity) throws Exception {
+    public void createNewUpdateBillForm(HomeScreenPanel homeScreenPanel,int id,int currQuantity,int maxQuantity,int srno) throws Exception {
         if (newUpdateBillForm != null) {
             deleteNewUpdateBillForm();
         }
-        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel,id,currQuantity,maxQuantity);
+        newUpdateBillForm = new NewUpdateBillForm(this, homeScreenPanel,id,currQuantity,maxQuantity,srno);
     }
     
     public void showNewUpdateBillForm() {
@@ -638,11 +638,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    public void createGenerateBillPanel(HomeScreenPanel homeScreenPanel,DefaultTableModel billData) throws Exception {
+    public void createGenerateBillPanel(HomeScreenPanel homeScreenPanel,DefaultTableModel billData,float totalValue) throws Exception {
         if (generateBillPanel != null) {
             deleteGenerateBillPanel();
         }
-        generateBillPanel = new GenerateBillPanel(this, homeScreenPanel,billData);
+        generateBillPanel = new GenerateBillPanel(this, homeScreenPanel,billData, totalValue);
     }
     
     public void showGenerateBillPanel() {

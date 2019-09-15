@@ -9,7 +9,11 @@ import com.safapharma.Helpers.Constants;
 import static com.safapharma.Helpers.Constants.TABLE_MEDICINE;
 import static com.safapharma.Helpers.Constants.TABLE_MEDICINE_LOT;
 import static com.safapharma.Helpers.Constants.TABLE_STOCK_ENTRY;
+import static com.safapharma.Helpers.Constants.TABLE_SALE_ENTRY;
+import static com.safapharma.Helpers.Constants.TABLE_SALES;
 import com.safapharma.Helpers.DbHelper;
+import com.safapharma.ModelObjects.SaleEntry;
+import com.safapharma.ModelObjects.Sales;
 import com.safapharma.ModelObjects.DataWithColumn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,15 +107,53 @@ public class StockDAO {
         
         return  DAOHelper.getDetailsForTableWithId(SQL_QUERY);
     }
-    public String setQuantity(int qty,int Stockid) throws Exception {
-        final String SQL_QUERY = "update stock_entry set quantity= ? where id= ?";
+    
+     public int BillSalesTableInsert(Sales sales) throws Exception{
+        final String sql1="Insert into "+ TABLE_SALES + "values(?,?,?,?,?,?)";
         try (Connection con = DbHelper.getConnection();) {
+            PreparedStatement pst1 = con.prepareStatement(sql1);
+            
+            pst1.setInt(1, sales.getCustomerId());
+            pst1.setInt(2, sales.getTotalQuantity());
+            pst1.setDouble(3, sales.getTotalAmount());
+            pst1.setDouble(4, sales.getDiscount());
+            pst1.setDouble(5, sales.getFinalAmount());
+            pst1.setString(6, sales.getDoctorPrescriptionUrl());
+            
+            int recordInsertedCount = pst1.executeUpdate();
+               return recordInsertedCount;
+        }
+     }
+     public int BillSalesEntryTableInsert(SaleEntry saleEntry) throws Exception{
+        final String sql = "Insert into "+ TABLE_SALE_ENTRY + "values(?,?,?,?,?,?,?)";
+        try (Connection con = DbHelper.getConnection();) {
+            PreparedStatement pst = con.prepareStatement(sql);
+            
+            pst.setInt(1, saleEntry.getSaleId());
+            pst.setInt(2, saleEntry.getStockEntryId());
+            pst.setDouble(3, saleEntry.getRate());
+            pst.setInt(4, saleEntry.getQuantity());
+            pst.setDouble(5, saleEntry.getDiscount());
+            pst.setDouble(6, saleEntry.getFinalAmount());
+            pst.setBoolean(7, true);
+            
+            int recordUpdatedCount = pst.executeUpdate();
+            return recordUpdatedCount;
+        }
+    }
+     public int BillStockUpdate(int quan,int id) throws Exception{
+         //final String sql1 = "select quantity from "+TABLE_STOCK_ENTRY +"where id=?";
+            //Object ob = DAOHelper.getDetailsForTableWithId(sql1);
+         //int calquan=
+         final String sql = "Update table"+ TABLE_STOCK_ENTRY +"set quantity ="+ quan +"where id ="+ id; 
+        try (Connection con = DbHelper.getConnection();) {
+           // PreparedStatement pst = con.prepareStatement(sql);
            
             
-          //  SQL_QUERY.executeUpdate();
-              return SQL_QUERY;
-        
-    }
+            //int recordUpdatedCount = sql.executeUpdate();
+            return 1;
+        }
+     }
     
 }
-}
+

@@ -55,6 +55,7 @@ public class HomeScreenPanel extends MainScreenPanel {
     protected ToolbarButton btnAddCustomer;
     private ToolbarButton btnGenerateBill;
     private static int  Srno=0;
+    private float sum1 = 0;
     DefaultTableModel model ;
     
 
@@ -163,11 +164,14 @@ public class HomeScreenPanel extends MainScreenPanel {
                         int rowIndex = billEntriesTable.getSelectedRow();
                         //String exactSrno = billEntriesTable.getValueAt(rowIndex, 0).toString();
                         int id = Integer.parseInt(billData.getDataOf(rowIndex).get(0).toString());
+                        int srno = Integer.parseInt(billEntriesTable.getValueAt(rowIndex, 0).toString());
                         int currQuantity = Integer.parseInt(billEntriesTable.getValueAt(rowIndex, 2).toString());
                         int maxQuantity=Integer.parseInt(billData.getDataOf(0).get(1).toString());
                         
                         System.out.println(" id -- "+id);
-                        manager.createNewUpdateBillForm(thisHome,id,currQuantity,maxQuantity);
+                        System.out.println(" currQuantity -- "+currQuantity);
+                        System.out.println(" maxQuantity -- "+maxQuantity);
+                        manager.createNewUpdateBillForm(thisHome,id,currQuantity,maxQuantity,srno);
                         manager.showNewUpdateBillForm();
                     }
                     else
@@ -251,7 +255,7 @@ public class HomeScreenPanel extends MainScreenPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    manager.createGenerateBillPanel(thisHome,model);
+                    manager.createGenerateBillPanel(thisHome,model,sum1);
                     manager.showGenerateBillPanel();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -298,10 +302,10 @@ public class HomeScreenPanel extends MainScreenPanel {
     }
 
     public void getSum() {
-        float sum1 = 0;
+        
         for (int i = 0; i < billEntriesTable.getRowCount(); i++) {
             try {
-                sum1 = sum1 + Float.parseFloat(billEntriesTable.getValueAt(i, 4).toString());
+                sum1 = sum1 + Float.parseFloat(billEntriesTable.getValueAt(i, 5).toString());
             } catch (Exception e) {
                 java.util.logging.Logger.getLogger(HomeScreenPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
             }
@@ -309,19 +313,31 @@ public class HomeScreenPanel extends MainScreenPanel {
         totalBox.setText("₹ " + Float.toString(sum1));
         totalBox.setHorizontalAlignment(JTextField.CENTER);
     }
-    public void updateQuantity(int quantity,int id)
+    public void updateQuantity(int quantity,int srno)
     {
         //System.out.println(id);
-        //System.out.println(quantity+" "+id);
-        billEntriesTable.setValueAt(quantity, id-1, 2);
-        int quan = (Integer)billEntriesTable.getValueAt(id-1, 2);
-        int rate= (Integer)billEntriesTable.getValueAt(id-1, 4);
-        int total = quan * rate;
-        billEntriesTable.setValueAt(total, id-1, 5);
-                
+        try
+        {
+        System.out.println(quantity+" "+srno);
+        billEntriesTable.setValueAt(quantity, srno-1, 2);
+        String rate=(String)billEntriesTable.getValueAt(srno-1, 4);
+        
+        float rate1 = Float.parseFloat(rate);
+        float quan1 = (float)quantity; 
+        //System.out.println(rate1);
+        float total = quan1 * rate1;
+          //  System.out.println(rate + " " + total);
+        billEntriesTable.setValueAt(total, srno-1, 5);
+        getSum();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
         
     }
     public void addRow(int rowIndex) {
+        //System.out.println(rowIndex);
         //System.out.println("found row : "+rowIndex+ " with value"+stockData.getDataOf(rowIndex)+ " --with id-- "+stockData.getIdData());
         JTextField obc = new JTextField();
         String str;
