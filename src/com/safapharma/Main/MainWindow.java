@@ -16,6 +16,8 @@ import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Home.MenuPanel;
 import com.safapharma.Home.NewStockViewForm;
 import com.safapharma.Home.NewUpdateBillForm;
+import com.safapharma.Home.GenerateBillPanel;
+
 import com.safapharma.Home.NewBillMedicineEntryViewForm;
 import com.safapharma.Home.Sales.SaleViewForm;
 import com.safapharma.Home.Sales.SalesPanel;
@@ -29,6 +31,7 @@ import com.safapharma.MedicineLot.MedicineLotPanel;
 import com.safapharma.MedicineLot.NewMedicineLotForm;
 import com.safapharma.MedicineLot.UpdateMedicineLotForm;
 import com.safapharma.MedicineLot.ViewMedicineLotForm;
+import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
@@ -46,6 +49,7 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -68,7 +72,9 @@ public class MainWindow extends javax.swing.JFrame {
     private MedicineLotPanel medicinePanel;
     private NewStockViewForm newStockViewForm;
     private NewUpdateBillForm newUpdateBillForm;
+    private GenerateBillPanel generateBillPanel;
     private NewBillMedicineEntryViewForm newBillInfoViewForm;
+    
     private AddOrUpdateSupplierForm newSupplierForm;
     private SaleViewForm saleViewForm;
     private NewStockForm newStockForm;
@@ -631,6 +637,30 @@ public class MainWindow extends javax.swing.JFrame {
             newBillInfoViewForm = null;
         }
     }
+    
+    public void createGenerateBillPanel(HomeScreenPanel homeScreenPanel,DefaultTableModel billData) throws Exception {
+        if (generateBillPanel != null) {
+            deleteGenerateBillPanel();
+        }
+        generateBillPanel = new GenerateBillPanel(this, homeScreenPanel,billData);
+    }
+    
+    public void showGenerateBillPanel() {
+        if (generateBillPanel != null) {
+            generateBillPanel.setVisible(true);
+        }
+    }
+
+    public void deleteGenerateBillPanel() {
+        if (generateBillPanel != null) {
+            generateBillPanel.setVisible(false);
+            generateBillPanel = null;
+        }
+    }
+    
+    
+    
+    
     
     public void createUpdateCustomerForm(CustomerBackend customerBackend) throws Exception {
         if(updateCustomerForm!=null)
