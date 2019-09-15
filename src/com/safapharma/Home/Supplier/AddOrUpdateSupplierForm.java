@@ -5,6 +5,7 @@
  */
 package com.safapharma.Home.Supplier;
 
+import com.safapharma.Helpers.Constants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.Templates.DialogForm;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -39,22 +41,24 @@ public class AddOrUpdateSupplierForm extends DialogForm {
     private SupplierBackend supplierBackend;
     private boolean isUpdateForm;
     private Supplier currentSupplier;
+    private boolean viaStockForm;
 
-    public AddOrUpdateSupplierForm(MainWindow manager, SupplierBackend supplierBackend) {
-        this.manager = manager;
-        this.supplierBackend = supplierBackend;
-        this.isUpdateForm = false;
-        this.currentSupplier = null;
-        this.setLocation(160,10);
-        initUI();
-        addListeners();
-    }
-
-    public AddOrUpdateSupplierForm(MainWindow manager, SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier) {
+//    public AddOrUpdateSupplierForm(MainWindow manager, SupplierBackend supplierBackend) {
+//        this.manager = manager;
+//        this.supplierBackend = supplierBackend;
+//        this.isUpdateForm = false;
+//        this.currentSupplier = null;
+//        this.viaStockForm=false;
+//        this.setLocation(160,10);
+//        initUI();
+//        addListeners();
+//    }
+    public AddOrUpdateSupplierForm(MainWindow manager, SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier, boolean viaStockForm) {
         this.manager = manager;
         this.supplierBackend = supplierBackend;
         this.isUpdateForm = isUpdateForm;
         this.currentSupplier = supplier;
+        this.viaStockForm = viaStockForm;
         initUI();
         addListeners();
     }
@@ -102,7 +106,7 @@ public class AddOrUpdateSupplierForm extends DialogForm {
         getFormPanel().add(emailText);
         getFormPanel().add(emailErrorLabel);
 
-        getButtonPanel().add(submitButton);        
+        getButtonPanel().add(submitButton);
         getButtonPanel().add(resetButton, getGBC(1));
 
         this.pack();
@@ -124,20 +128,27 @@ public class AddOrUpdateSupplierForm extends DialogForm {
                             boolean isUpated = supplierBackend.updateSupplier(supplier);
                             if (isUpated) {
                                 createOptionPane("Supplier Updated", "");
+                                manager.passUpdatedSupplierBackToPanel(supplier);
                                 manager.deleteNewOrUpdateSupplierForm();
                             } else {
                                 createOptionPane("Not Able to update supplier! Please try again.", "Error");
                             }
                         } else {
-                            boolean isAdded = supplierBackend.addSupplier(supplier);
-                            if (isAdded) {
+                            int newSupplierId = supplierBackend.addSupplier(supplier);
+                            if (newSupplierId != Constants.INVALID) {
                                 createOptionPane("Supplier Added", "");
+                                if (viaStockForm) {
+                                    supplier.setId(newSupplierId);
+                                    manager.passSupplierToStock(supplier);
+                                } else {
+                                    manager.passNewSupplierBackToPanel(supplier);
+                                }
                                 manager.deleteNewOrUpdateSupplierForm();
                             } else {
                                 createOptionPane("Not Able to add supplier! Please try again.", "Error");
                             }
                         }
-                    } catch (Exception ex) {
+                    } catch (Exception ex) {                        
                         createOptionPane("Database Error", "Error");
                     }
                 }

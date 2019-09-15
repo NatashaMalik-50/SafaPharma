@@ -250,7 +250,7 @@ public class NewMedicineLotForm extends DialogForm {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Add Supplier called");
                 try {
-                    manager.createNewOrUpdateSupplierForm(new SupplierBackend());
+                    manager.createNewOrUpdateSupplierForm(new SupplierBackend(),false,null,false);
                     manager.showNewOrUpdateSupplierForm();
                 } catch (Exception ex) {
                     Logger.getLogger(NewMedicineLotForm.class.getName()).log(Level.SEVERE, null, ex);

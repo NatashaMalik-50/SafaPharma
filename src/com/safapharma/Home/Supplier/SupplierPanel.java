@@ -5,12 +5,13 @@
  */
 package com.safapharma.Home.Supplier;
 
+import com.safapharma.Helpers.Constants;
 import com.safapharma.Helpers.DesignConstants;
-import com.safapharma.Home.HomeScreenBackend;
 import com.safapharma.Home.HomeScreenPanel;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.ModelObjects.Supplier;
+import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,6 @@ import java.math.BigDecimal;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Action;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.SwingWorker;
@@ -41,10 +41,12 @@ public class SupplierPanel extends MainScreenPanel {
     private final SupplierBackend supplierBackend;
     private TableRowSorter sorter;
     private DataWithColumn supplierDataWithColumn;
+    private int currentlyUpdatingSupplierSno;
 
     public SupplierPanel(MainWindow manager) {
         this.manager = manager;
         supplierBackend = new SupplierBackend();
+        this.currentlyUpdatingSupplierSno = Constants.INVALID;
         initUI();
         setListeners();
     }
@@ -72,7 +74,7 @@ public class SupplierPanel extends MainScreenPanel {
     }
 
     private void loadData() throws Exception {
-        this.supplierDataWithColumn = supplierBackend.setSupplierInfoIntoTable(supplierTable, tableModel);
+        this.supplierDataWithColumn = supplierBackend.setSupplierInfoIntoTable();
         if (supplierDataWithColumn != null) {
             tableModel.setDataVector(supplierDataWithColumn.getData(), supplierDataWithColumn.getColumnNames());
         }
@@ -94,7 +96,7 @@ public class SupplierPanel extends MainScreenPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    manager.createNewOrUpdateSupplierForm(supplierBackend);
+                    manager.createNewOrUpdateSupplierForm(supplierBackend, false, null, false);
                     manager.showNewOrUpdateSupplierForm();
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,13 +132,16 @@ public class SupplierPanel extends MainScreenPanel {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int rowIdx = supplierTable.getSelectedRow();
-                Vector<Object> data = supplierDataWithColumn.getDataOf(rowIdx);
-                Supplier supplier = new Supplier((String) data.get(1), (String) data.get(2), ""+(BigDecimal)data.get(3), (String) data.get(4));
-                supplier.setId(supplierDataWithColumn.getIdOf(rowIdx));
-                System.out.println("supplier found: " + supplier);
+                int rowIndex = supplierTable.getSelectedRow();
+                int selectSNo = Integer.parseInt(supplierTable.getValueAt(rowIndex, 0).toString());
+                int currentId = supplierDataWithColumn.getIdBySerialNo(selectSNo);
+                Vector<Object> data = supplierDataWithColumn.getDataOf(selectSNo - 1);
+                Supplier supplier = new Supplier((String) data.get(1), (String) data.get(2), "" + (BigDecimal) data.get(3), (String) data.get(4));
+                supplier.setId(currentId);
+                currentlyUpdatingSupplierSno = selectSNo;
+                System.out.println("supplier found: " + supplier +" with current serial no. as  "+currentlyUpdatingSupplierSno);
                 try {
-                    manager.createNewOrUpdateSupplierForm(supplierBackend, true, supplier);
+                    manager.createNewOrUpdateSupplierForm(supplierBackend, true, supplier, false);
                     manager.showNewOrUpdateSupplierForm();
                 } catch (Exception ex) {
                     Logger.getLogger(SupplierPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -144,6 +149,41 @@ public class SupplierPanel extends MainScreenPanel {
             }
         });
     }
+
+    public void receiveNewSupplier(Supplier supplier) {
+        System.out.println("Received new supplier as : " + supplier);
+        DefaultTableModel model = (DefaultTableModel) supplierTable.getModel();
+        Vector<Object> newSupplierRow = new Vector<>();
+        newSupplierRow.add(supplierDataWithColumn.getLastKey() + 1);
+        newSupplierRow.add(supplier.getName());
+        newSupplierRow.add(supplier.getAddress());
+        newSupplierRow.add(supplier.getContactNo());
+        newSupplierRow.add(supplier.getEmail());
+        model.addRow(newSupplierRow);
+        supplierDataWithColumn.addData(newSupplierRow);
+        supplierDataWithColumn.addIdData(supplier.getId());
+    }
+
+    public void receiveUpdatedSupplier(Supplier supplier) {
+        System.out.println("Received updated supplier as : " + supplier);
+        try {
+            Vector<Object> updatedSupplierRow = new Vector<>();
+            updatedSupplierRow.add(currentlyUpdatingSupplierSno);
+            updatedSupplierRow.add(supplier.getName());
+            updatedSupplierRow.add(supplier.getAddress());
+            updatedSupplierRow.add(supplier.getContactNo());
+            updatedSupplierRow.add(supplier.getEmail());
+
+            System.out.println("New Row updating at index : " + (currentlyUpdatingSupplierSno - 1) + " as " + updatedSupplierRow.toString());
+            supplierDataWithColumn.updateData(currentlyUpdatingSupplierSno - 1, updatedSupplierRow);
+
+            DefaultTableModel model = (DefaultTableModel) supplierTable.getModel();
+            model.setDataVector(supplierDataWithColumn.getData(), supplierDataWithColumn.getColumnNames());
+        } catch (Exception e) {
+            System.out.println("Error found here : " + e);
+        }
+    }
+
     @Override
     protected void addAlerts() {
         manager.viewExpiredMedicineThroughStatusPanel();

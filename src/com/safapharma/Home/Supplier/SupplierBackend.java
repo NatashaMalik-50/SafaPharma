@@ -24,15 +24,15 @@ public class SupplierBackend {
         supplierDAO = new SupplierDAO();
     }
 
-    public boolean addSupplier(Supplier supplier) throws Exception {
-        return (supplierDAO.saveSupplier(supplier) != Constants.INVALID) ? true : false;
+    public int addSupplier(Supplier supplier) throws Exception {
+        return supplierDAO.saveSupplier(supplier);
     }
     
     public boolean updateSupplier(Supplier supplier) throws Exception {
         return (supplierDAO.updateSupplier(supplier) != Constants.INVALID) ? true : false;
     }
 
-    public DataWithColumn setSupplierInfoIntoTable(JTable table, DefaultTableModel tableModel) throws Exception {
+    public DataWithColumn setSupplierInfoIntoTable() throws Exception {
         DataWithColumn dataWithColumn = supplierDAO.getAllSupplierDetails();
         return dataWithColumn;
     }

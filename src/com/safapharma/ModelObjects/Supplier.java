@@ -16,6 +16,13 @@ public class Supplier {
         this.contactNo = contactNo;
         this.email = email;
     }
+    public Supplier(int id,String name, String address, String contactNo, String email) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.contactNo = contactNo;
+        this.email = email;
+    }
 
     public Supplier() {
     }

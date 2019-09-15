@@ -20,10 +20,12 @@ public class DataWithColumn {
     Vector<String> columnNames;
     Vector<Object> idData;
     HashMap<Integer,Integer> idSnoHashmap;
+    int lastKey;
 
     public DataWithColumn() {
         columnNames = new Vector<String>();
         data = new Vector<Vector<Object>>();
+        lastKey=0;
     }
 
     public DataWithColumn(boolean hasId) {
@@ -31,6 +33,7 @@ public class DataWithColumn {
         data = new Vector<Vector<Object>>();
         idData = new Vector<>();
         idSnoHashmap = new HashMap<>();
+        lastKey=0;
     }
 
     public Vector<Vector<Object>> getData() {
@@ -62,7 +65,7 @@ public class DataWithColumn {
     }
 
     public int getIdOf(int index) {
-        return (Integer) idData.get(index);
+        return getIdBySerialNo(index);
     }
 
     public void addToIdSNoHashMap(int sNo,int id){
@@ -75,5 +78,33 @@ public class DataWithColumn {
         else
             return Constants.INVALID;
     }
+    
+    public void addData(Vector<Object> dataObj){
+        dataObj.add(dataObj);
+    }
+    public void updateData(int idx,Vector<Object> dataObj){
+        data.set(idx, dataObj);
+    }
+    public void addIdData(int id){
+        idSnoHashmap.put(lastKey+1,id);
+        lastKey++;
+        idData.add(id);
+    }
+    public HashMap<Integer, Integer> getIdSnoHashmap() {
+        return idSnoHashmap;
+    }
+
+    public void setIdSnoHashmap(HashMap<Integer, Integer> idSnoHashmap) {
+        this.idSnoHashmap = idSnoHashmap;
+    }
+
+    public int getLastKey() {
+        return lastKey;
+    }
+
+    public void setLastKey(int lastKey) {
+        this.lastKey = lastKey;
+    }
+    
     
 }

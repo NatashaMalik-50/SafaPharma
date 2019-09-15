@@ -48,7 +48,15 @@ public class SupplierDAO {
             statement.setString(3, supplier.getContactNo());
             statement.setString(4, supplier.getEmail());
             int rowsAdded = statement.executeUpdate();
-            return (rowsAdded > 0) ? rowsAdded : Constants.INVALID;
+            if(rowsAdded > 0){
+                statement = connection.prepareStatement("SELECT id from "+Constants.TABLE_SUPPLIER+" order by id desc limit 1;");
+                ResultSet rs = statement.executeQuery();
+                if(rs.next())
+                    return rs.getInt("id");
+                else
+                    return Constants.INVALID;
+            }else
+                return Constants.INVALID;
         }
     }
 

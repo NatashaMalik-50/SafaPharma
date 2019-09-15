@@ -212,7 +212,7 @@ public class MainWindow extends javax.swing.JFrame {
             if (customerPanel != null) {
                 deleteSupplierPanel();
             }
-            customerPanel = new CustomerPanel(this,viaBilling);
+            customerPanel = new CustomerPanel(this, viaBilling);
             screenPanel.add(CUSTOMER_LABEL, customerPanel);
             componentStack.push(customerPanel);
         } finally {
@@ -412,18 +412,17 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
 
-    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend) throws Exception {
+//    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend) throws Exception {
+//        if (newSupplierForm != null) {
+//            deleteNewOrUpdateSupplierForm();
+//        }
+//        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend);
+//    }
+    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier, boolean viaStockForm) throws Exception {
         if (newSupplierForm != null) {
             deleteNewOrUpdateSupplierForm();
         }
-        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend);
-    }
-
-    public void createNewOrUpdateSupplierForm(SupplierBackend supplierBackend, boolean isUpdateForm, Supplier supplier) throws Exception {
-        if (newSupplierForm != null) {
-            deleteNewOrUpdateSupplierForm();
-        }
-        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend, isUpdateForm, supplier);
+        newSupplierForm = new AddOrUpdateSupplierForm(this, supplierBackend, isUpdateForm, supplier, viaStockForm);
     }
 
     public void showNewOrUpdateSupplierForm() {
@@ -670,12 +669,32 @@ public class MainWindow extends javax.swing.JFrame {
     public void viewExpiredMedicineThroughStatusPanel() {
         sidePanel.expiredMedicineButton();
     }
+
     public void viewCustomerThroughStatusPanel() {
         sidePanel.customerButton(true);
     }
-    public void passCustomerToBilling(Customer customer){
-        if(home!=null){
+
+    public void passCustomerToBilling(Customer customer) {
+        if (home != null) {
             home.receiveCustomer(customer);
+        }
+    }
+
+    public void passSupplierToStock(Supplier supplier) {
+        if (newStockForm != null) {
+            newStockForm.receiveSupplier(supplier);
+        }
+    }
+
+    public void passNewSupplierBackToPanel(Supplier supplier) {
+        if (supplierPanel != null) {
+            supplierPanel.receiveNewSupplier(supplier);
+        }
+    }
+
+    public void passUpdatedSupplierBackToPanel(Supplier supplier) {
+        if (supplierPanel != null) {
+            supplierPanel.receiveUpdatedSupplier(supplier);
         }
     }
 
@@ -754,7 +773,7 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
         } catch (Exception e) {
-        
+
             try {
                 for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                     if ("Nimbus".equals(info.getName())) {

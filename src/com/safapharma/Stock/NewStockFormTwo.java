@@ -363,7 +363,7 @@ public class NewStockFormTwo extends DialogForm {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("Add Supplier called");
                 try {
-                    manager.createNewOrUpdateSupplierForm(new SupplierBackend());
+                    manager.createNewOrUpdateSupplierForm(new SupplierBackend(),false,null,true);
                     manager.showNewOrUpdateSupplierForm();
                     fetchAndSetSupplierIdNameList();
                 } catch (Exception ex) {
@@ -668,6 +668,13 @@ public class NewStockFormTwo extends DialogForm {
         amountText.setText("");
 
         hideErrorLabels();
+    }
+    
+    public void receiveSupplier(Supplier supplier){
+        supplierIdNameList.add(supplier);
+        supplierNameCombo.addItem(supplier.getName());
+        supplierNameCombo.setSelectedIndex(supplierIdNameList.size()-1);
+        System.out.println("Supplier selected : "+supplier);
     }
 
     @Override

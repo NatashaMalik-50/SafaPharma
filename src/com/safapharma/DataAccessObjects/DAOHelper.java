@@ -74,6 +74,7 @@ public class DAOHelper {
                     }
                 }
                 dataWithColumn.getData().add(row);
+                dataWithColumn.setLastKey(sNo);
                 sNo++;
             }
             dataWithColumn.setIdData(idRow);
