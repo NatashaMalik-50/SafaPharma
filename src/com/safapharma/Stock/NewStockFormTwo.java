@@ -40,6 +40,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -438,6 +439,12 @@ public class NewStockFormTwo extends DialogForm {
 
                 Vector<Vector> submitLotData = model.getDataVector();
                 stockBackend.insertStockDetails(submitLotData);
+                
+                supplierNameCombo.setEditable(true);
+                supplierNameCombo.setEnabled(true);
+                model.setRowCount(0);
+                
+                JOptionPane.showMessageDialog(thisForm,"The medicine lot has been submitted successfully.");  
             }
         });
 
