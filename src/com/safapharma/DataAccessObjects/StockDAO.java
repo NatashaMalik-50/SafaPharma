@@ -112,8 +112,8 @@ public class StockDAO {
               return SQL_QUERY;
         
     }
-    
 }
+    
     
     public DataWithColumn getAllExpiredMedicinesDetails() throws Exception{
         final String SQL_QUERY = "select id,company_name,medicine_name,quantity,amount,batch_no,expiry,supplier_name from " + Constants.VIEW_EXPIRED_MEDICINES;

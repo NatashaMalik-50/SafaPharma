@@ -9,12 +9,17 @@ import com.safapharma.Home.*;
 import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.DataWithColumn;
+import com.safapharma.ModelObjects.Medicine;
+import com.safapharma.ModelObjects.MedicineLot;
+import com.safapharma.ModelObjects.StockEntry;
+import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
@@ -36,6 +41,15 @@ public class StockPanel extends MainScreenPanel {
     private CustomDefaultTableModel tableModel;
     private final StockBackend stockBackend;
     private TableRowSorter sorter;
+    
+    private Vector<MedicineLot> lotIdBatchList;
+    private Vector<Supplier> supplierIdNameList;
+    private Vector<Medicine> medicineIdNameList;
+    private Vector<StockEntry> stockEntryList;
+    
+    DataWithColumn dataWithColumn;
+    Vector<Object> selectedObject;
+    Vector fullList;
 
     public StockPanel(MainWindow manager) {
         this.manager = manager;
@@ -65,17 +79,42 @@ public class StockPanel extends MainScreenPanel {
         getTableScrollPane().setViewportView(stockTable);
 
     }
+    private void setFullList(){
+        fullList = dataWithColumn.getData();
+    }
 
     private void loadData() throws Exception {
-        DataWithColumn dataWithColumn = stockBackend.setStockInfoIntoTable(stockTable, tableModel);
+        dataWithColumn = stockBackend.setStockInfoIntoTable(stockTable, tableModel);
         tableModel.setDataVector(dataWithColumn.getData(), dataWithColumn.getColumnNames());
+        setFullList();
+    }
+    
+    private void setDataToVectors(){
+//        lotIdBatchList;
+//        supplierIdNameList;
+//    medicineIdNameList;
+//    stockEntryList;
+    }
+    
+    private void deleteFullRow(DefaultTableModel model, JTable stockTable){
+        int selectedRow = stockTable.getSelectedRow();
+        model.removeRow(selectedRow);
+        stockTable.getValueAt(selectedRow, 2);        
     }
 
     private void setListeners() {
         stockTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                enableButtons();
+                enableButtons();
+                int x = stockTable.getSelectedRow();
+//                int y = supplierTable.getSelectedColumn();
+//                
+//                Object ob = tableModel.getDataVector().elementAt(supplierTable.getSelectedRow());
+//                fullList = dataWithColumn.getData();
+                Object ob= dataWithColumn.getDataOf(x);
+                selectedObject = dataWithColumn.getDataOf(x);
+                System.out.println("We are getting the selected data"+selectedObject);
             }
 
         });
@@ -87,6 +126,44 @@ public class StockPanel extends MainScreenPanel {
                     manager.showNewStockForm();
                 } catch (Exception ex) {
                     Logger.getLogger(StockPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Remove Button Called");                
+                DefaultTableModel model = (DefaultTableModel) stockTable.getModel();
+                int numRows = stockTable.getSelectedRows().length;
+                for (int i = 0; i < numRows; i++) {
+                    deleteFullRow(model, stockTable);
+                }
+            }
+        });
+        
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    System.out.println("View Stock Button Called");                          
+                    manager.createViewStockForm(selectedObject);
+                    manager.showViewStockForm();                  
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    System.out.println("Update Stock Button Called");
+                    manager.createUpdateStockForm(selectedObject);
+                    manager.showUpdateStockForm();                  
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });

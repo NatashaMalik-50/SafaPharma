@@ -35,7 +35,10 @@ import com.safapharma.ModelObjects.Supplier;
 import com.safapharma.ModelObjects.User;
 import com.safapharma.Stock.NewStockForm;
 import com.safapharma.Stock.NewStockFormTwo;
+import com.safapharma.Stock.StockBackend;
 import com.safapharma.Stock.StockPanel;
+import com.safapharma.Stock.UpdateStockForm;
+import com.safapharma.Stock.ViewStockForm;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -83,6 +86,8 @@ public class MainWindow extends javax.swing.JFrame {
     private NewOrUpdateCustomerForm newOrUpdateCustomerForm;
     private ViewCustomerForm viewCustomerForm;
     private ExpiredMedicinesPanel expiredMedicinesPanel;
+    private UpdateStockForm updateStockForm;
+    private ViewStockForm viewStockForm;
 
     /**
      * Creates new form MainWindow
@@ -410,6 +415,48 @@ public class MainWindow extends javax.swing.JFrame {
         if (newStockForm != null) {
             newStockForm.setVisible(false);
             newStockForm = null;
+        }
+    }
+    /****************/
+    public void createUpdateStockForm(Vector selectedObject) throws Exception {
+        if (updateStockForm != null) {
+            deleteUpdateStockForm();
+        }
+
+        updateStockForm = new UpdateStockForm(this, selectedObject); 
+    }
+
+    public void showUpdateStockForm() {
+        if (updateStockForm != null) {
+            updateStockForm.setVisible(true);
+        }
+    }
+
+    public void deleteUpdateStockForm() {
+        if (updateStockForm != null) {
+            updateStockForm.setVisible(false);
+            updateStockForm = null;
+        }
+    }
+    /****************/
+    public void createViewStockForm(Vector selectedObject) throws Exception {
+        if (viewStockForm != null) {
+            deleteViewStockForm();
+        }
+
+        viewStockForm = new ViewStockForm(this, selectedObject);
+    }
+
+    public void showViewStockForm() {
+        if (viewStockForm != null) {
+            viewStockForm.setVisible(true);
+        }
+    }
+
+    public void deleteViewStockForm() {
+        if (viewStockForm != null) {
+            viewStockForm.setVisible(false);
+            viewStockForm = null;
         }
     }
 
