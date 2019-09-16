@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -51,11 +52,14 @@ public class UpdateStockForm extends DialogForm {
     
     private MedicineLotBackend medicineLotBackend;   
     
+    private UpdateStockForm thisForm;
+    
     
 
     public UpdateStockForm(MainWindow manager,Vector selectedObject) {
         this.manager = manager;
         this.medicineLotBackend = medicineLotBackend;
+        thisForm = this;
         initUI();        
         addListeners();
         
@@ -102,13 +106,13 @@ public class UpdateStockForm extends DialogForm {
         
         updateButton = new DialogForm.FormButton("Update Stock");
         
-//        companyNameText.setEditable(false);
-//        medicineNameText.setEditable(false);
+        companyNameText.setEditable(false);
+        medicineNameText.setEditable(false);
 //        quantityText.setEditable(false);
-//        rateText.setEditable(false);        
-//        batchText.setEditable(false);
-//        expiryText.setEditable(false);
-//        supplierNameText.setEditable(false);
+        rateText.setEditable(false);        
+        batchText.setEditable(false);
+        expiryText.setEditable(false);
+        supplierNameText.setEditable(false);
         
 //        medicineNameText.setEnabled(false);
 //        batchNumText.setEnabled(false);
@@ -116,12 +120,21 @@ public class UpdateStockForm extends DialogForm {
 //        rateText.setEnabled(false);        
 //        inStockText.setEnabled(false);
         
+        
+        getFormPanel().add(supplierNameLabel);
+        getFormPanel().add(supplierNameText);
+        getFormPanel().add(new JPanel());
+        
         getFormPanel().add(companyNameLabel);
         getFormPanel().add(companyNameText);
         getFormPanel().add(new JPanel());
         
         getFormPanel().add(medicineNameLabel);
         getFormPanel().add(medicineNameText);
+        getFormPanel().add(new JPanel());
+        
+        getFormPanel().add(batchLabel);
+        getFormPanel().add(batchText);
         getFormPanel().add(new JPanel());
         
         getFormPanel().add(quantityLabel);
@@ -132,17 +145,12 @@ public class UpdateStockForm extends DialogForm {
         getFormPanel().add(rateText);
         getFormPanel().add(new JPanel());
         
-        getFormPanel().add(batchLabel);
-        getFormPanel().add(batchText);
-        getFormPanel().add(new JPanel());
         
         getFormPanel().add(expiryLabel);
         getFormPanel().add(expiryText);
         getFormPanel().add(new JPanel());
         
-        getFormPanel().add(supplierNameLabel);
-        getFormPanel().add(supplierNameText);
-        getFormPanel().add(new JPanel());
+        
         
         getButtonPanel().add(updateButton);
         getFormPanel().add(new JPanel());
@@ -156,6 +164,7 @@ public class UpdateStockForm extends DialogForm {
             public void actionPerformed(ActionEvent e) {                
                 // Close the form once this is clicked.
                 //TODO : Close the form once this is clicked.
+                   JOptionPane.showMessageDialog(thisForm,"The stock has been updated successfully.");  
                 
             }
         });
@@ -181,7 +190,7 @@ private void displayTable(){
 
     @Override
     protected void deleteScreen() {
-                manager.deleteViewMedicineLotForm();
+                manager.deleteUpdateStockForm();
     }
     
 }

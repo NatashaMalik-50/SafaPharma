@@ -122,12 +122,20 @@ public class ViewStockForm extends DialogForm {
 //        rateText.setEnabled(false);        
 //        inStockText.setEnabled(false);
         
+        getFormPanel().add(supplierNameLabel);
+        getFormPanel().add(supplierNameText);
+        getFormPanel().add(new JPanel());
+        
         getFormPanel().add(companyNameLabel);
         getFormPanel().add(companyNameText);
         getFormPanel().add(new JPanel());
         
         getFormPanel().add(medicineNameLabel);
         getFormPanel().add(medicineNameText);
+        getFormPanel().add(new JPanel());
+        
+        getFormPanel().add(batchLabel);
+        getFormPanel().add(batchText);
         getFormPanel().add(new JPanel());
         
         getFormPanel().add(quantityLabel);
@@ -138,17 +146,12 @@ public class ViewStockForm extends DialogForm {
         getFormPanel().add(rateText);
         getFormPanel().add(new JPanel());
         
-        getFormPanel().add(batchLabel);
-        getFormPanel().add(batchText);
-        getFormPanel().add(new JPanel());
         
         getFormPanel().add(expiryLabel);
         getFormPanel().add(expiryText);
         getFormPanel().add(new JPanel());
         
-        getFormPanel().add(supplierNameLabel);
-        getFormPanel().add(supplierNameText);
-        getFormPanel().add(new JPanel());
+        
         
         getButtonPanel().add(closeButton);
         
@@ -162,7 +165,7 @@ public class ViewStockForm extends DialogForm {
             public void actionPerformed(ActionEvent e) {                
                 // Close the form once this is clicked.
                 //TODO : Close the form once this is clicked.
-                
+                deleteScreen();
             }
         });
     }
@@ -187,7 +190,7 @@ private void displayTable(){
 
     @Override
     protected void deleteScreen() {
-                manager.deleteViewMedicineLotForm();
+                manager.deleteViewStockForm();
     }
     
 }
