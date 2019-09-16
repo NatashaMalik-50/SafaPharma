@@ -637,11 +637,11 @@ public class MainWindow extends javax.swing.JFrame {
             newBillInfoViewForm = null;
         }
     }
-    public void createGenerateBillPanel(HomeScreenPanel homeScreenPanel,DefaultTableModel billData,float totalValue) throws Exception {
+    public void createGenerateBillPanel(HomeScreenPanel homeScreenPanel,DefaultTableModel billData,float totalValue,Customer customer) throws Exception {
         if (generateBillPanel != null) {
             deleteGenerateBillPanel();
         }
-        generateBillPanel = new GenerateBillPanel(this, homeScreenPanel,billData,totalValue);
+        generateBillPanel = new GenerateBillPanel(this, homeScreenPanel,billData,totalValue,customer);
     }
     
     public void showGenerateBillPanel() {

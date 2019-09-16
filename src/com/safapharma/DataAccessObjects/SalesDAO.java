@@ -14,9 +14,11 @@ import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.DataWithColumn;
 import com.safapharma.ModelObjects.Sales;
 import com.safapharma.ModelObjects.SaleEntry;
+import com.safapharma.ModelObjects.StockEntry;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Vector;
 /**
  *
  * @author akshit
@@ -59,5 +61,89 @@ public class SalesDAO {
 "on medicine_lot.medicine_id = medicine.id\n" +
 "where sale_entry.id =" + sale_id;
         return DAOHelper.getDetailsForTableWithId(SQL_QUERY);
+    }
+    
+    
+    
+    
+    
+    public int createSale(Sales sale, Customer customer, Vector<SaleEntry> saleEntries, Vector<StockEntry> stockEntries) throws Exception
+    {
+        String sql = "Insert into " + TABLE_SALES + "(customer_id, total_quantity, total_amount , discount, final_amount) values(?,?,?,?,?)";
+        try (Connection connection = DbHelper.getConnection();) 
+        {
+            connection.setAutoCommit(false);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,customer.getId());
+            statement.setInt(2, sale.getTotalQuantity());
+            statement.setDouble(3,sale.getTotalAmount());
+            statement.setDouble(4, sale.getDiscount());
+            statement.setDouble(5, sale.getFinalAmount());
+            int result = statement.executeUpdate();
+    
+            if(result > 0)
+            {
+                // when sales entry is exceuted successfully
+                
+                statement = connection.prepareStatement("SELECT id from " + TABLE_SALES + " order by id desc limit 1;");
+                ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int saleId = rs.getInt("id");
+                 
+                String query = "Insert into " + TABLE_SALE_ENTRY + "(sale_id, stock_entry_id, rate, quantity, discount, final_amount) values(?,?,?,?,?,?);";
+                PreparedStatement stmt = connection.prepareStatement(query);
+               
+                for( SaleEntry saleEntry :  saleEntries)
+                {
+                    stmt.setInt(1, saleId);
+                    stmt.setInt(2, saleEntry.getStockEntryId());
+                    stmt.setDouble(3, saleEntry.getRate());
+                    stmt.setInt(4,saleEntry.getQuantity());
+                    stmt.setDouble(5, saleEntry.getDiscount());
+                    stmt.setDouble(6, sale.getFinalAmount());
+                    stmt.addBatch();
+                }
+                
+                int[] resultIds = stmt.executeBatch();
+                boolean areInsertsSuccessful = true;
+                for(int id : resultIds)
+                    if(id <= 0)
+                    { areInsertsSuccessful = false;
+                        break;}
+                if(areInsertsSuccessful)
+                {
+                    // stock entry 
+                    String qsl = "Update " + Constants.TABLE_STOCK_ENTRY + " set quantity=quantity-? where id=? ";
+                    PreparedStatement stmts = connection.prepareStatement(qsl);
+                    for( StockEntry stockEntry :  stockEntries)
+                    {
+                        stmts.setInt(1, stockEntry.getQuantity());
+                        stmts.setInt(2, stockEntry.getId());
+                        stmts.addBatch();
+                    }
+                    
+                    int[] rstIds = stmts.executeBatch();
+                    boolean areInsertSuccessful = true;
+                    for(int id : rstIds)
+                    if(id <= 0)
+                    { areInsertSuccessful = false;
+                        break;}
+                    
+                    if(areInsertSuccessful)
+                    {
+                        connection.commit();
+                        return Constants.VALID;
+                    }
+                    else 
+                        return Constants.INVALID;
+                }
+            }
+        }
+        else
+            return Constants.INVALID;
+
+        
+        }   
+        return Constants.INVALID;   
     }
 }

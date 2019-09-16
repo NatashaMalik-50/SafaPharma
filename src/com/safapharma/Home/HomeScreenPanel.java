@@ -9,6 +9,10 @@ import com.safapharma.Helpers.DesignConstants;
 import com.safapharma.Main.MainWindow;
 import com.safapharma.ModelObjects.Customer;
 import com.safapharma.ModelObjects.DataWithColumn;
+import com.safapharma.ModelObjects.SaleEntry;
+import com.safapharma.ModelObjects.StockEntry;
+import com.safapharma.DataAccessObjects.SalesDAO;
+import com.safapharma.ModelObjects.Sales;
 import com.safapharma.Templates.CustomDefaultTableModel;
 import com.safapharma.Templates.MainScreenPanel;
 import java.awt.Cursor;
@@ -25,6 +29,7 @@ import javafx.scene.control.ButtonType;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -55,6 +60,7 @@ public class HomeScreenPanel extends MainScreenPanel {
     private ToolbarButton btnGenerateBill;
     private int  Srno=0;
     private float sum1 = 0;
+    private int totalquan = 0;
     DefaultTableModel model ;
     private Customer currentCustomer;
     
@@ -104,7 +110,7 @@ public class HomeScreenPanel extends MainScreenPanel {
         //btnAddCustomer = new ToolbarButton("Search",new ImageIcon(getClass().getResource(IconConstants.SEARCH_ICON)));
         btnAddCustomer.setText("ADD CUSTOMER");
         btnGenerateBill.setText("GENERATE BILL");
-        //btnGenerateBill.setEnabled(false);
+        btnGenerateBill.setEnabled(false);
         //TotalBox.
         getTotalPanel().setLayout(new GridLayout(0, 2));
 
@@ -215,13 +221,13 @@ public class HomeScreenPanel extends MainScreenPanel {
                     int id = billEntriesTable.getSelectedRow();
                     //System.out.println(id);
                     //billEntriesTable.remove(id);
-                    if (billEntriesTable.getSelectedRow() >= 0) {
+                    if (billEntriesTable.getSelectedRowCount() > 0) {
                         DefaultTableModel model = (DefaultTableModel) billEntriesTable.getModel();
                         model.removeRow(id);
                         Srno--;
                         
                         billData.getData().remove(id);
-                        if (billEntriesTable.getRowCount() >= 0) {
+                        if (billEntriesTable.getRowCount() <= 0) {
                             disableRemoveButtons();
                             disableUpdateButtons();
                             disableViewButtons();
@@ -237,7 +243,10 @@ public class HomeScreenPanel extends MainScreenPanel {
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                disableButtons();
+                //disableButtons();
+                disableRemoveButtons();
+                        disableUpdateButtons();
+                        disableViewButtons();
             }
         });
         btnAddCustomer.addActionListener(new ActionListener() {
@@ -254,8 +263,67 @@ public class HomeScreenPanel extends MainScreenPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    manager.createGenerateBillPanel(thisHome,model,sum1);
+                    int input = JOptionPane.showConfirmDialog(null, "Do You Really Want To Generate Bill?"); // 0=yes, 1=no, 2=ca
+                    if(input==0)
+                    {
+                        
+                        
+                        Customer cus = new Customer();
+                        Sales sales = new Sales();
+                        //SaleEntry saleEntry = new SaleEntry();
+                        cus = currentCustomer;
+                        sales.setCustomerId(cus.getId());
+                        sales.setTotalQuantity(totalquan);
+                        sales.setTotalAmount(sum1);
+                        sales.setDiscount(10.0);
+                        sales.setFinalAmount(sum1);
+                        sales.setDoctorPrescriptionUrl(null);
+                        
+                        
+                        
+                        DataWithColumn td = new DataWithColumn();
+                        Vector<SaleEntry> tableSaleData = new Vector<SaleEntry>();
+                        Vector<StockEntry> tableStockData = new Vector<StockEntry>();
+                        System.out.println(billEntriesTable.getRowCount());
+            for (int i = 0; i < billEntriesTable.getRowCount(); i++) {
+            try {
+                //tableData.add(stockData.getDataOf(i).get(3).toString());
+                SaleEntry saleEntry = new SaleEntry();
+                StockEntry stockEntry = new StockEntry();
+                //tableData.add((SaleEntry)(Object)(stockData.getIdBySerialNo(Integer.parseInt(stockData.getDataOf(i).get(0).toString()))));
+                //setters use krke ek ek field set krr smjh aya??
+               //field number dehk liyp konsa kiska hai ; abhi maine demo ke liyo quanitity set ki hai 
+                //what about saleid; wo toh autoincrement hoke generate hogi ; tu peeche fucntion mei Sale object aur ye vector behejea
+                //sale wali id toh tabhi provide hogi jab sale table main entry ho jayegi
+                //han wo akshit hqndle krega ok
+                saleEntry.setStockEntryId(stockData.getIdBySerialNo(Integer.parseInt(stockData.getDataOf(i).get(0).toString())));
+                //saleEntry.setSaleId();
+                saleEntry.setRate(Double.parseDouble(billEntriesTable.getValueAt(i, 4).toString()));
+                saleEntry.setQuantity((Integer)billEntriesTable.getValueAt(i, 2));//ye error casting ki hai integer ya jo bhi data type ho usmei cast
+                saleEntry.setDiscount(10.0);
+                saleEntry.setFinalAmount(sum1);
+                saleEntry.setIsReturnable(false);
+                stockEntry.setId(stockData.getIdBySerialNo(Integer.parseInt(stockData.getDataOf(i).get(0).toString())));
+                stockEntry.setQuantity((Integer)billEntriesTable.getValueAt(i, 2));
+                tableSaleData.add(saleEntry);
+                tableStockData.add(stockEntry);
+               
+                }
+                catch(Exception e1) {
+                java.util.logging.Logger.getLogger(HomeScreenPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, e1);
+            }
+        }
+            //td.getData().add(tableData);
+            //System.out.println("here --------- "+tableData);
+                    SalesDAO salesDAO = new SalesDAO();
+                    salesDAO.createSale(sales, cus, tableSaleData, tableStockData);
+                    manager.createGenerateBillPanel(thisHome,model,sum1,currentCustomer);
                     manager.showGenerateBillPanel();
+                    }
+                    else
+                    {
+                        manager.showHomeScreen();
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(HomeScreenPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -304,6 +372,7 @@ public class HomeScreenPanel extends MainScreenPanel {
         
         for (int i = 0; i < billEntriesTable.getRowCount(); i++) {
             try {
+                totalquan = totalquan + Integer.parseInt(billEntriesTable.getValueAt(i, 2).toString());
                 sum1 = sum1 + Float.parseFloat(billEntriesTable.getValueAt(i, 5).toString());
             } catch (Exception e) {
                 java.util.logging.Logger.getLogger(HomeScreenPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, e);
@@ -336,7 +405,11 @@ public class HomeScreenPanel extends MainScreenPanel {
         
     }
     public void addRow(int rowIndex) {
-        //System.out.println(rowIndex);
+        /*if((Integer)model.getValueAt(rowIndex, 0)==rowIndex)
+            model.setValueAt((Integer)model.getValueAt(rowIndex,2)+1,rowIndex,2);
+        else
+        { */               
+        System.out.println(rowIndex);
         //System.out.println("found row : "+rowIndex+ " with value"+stockData.getDataOf(rowIndex)+ " --with id-- "+stockData.getIdData());
         JTextField obc = new JTextField();
         String str;
@@ -369,13 +442,13 @@ public class HomeScreenPanel extends MainScreenPanel {
         model.addRow(newRow);
         //model.setValueAt(false);
         //bill row also stores id of the object
-        Vector<Object> billRow = new Vector<>();
+        Vector<Object> billRow = new Vector<>() ;
         billRow.add(stockData.getIdBySerialNo((Integer)(stockData.getDataOf(rowIndex - 1).get(0))));
         billRow.add(stockData.getDataOf(rowIndex - 1).get(3).toString());//quantity
         System.out.println("Bill row "+billRow);
         billData.getData().add(billRow);
         System.out.print("Vec -- " + billData.getData());
-
+        
         /*Vector v = new Vector();
         v.add("Sr.No");
         v.add("Medicine Name");
@@ -386,7 +459,8 @@ public class HomeScreenPanel extends MainScreenPanel {
         
         DefaultTableModel model = new DefaultTableModel();
         model.setDataVector(ob, v);
-         */
+          */
+        
         getSum();
 
     }
